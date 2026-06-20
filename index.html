@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mindset-Werkstatt — Capital Future</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1A2A4A;
+    --navy-deep:#11203B;
+    --navy-card:#21345A;
+    --navy-line:rgba(237,231,214,.14);
+    --gold:#C8A84B;
+    --gold-soft:rgba(200,168,75,.14);
+    --paper:#F5F2EA;
+    --paper-2:#EFEADC;
+    --ink:#1A2A4A;
+    --cream:#EDE7D6;
+    --muted:#90A0BC;
+    --muted-ink:#5E6B82;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--navy);
+    color:var(--cream);
+    font-family:'Inter',system-ui,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+  h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;font-weight:600;line-height:1.15;margin:0;}
+  .eyebrow{
+    font-family:'Inter',sans-serif;font-weight:600;font-size:12px;
+    letter-spacing:.18em;text-transform:uppercase;color:var(--gold);
+  }
+  a{color:inherit;}
+  button{font-family:'Inter',sans-serif;cursor:pointer;}
+
+  /* ---------- Topbar ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:40;
+    background:rgba(17,32,59,.86);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--navy-line);
+  }
+  .topbar .inner{display:flex;align-items:center;justify-content:space-between;height:60px;}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:600;letter-spacing:.02em;}
+  .brand .mark{
+    width:26px;height:26px;border:1.5px solid var(--gold);border-radius:5px;
+    display:grid;place-items:center;color:var(--gold);font-family:'Fraunces',serif;font-size:15px;
+  }
+  .brand small{display:block;font-weight:400;font-size:11px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;}
+
+  /* ---------- Timer ---------- */
+  .timer{
+    display:flex;align-items:center;gap:8px;
+    background:var(--gold-soft);border:1px solid rgba(200,168,75,.4);
+    color:var(--gold);border-radius:999px;padding:6px 14px;font-weight:600;font-size:14px;
+    font-variant-numeric:tabular-nums;
+  }
+  .timer button{
+    background:none;border:none;color:var(--gold);font-size:13px;font-weight:600;padding:0;opacity:.8;
+  }
+  .timer button:hover{opacity:1;}
+  .timer .sep{width:1px;height:14px;background:rgba(200,168,75,.4);}
+
+  /* ---------- Hero / general part ---------- */
+  .hero{padding:64px 0 40px;}
+  .hero h1{font-size:clamp(38px,6vw,68px);font-weight:600;letter-spacing:-.01em;}
+  .hero h1 .gold{color:var(--gold);font-style:italic;}
+  .hero .lead{font-size:clamp(17px,2.2vw,21px);color:var(--cream);max-width:640px;margin:22px 0 0;}
+  .hero .lead.muted{color:var(--muted);font-size:16px;margin-top:10px;}
+
+  .wisdoms{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:42px 0 8px;}
+  .wisdom{
+    background:var(--navy-deep);border:1px solid var(--navy-line);border-radius:14px;padding:20px 20px 22px;
+  }
+  .wisdom .n{font-family:'Fraunces',serif;color:var(--gold);font-size:14px;font-weight:600;}
+  .wisdom h4{font-size:18px;margin-top:8px;}
+  .wisdom p{font-size:14px;color:var(--muted);margin:7px 0 0;}
+
+  .flow{
+    margin-top:34px;background:linear-gradient(180deg,var(--navy-deep),rgba(17,32,59,.4));
+    border:1px solid var(--navy-line);border-radius:16px;padding:26px 28px;
+  }
+  .flow h3{font-size:15px;font-family:'Inter';font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);}
+  .flow ol{margin:16px 0 0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(5,1fr);gap:14px;}
+  .flow li{font-size:14px;color:var(--cream);position:relative;padding-top:30px;}
+  .flow li .step{
+    position:absolute;top:0;left:0;width:24px;height:24px;border-radius:50%;
+    background:var(--gold-soft);border:1px solid var(--gold);color:var(--gold);
+    display:grid;place-items:center;font-size:12px;font-weight:700;
+  }
+  .flow li b{color:var(--cream);}
+  .flow-creed{margin:18px 0 0;font-size:14px;color:var(--gold);font-weight:600;}
+
+  .cta-row{margin-top:34px;display:flex;gap:14px;flex-wrap:wrap;align-items:center;}
+  .btn{
+    display:inline-flex;align-items:center;gap:9px;border-radius:999px;padding:14px 26px;
+    font-weight:600;font-size:15px;text-decoration:none;border:1px solid transparent;transition:.18s;
+  }
+  .btn-gold{background:var(--gold);color:var(--navy-deep);}
+  .btn-gold:hover{background:#d8b95e;transform:translateY(-1px);}
+  .btn-ghost{background:none;border-color:var(--navy-line);color:var(--cream);}
+  .btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
+
+  /* ---------- Section heading ---------- */
+  .sec{padding:54px 0 10px;}
+  .sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:8px;}
+  .sec-head h2{font-size:clamp(26px,3.4vw,38px);}
+  .sec-head p{color:var(--muted);font-size:15px;max-width:480px;margin:6px 0 0;}
+
+  /* ---------- Weight-class cards ---------- */
+  .classes{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:28px;}
+  .class-card{
+    background:var(--navy-card);border:1px solid var(--navy-line);border-radius:18px;padding:26px 24px 24px;
+    text-align:left;color:var(--cream);transition:.2s;position:relative;overflow:hidden;
+  }
+  .class-card:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 18px 40px -22px rgba(0,0,0,.7);}
+  .class-card .corner{font-family:'Fraunces',serif;font-size:13px;color:var(--gold);letter-spacing:.04em;}
+  .class-card h3{font-size:24px;margin:10px 0 4px;}
+  .class-card .lvl{font-size:13px;color:var(--muted);font-weight:500;}
+  .class-card p{font-size:14px;color:var(--cream);opacity:.85;margin:14px 0 18px;}
+  .class-card .go{display:inline-flex;align-items:center;gap:8px;color:var(--gold);font-weight:600;font-size:14px;}
+  .class-card .count{
+    position:absolute;top:22px;right:22px;font-size:12px;color:var(--muted);
+    border:1px solid var(--navy-line);border-radius:999px;padding:3px 10px;
+  }
+
+  /* ---------- Theme stage (level view) ---------- */
+  .stage{display:none;padding:48px 0 20px;}
+  .stage.active{display:block;}
+  .stage-top{display:flex;align-items:center;gap:14px;margin-bottom:8px;}
+  .back{
+    background:none;border:1px solid var(--navy-line);color:var(--cream);border-radius:999px;
+    padding:8px 16px;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:7px;transition:.18s;
+  }
+  .back:hover{border-color:var(--gold);color:var(--gold);}
+  .stage h2{font-size:clamp(26px,3.6vw,40px);margin-top:14px;}
+  .stage .stage-sub{color:var(--muted);font-size:15px;margin:8px 0 0;max-width:560px;}
+
+  .theme-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:30px;}
+  .theme-card{
+    background:var(--navy-deep);border:1px solid var(--navy-line);border-radius:16px;padding:22px 22px 20px;
+    text-align:left;color:var(--cream);transition:.2s;display:flex;flex-direction:column;gap:10px;
+  }
+  .theme-card:hover{border-color:var(--gold);transform:translateY(-2px);}
+  .theme-card .tag{font-size:12px;color:var(--gold);font-weight:600;letter-spacing:.04em;}
+  .theme-card h4{font-size:20px;}
+  .theme-card p{font-size:14px;color:var(--muted);margin:0;flex:1;}
+  .theme-card .meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;}
+  .pill{font-size:11px;border:1px solid var(--navy-line);border-radius:999px;padding:3px 9px;color:var(--muted);}
+  .theme-card .open{color:var(--gold);font-weight:600;font-size:14px;display:inline-flex;gap:7px;align-items:center;margin-top:4px;}
+
+  /* ---------- Reader (paper panel) ---------- */
+  .reader{display:none;padding:34px 0 70px;}
+  .reader.active{display:block;}
+  .reader-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:22px;flex-wrap:wrap;}
+  .reader-bar .right{display:flex;gap:10px;}
+  .paper{
+    background:var(--paper);color:var(--ink);border-radius:20px;padding:46px clamp(24px,5vw,56px);
+    box-shadow:0 30px 70px -40px rgba(0,0,0,.8);
+  }
+  .paper .kicker{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#9a823a;}
+  .paper h2{font-size:clamp(28px,4vw,42px);color:var(--ink);margin:10px 0 0;}
+  .paper .frame{
+    background:var(--paper-2);border-left:3px solid var(--gold);border-radius:0 12px 12px 0;
+    padding:18px 22px;margin:24px 0 0;font-size:16px;color:#3a4356;
+  }
+  .block{margin-top:34px;}
+  .block-h{display:flex;align-items:center;gap:11px;margin-bottom:14px;}
+  .block-h .bi{
+    width:30px;height:30px;border-radius:8px;background:var(--navy);color:var(--gold);
+    display:grid;place-items:center;font-size:15px;flex:none;
+  }
+  .block-h h3{font-size:21px;color:var(--ink);}
+  .ex{margin:0 0 16px;}
+  .ex .q{display:flex;gap:12px;font-size:16px;color:var(--ink);font-weight:500;}
+  .ex .q .num{
+    flex:none;width:24px;height:24px;border-radius:50%;border:1.5px solid var(--gold);color:#9a823a;
+    display:grid;place-items:center;font-size:13px;font-weight:700;font-family:'Inter';
+  }
+  .ex textarea{
+    width:100%;margin-top:9px;min-height:72px;resize:vertical;border:1px solid #d9d0bb;border-radius:10px;
+    background:#fffdf8;padding:11px 13px;font-family:'Inter';font-size:14px;color:var(--ink);line-height:1.55;
+  }
+  .ex textarea:focus{outline:2px solid var(--gold);border-color:transparent;}
+
+  .roles{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px;}
+  .role{background:#fffdf8;border:1px solid #e2d9c4;border-radius:12px;padding:16px 18px;}
+  .role .who{font-weight:700;color:var(--navy);font-size:13px;letter-spacing:.06em;text-transform:uppercase;}
+  .role p{font-size:14px;color:#3a4356;margin:8px 0 0;}
+  .rs-note{font-size:13px;color:var(--muted-ink);margin-top:12px;font-style:italic;}
+  .rs-setup{font-size:15px;color:#3a4356;margin:0 0 14px;}
+
+  .video{
+    margin-top:6px;border:2px dashed #cdbf9e;border-radius:14px;background:#fffdf8;
+    padding:26px;text-align:center;color:var(--muted-ink);
+  }
+  .video .vi{font-size:26px;color:var(--gold);}
+  .video p{margin:8px 0 0;font-size:14px;}
+  .video .hint{font-size:12px;color:#9a9684;margin-top:4px;}
+  .video iframe{width:100%;aspect-ratio:16/9;border:0;border-radius:10px;}
+  .video.has-video{border:1px solid #e2d9c4;border-style:solid;text-align:left;padding:14px;}
+  .video .yt-link{
+    display:inline-flex;align-items:center;gap:6px;margin-top:11px;font-size:13px;font-weight:600;
+    color:#9a823a;text-decoration:none;
+  }
+  .video .yt-link:hover{color:var(--navy);}
+
+  .howto{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:18px 0 0;font-size:14px;color:var(--muted-ink);}
+  .howto b{color:var(--ink);font-weight:600;}
+  .howto .dot{color:var(--gold);font-weight:700;}
+  .takeaway{margin-top:36px;background:linear-gradient(180deg,#fbf6e8,#f4ead2);border:1px solid #e6d6a8;border-radius:16px;padding:24px 26px;}
+  .takeaway .ta-sub{font-size:14px;color:#5a5238;margin:2px 0 14px;}
+  .takeaway textarea{
+    width:100%;min-height:64px;resize:vertical;border:1px solid #d9c98f;border-radius:10px;background:#fffdf6;
+    padding:12px 14px;font-family:'Inter';font-size:16px;color:var(--ink);line-height:1.5;
+  }
+  .takeaway textarea:focus{outline:2px solid var(--gold);border-color:transparent;}
+  .ta-done{
+    margin-top:14px;border:none;background:var(--navy);color:var(--gold);border-radius:999px;
+    padding:10px 20px;font-weight:600;font-size:14px;cursor:pointer;transition:.18s;
+  }
+  .ta-done:hover{background:var(--navy-deep);transform:translateY(-1px);}
+  .ta-done.ok{background:var(--gold);color:var(--navy-deep);transform:none;}
+
+  .reader-foot{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-top:34px;flex-wrap:wrap;}
+  .reader-foot .done{color:var(--muted-ink);font-size:14px;}
+
+  .btn-sm{
+    border-radius:999px;padding:9px 18px;font-weight:600;font-size:13px;border:1px solid var(--navy-line);
+    background:none;color:var(--cream);display:inline-flex;align-items:center;gap:7px;transition:.18s;
+  }
+  .btn-sm:hover{border-color:var(--gold);color:var(--gold);}
+  .btn-sm.solid{background:var(--gold);color:var(--navy-deep);border-color:var(--gold);}
+  .btn-sm.solid:hover{background:#d8b95e;color:var(--navy-deep);}
+
+  footer{border-top:1px solid var(--navy-line);margin-top:50px;padding:26px 0 40px;color:var(--muted);font-size:13px;}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+
+  /* ---------- Responsive ---------- */
+  @media(max-width:880px){
+    .wisdoms{grid-template-columns:1fr;}
+    .flow ol{grid-template-columns:1fr 1fr;}
+    .classes{grid-template-columns:1fr;}
+    .theme-grid{grid-template-columns:1fr;}
+    .roles{grid-template-columns:1fr;}
+    .brand small{display:none;}
+  }
+  @media(max-width:560px){
+    .flow ol{grid-template-columns:1fr;}
+    .hero{padding:42px 0 28px;}
+  }
+
+  /* ---------- Print ---------- */
+  @media print{
+    body{background:#fff;color:#000;}
+    .topbar,.cta-row,.reader-bar,.reader-foot,.back,footer{display:none!important;}
+    .paper{box-shadow:none;padding:0;background:#fff;}
+    .ex textarea{min-height:90px;border:1px solid #999;}
+    .video{border-color:#999;}
+  }
+
+  /* categories + done */
+  .cat-bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:26px 0 6px;}
+  .chip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--navy-line);background:none;color:var(--cream);border-radius:999px;padding:8px 14px;font-size:13px;font-weight:600;transition:.16s;cursor:pointer;}
+  .chip:hover{border-color:var(--gold);color:var(--gold);}
+  .chip.on{background:var(--gold);color:var(--navy-deep);border-color:var(--gold);}
+  .chip-n{font-size:11px;background:rgba(0,0,0,.18);border-radius:999px;padding:1px 7px;}
+  .progress{margin-left:auto;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;}
+  .theme-card{cursor:pointer;}
+  .theme-card .tag{padding-right:72px;}
+  .card-done{position:absolute;top:14px;right:14px;border:1px solid var(--navy-line);background:rgba(0,0,0,.18);color:var(--muted);border-radius:999px;padding:4px 11px;font-size:11px;font-weight:600;transition:.16s;z-index:2;cursor:pointer;}
+  .card-done:hover{border-color:var(--gold);color:var(--gold);}
+  .empty{grid-column:1/-1;border:1px dashed var(--navy-line);border-radius:14px;padding:30px;text-align:center;color:var(--muted);font-size:14px;}
+  .done-wrap{margin-top:24px;}
+  .done-head{display:inline-flex;align-items:center;gap:9px;background:none;border:none;color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;padding:8px 0;}
+  .done-head:hover{color:var(--gold);}
+  .done-n{background:var(--navy-deep);border:1px solid var(--navy-line);border-radius:999px;padding:1px 8px;font-size:11px;}
+  .done-list{display:none;flex-wrap:wrap;gap:8px;margin-top:10px;}
+  .done-list.show{display:flex;}
+  .done-chip{display:inline-flex;align-items:center;border:1px solid var(--navy-line);border-radius:999px;overflow:hidden;opacity:.7;}
+  .dc-open{background:none;border:none;color:var(--cream);font-size:12px;padding:6px 12px;text-decoration:line-through;cursor:pointer;}
+  .dc-open:hover{color:var(--gold);}
+  .dc-undo{background:none;border:none;border-left:1px solid var(--navy-line);color:var(--muted);padding:6px 10px;font-size:12px;cursor:pointer;}
+  .dc-undo:hover{color:var(--gold);}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="wrap inner">
+    <div class="brand" data-act="home" style="cursor:pointer">
+      <span class="mark">CF</span>
+      <span>Mindset-Werkstatt<small>Capital Future · CF Operating System</small></span>
+    </div>
+    <div class="timer" id="timer">
+      <span id="clock">30:00</span>
+      <span class="sep"></span>
+      <button id="tToggle">Start</button>
+      <button id="tReset">Reset</button>
+    </div>
+  </div>
+</div>
+
+<main id="home">
+<!-- HERO / GENERAL PART -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <div class="eyebrow">Heute Abend · Gemeinsamer Teil</div>
+    <h1>Arbeite an dem, was alles<br>andere trägt: deinem <span class="gold">Kopf</span>.</h1>
+    <p class="lead">Fachwissen kannst du nachlesen. Was über Erfolg oder Aufgeben entscheidet, sitzt zwischen den Ohren. Heute nimmst du dir 30–40 Minuten für genau ein Thema — allein oder zu zweit/dritt.</p>
+    <p class="lead muted">Drei Sätze, die über allem stehen, was du gleich bearbeitest:</p>
+
+    <div class="wisdoms">
+      <div class="wisdom"><div class="n">01</div><h4>Übung macht den Meister</h4><p>Arbeit ist nicht verhandelbar. Können kommt durch Wiederholung, nicht durch Talent.</p></div>
+      <div class="wisdom"><div class="n">02</div><h4>Gut Ding will Weile haben</h4><p>Geduld ist Stärke, nicht Schwäche. Meisterschaft dauert rund sieben Jahre.</p></div>
+      <div class="wisdom"><div class="n">03</div><h4>Liebe das Plateau</h4><p>Wo nichts zu wachsen scheint, bilden sich Wurzeln. Wie Bambus — lange unsichtbar, dann ein Sprung.</p></div>
+    </div>
+
+    <div class="flow">
+      <h3>So läuft der Abend</h3>
+      <ol>
+        <li><span class="step">1</span><b>Gemeinsamer Teil</b> — alle zusammen, kurzer Einstieg.</li>
+        <li><span class="step">2</span><b>Gewichtsklasse</b> wählen — wo stehst du gerade?</li>
+        <li><span class="step">3</span><b>Thema</b> wählen — allein oder zu zweit/dritt.</li>
+        <li><span class="step">4</span><b>Arbeiten</b> — Übungen + Rollenspiel, ca. 30–40 Min.</li>
+        <li><span class="step">5</span><b>Zurück in die Runde</b> — jeder teilt seinen Standard.</li>
+      </ol>
+      <p class="flow-creed">Kein Druck, etwas zu beweisen — jeder geht heute mit genau einer konkreten Entscheidung raus.</p>
+    </div>
+
+    <div class="cta-row">
+      <a href="#waehlen" class="btn btn-gold">Gewichtsklasse wählen →</a>
+      <span class="lead muted" style="margin:0;">Online dabei? Gleich geht's in die Breakout-Räume — öffne dort einfach dein Thema.</span>
+    </div>
+  </div>
+</section>
+
+<!-- WEIGHT CLASS SELECTION -->
+<section class="sec" id="waehlen">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="eyebrow">Schritt 2 · Deine Gewichtsklasse</div>
+        <h2>Wähl deine Ecke.</h2>
+      </div>
+      <p>Nicht besser oder schlechter — anderes Gewicht, andere Themen. Wähl die Klasse, in der du gerade kämpfst.</p>
+    </div>
+    <div class="classes" id="classCards"></div>
+  </div>
+</section>
+</main>
+
+<!-- STAGE: theme grid for a level -->
+<section class="stage" id="stage">
+  <div class="wrap">
+    <div class="stage-top">
+      <button class="back" data-act="toClasses">← Gewichtsklassen</button>
+    </div>
+    <div class="eyebrow" id="stageEyebrow"></div>
+    <h2 id="stageTitle"></h2>
+    <p class="stage-sub" id="stageSub"></p>
+    <div class="cat-bar" id="catBar"></div>
+    <div class="theme-grid" id="themeGrid"></div>
+    <div class="done-wrap" id="doneWrap"></div>
+  </div>
+</section>
+
+<!-- READER -->
+<section class="reader" id="reader">
+  <div class="wrap">
+    <div class="reader-bar">
+      <button class="back" data-act="toStage">← Zurück zu den Themen</button>
+      <div class="right">
+        <button class="btn-sm" data-act="print">⎙ Drucken / PDF</button>
+      </div>
+    </div>
+    <div class="paper" id="paper"></div>
+    <div class="reader-foot">
+      <span class="done">Fertig? Notizen mitnehmen oder ausdrucken — gleich teilst du in der Runde.</span>
+      <span style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn-sm" data-act="markdone">✓ Als erledigt markieren</button>
+        <button class="btn-sm solid" data-act="toStage">Zurück zur Übersicht →</button>
+      </span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Capital Future AG · CF Operating System — Modul Mindset</span>
+    <span>Interne Schulungsunterlage · nicht zur Weitergabe</span>
+  </div>
+</footer>
+
+<script>
+/* ============== CONTENT ============== */
+const DATA = {
+  einsteiger:{
+    corner:"Klasse I",
+    title:"Einsteiger",
+    level:"FA / FM",
+    sub:"Ankommen & Dranbleiben",
+    pitch:"Du fängst gerade an. Heute geht's nicht um Technik, sondern darum, ob du innerlich angekommen bist — und wie du dranbleibst, wenn es mal ungemütlich wird.",
+    themes:[
+      {
+        tag:"System einordnen", title:"„Ist das hier echt?“",
+        teaser:"Schule → Ausbildung → Job — in dieses Bild passt CF nicht sauber. Heute findest du deine ehrliche Antwort, warum dieser Weg trotzdem zählt.",
+        meta:["3 Übungen","Rollenspiel","Video"],
+        frame:"Du bist auf den klassischen Weg geprägt: Schule, Ausbildung oder Studium, Job, Karriere. CF passt da nicht rein — keine Vorqualifikation nötig, bunt gemischt, oft nebenbei. Die Frage „Ist das gleichwertig?“ stellt sich am Anfang fast jeder. Heute beantwortest du sie für dich — nicht mit einem Werbespruch, sondern ehrlich.",
+        ex:[
+          "Zwei Spalten: Was gibt mir der klassische Weg an Sicherheit? Was gibt mir dieser Weg, das der andere nie könnte? Sei bei beidem ehrlich — beide Spalten dürfen voll sein.",
+          "Die fachliche Ausbildung dauert nur 9 Monate — das wirkt kurz. Was lernst du hier in echten Gesprächen mit echten Menschen, das in keiner Vorlesung steht?",
+          "Beende den Satz: „Wenn ich in 7 Jahren zurückblicke, will ich sagen können, dass ich …“"
+        ],
+        rsSetup:"Zu zweit, 90 Sekunden pro Runde.",
+        roleA:"Skeptischer Bekannter: „Du machst jetzt Versicherungen? Ohne Studium? Ist das seriös?“ Bohr ruhig nach.",
+        roleB:"Du. Erklär in 90 Sekunden, warum dieser Weg für dich Sinn ergibt — ruhig, ohne dich zu rechtfertigen.",
+        rsNote:"Danach Rollen tauschen. Achte drauf: Wann rutschst du ins Rechtfertigen — und wann klingst du überzeugt?"
+      },
+      {
+        tag:"Antrieb", title:"Von Begeisterung zu Überzeugung",
+        teaser:"Begeisterung trägt am Anfang — Überzeugung trägt, wenn's mal nicht läuft. Heute baust du an Letzterem.",
+        meta:["3 Übungen","Rollenspiel","Video"],
+        frame:"Am Anfang trägt dich Begeisterung. Schön — die braucht's. Sie hält nur nicht von allein. Wer dranbleibt, baut aus Begeisterung echte Überzeugung: versteht den Sinn und erkennt den ganz persönlichen Nutzen. Heute schaust du, wo du gerade stehst — und das ist völlig in Ordnung, egal wo.",
+        ex:[
+          "Je drei Sätze: „Ich bin begeistert, weil …“ und „Ich bin überzeugt, weil …“. Bei welcher Liste musstest du länger überlegen? Da liegt deine nächste Etappe.",
+          "Was hast DU davon, wenn du dranbleibst — über Geld hinaus? (Freiheit, Können, Menschen, Selbstbild.) Such mindestens drei.",
+          "Frühwarnsignal: Woran würdest du merken, dass deine Begeisterung kippt — und was tust du dann, bevor du aufgibst? Notiere 2 Anzeichen."
+        ],
+        rsSetup:"Zu zweit, je 2 Minuten. Ehrlich, nicht auswendig.",
+        roleA:"Erzähl 2 Minuten, warum du wirklich hier bist.",
+        roleB:"Hör zu und spiegle: „Was ich höre, ist Begeisterung über … und echte Überzeugung bei …“",
+        rsNote:"Tauschen. Der Spiegel hilft mehr als jedes Lob — es geht ums Zuhören, nicht ums Bewerten."
+      },
+      {
+        tag:"Kunden-Mindset", title:"Das App-Argument: Was ich nicht sehe",
+        teaser:"„Trade Republic + ChatGPT reicht.“ Das hörst du oft. Heute lernst du, ruhig den blinden Fleck dahinter zu zeigen.",
+        meta:["3 Übungen","Rollenspiel","Video"],
+        frame:"„Trade Republic plus ChatGPT reicht doch.“ Das hörst du von Freunden, im Netz — vielleicht steckt der Gedanke auch noch ein Stück in dir. Völlig normal. Der Punkt: Die meisten wissen nicht, was sie nicht sehen. Heute machst du diesen blinden Fleck sichtbar — erst für dich, dann für den Kunden.",
+        ex:[
+          "Nenn 3 Dinge, die eine App/KI bei einer echten Lebenssituation NICHT weiß (z. B. künftige Steueränderung, persönliches Risiko, Familienplanung).",
+          "Übersetze „Die Menschen wissen nicht, was sie nicht sehen“ in einen Satz, den ein 25-Jähriger sofort versteht.",
+          "Zieh die Linie: Wofür reicht die App wirklich? Ab wo wird's fahrlässig? Ein Satz, mit dem du beim nächsten Erstkontakt sicher stehst."
+        ],
+        rsSetup:"Zu zweit. Wichtig: mit Fragen führen, nicht mit Gegenargumenten.",
+        roleA:"Kunde: „Ich brauch keinen Berater, ich hab ChatGPT und meine App.“ Bleib selbstbewusst.",
+        roleB:"Du. Führ mit Fragen statt Widerspruch: „Was passiert mit deinem Plan, wenn sich nächstes Jahr die Steuer ändert?“ Ziel: Er denkt selbst nach.",
+        rsNote:"Tauschen. Wer überzeugt, gewinnt — wer fragt, führt."
+      },
+      {
+        tag:"Fundament", title:"Mein persönliches Warum",
+        teaser:"Ohne Warum wird das erste Tief schwer. Heute machst du deins greifbar — in einem Satz, der dich trägt.",
+        meta:["3 Übungen","Rollenspiel","Video"],
+        frame:"Ohne ein echtes Warum wird das erste Tief schwer. Bens Warum kam aus fehlender Perspektive in der Jugend — heute: Meisterschaft, Veredelung, Freiheit. Deins ist anders, und das ist gut so. Heute machst du es greifbar, damit es trägt, wenn dich keiner sieht. (Freiheit heißt übrigens Wahl haben, nicht Nichtstun.)",
+        ex:[
+          "Fünf-mal-Warum: „Ich mache das, weil …“ — und auf jede Antwort wieder „Warum?“. Geh, bis es sich ehrlich anfühlt.",
+          "Was heißt Freiheit für dich konkret? Beschreib einen ganz normalen Tag in dem Leben, das du dir baust.",
+          "Schreib dein Warum in EINEN Satz auf eine Karte. Den nimmst du heute mit."
+        ],
+        rsSetup:"Zu zweit, ruhig und langsam.",
+        roleA:"Lies dem anderen deinen Ein-Satz-Warum vor.",
+        roleB:"Frag genau einmal nach: „Und warum ist DIR das wichtig?“ Dann still sein.",
+        rsNote:"Kein Kommentar, kein Ratschlag. Nur zuhören und tauschen."
+      },
+      {
+        tag:"Akquise · Cycle-Start", title:"Sichtbar werden & erste Kontakte",
+        teaser:"Kein Kontakt, kein Geschäft. Hier lernst du, sichtbar zu werden und die ersten Gespräche zu knüpfen — auch ohne Talent fürs Rampenlicht.",
+        meta:["4 Übungen","Rollenspiel","Video"],
+        frame:"Im Vertrieb entscheidet eine Sache über alles andere: Sichtbarkeit. Wen keiner kennt, der bekommt keine Termine. Die gute Nachricht: Du musst dafür nicht kreativ, laut oder ein Naturtalent sein. Du brauchst ein System und ein bisschen Mut. Heute baust du den Anfang des Cycles — dein Umfeld, deine ersten Kontakte, deinen Rhythmus.",
+        ex:[
+          "Dein 50er-Umfeld: Schreib in 10 Minuten 50 Namen aus deinem Umfeld auf — Familie, Freunde, Ex-Kollegen, Verein, Nachbarn, alte Schulkontakte. Nicht bewerten, erst sammeln. Das ist dein Startkapital.",
+          "Markier die 5, bei denen dir ein Gespräch am leichtesten fällt. Mit denen startest du — nicht mit den schwierigsten.",
+          "Dein Hook — die Frage ist nicht OB, sondern WANN. Schwach: „Hättest du mal Zeit, dir das unverbindlich anzuhören?“ — das lädt zum Nein ein. Stark: Begeisterung zeigen, Initiative ergreifen, Termin ansteuern. Vorlage zum Anpassen: „Hey [Name], ich beschäftige mich schon länger mit Finanzen und hab jetzt ein Unternehmen kennengelernt, bei dem ich das richtig professionell lernen kann — ich find's total spannend. Das würd ich dir gern mal zeigen. Wann passt's dir nächste Woche besser — Anfang oder Ende?“ Schreib deine eigene Version.",
+          "Dein Kontakt-Rhythmus: Leg fest, wie viele Leute du pro Tag ansprichst — auch 2–3 reichen am Anfang. Trag die feste Zahl ein. Sichtbarkeit ist Wiederholung, nicht Genie."
+        ],
+        rsSetup:"Zu zweit. Üb die erste Ansprache, bevor du sie ernst machst.",
+        roleA:"Bekannter, den du ansprichst: freundlich, aber „Oh, Finanzen … ich weiß nicht so recht.“",
+        roleB:"Du. Zeig echte Begeisterung und steuer direkt auf einen Termin zu: „Das zeig ich dir gern — wann passt's dir, Anfang oder Ende der Woche?“ Kein „hättest du mal Zeit“.",
+        rsNote:"Tauschen. Ziel ist der Termin, nicht der Abschluss — steuer auf einen Zeitpunkt zu, nicht auf ein Ja/Nein. Wie fühlt sich das erste Nein an, und wie machst du weiter?"
+      },
+      {
+        cat:"persoenlich",
+        tag:"Persönlichkeit · Disziplin", title:"Selbstorganisation: dein Wochenplan",
+        teaser:"Erfolg im Vertrieb ist planbar — wenn du deine Woche steuerst, statt dich treiben zu lassen.",
+        meta:["3 Übungen","Rollenspiel","Video"],
+        frame:"Im Vertrieb arbeitet keiner über deine Schulter — du steuerst dich selbst. Wer seine Woche plant, kommt ins Tun; wer auf Motivation wartet, wartet meistens. Heute baust du dir einen einfachen Wochenrhythmus, der auch an schlechten Tagen trägt.",
+        ex:[
+          "Block-Plan: Trag für die kommende Woche feste Blöcke ein — Akquise, Termine, Nachbereitung, Lernen. Erst die wichtigen Blöcke, dann der Rest.",
+          "Deine 3 Big Points: Welche 3 Tätigkeiten zählen diese Woche wirklich? Schreib sie auf und schütze ihre Zeit.",
+          "Tages-Startritual: Leg eine kleine feste Routine fest, mit der du jeden Arbeitstag startest (z. B. erst 30 Min Akquise, bevor irgendetwas anderes kommt)."
+        ],
+        rsSetup:"Zu zweit. Plan vorstellen, ehrliches Feedback.",
+        roleA:"Stell deinem Partner deinen Wochenplan in 2 Minuten vor.",
+        roleB:"Frag nach: „Wo ist deine Akquise-Zeit fest geblockt — und was würde sie als Erstes verdrängen?“",
+        rsNote:"Tauschen. Ein Plan, der nicht geschützt ist, ist nur ein Wunschzettel."
+      },
+      {
+        cat:"vertrieb",
+        tag:"Vertrieb · Cycle-Analyse", title:"Der Analysetermin: Bedarf erfassen",
+        teaser:"Der erste Termin entscheidet. Hier lernst du, Bedarf zu erfassen, indem du fragst und zuhörst — nicht indem du redest.",
+        meta:["3 Übungen","Rollenspiel","Video"],
+        frame:"Nach dem Kontakt kommt der Analysetermin — der Moment, in dem aus einem Namen ein echter Bedarf wird. Der häufigste Anfängerfehler: zu viel reden, zu früh Lösungen anbieten. Stark ist, wer fragt, zuhört und die Situation wirklich versteht. Heute übst du genau das.",
+        ex:[
+          "Deine Top-Fragen: Schreib 5 offene Fragen auf, mit denen du die Situation eines Menschen erfasst (Familie, Ziele, Sorgen, Absicherung, Zukunft). Offen heißt: nicht mit Ja/Nein beantwortbar.",
+          "Reden vs. Zuhören: Schätz ehrlich, wie hoch dein Redeanteil im letzten Gespräch war. Ziel im Analysetermin: der Kunde redet mehr als du. Was änderst du konkret?",
+          "Mitschreiben: Leg fest, was du im Termin notierst, damit du in der Auswertung nichts vergisst. Ein einfaches Raster reicht."
+        ],
+        rsSetup:"Zu zweit. Analysetermin-Einstieg üben.",
+        roleA:"Kunde, der erst zurückhaltend ist und kurz antwortet.",
+        roleB:"Du. Öffne mit Fragen, hör zu, bohr freundlich nach — kein Produkt, nur verstehen.",
+        rsNote:"Tauschen. Wer am meisten zuhört, erfährt am meisten — und verkauft am Ende leichter."
+      },
+      {
+        cat:"vertrieb",
+        tag:"Vertrieb · Cycle-Kontakt", title:"Erste Einwände am Kontakt entkräften",
+        teaser:"„Kein Interesse“, „keine Zeit“, „schick mir was per Mail“ — souverän bleiben statt aufgeben.",
+        meta:["3 Übungen","Rollenspiel","Video"],
+        frame:"Beim Erstkontakt kommen fast immer dieselben Reflexe: „kein Interesse“, „keine Zeit“, „schick mir mal was per Mail“. Das sind keine Absagen, das sind Reflexe. Wer sie ruhig auffängt, statt sie persönlich zu nehmen, bekommt den Termin trotzdem. Heute baust du dir deine Antworten.",
+        ex:[
+          "Sammle die 3 Einwände, die du am häufigsten hörst. Schreib sie wörtlich auf, so wie die Leute sie sagen.",
+          "Für jeden Einwand eine ruhige, freundliche Antwort, die nicht diskutiert, sondern auf den Termin zurückführt. (Beispiel zu „schick per Mail“: „Mach ich gern — aber in 15 Minuten zeig ich dir mehr als jede Mail. Wann passt's dir?“)",
+          "Deine Haltung: Ein Einwand ist kein Nein. Schreib dir einen Satz auf, der dich nach einem Korb sofort weitermachen lässt."
+        ],
+        rsSetup:"Zu zweit. Einwand-Pingpong.",
+        roleA:"Wirf B drei typische Einwände nacheinander entgegen — freundlich, aber bestimmt.",
+        roleB:"Du. Fang jeden ruhig auf und führ zum Termin zurück. Nicht rechtfertigen, nicht diskutieren.",
+        rsNote:"Tauschen. Übung nimmt dem Einwand die Macht — beim zehnten Mal lächelst du nur noch."
+      },
+      {
+        cat:"fach",
+        tag:"Fach · Förderung & Investment", title:"Vermögenswirksame Leistungen: das unterschätzte Geschenk",
+        teaser:"Fast jeder hat Anspruch, kaum jemand nutzt es richtig. An VL erklärst du Förderung, Zinsen vs. Investment und den Wert der Zeit.",
+        meta:["4 Übungen","Rollenspiel","Video"],
+        frame:"VL sind ein monatlicher Zuschuss vom Arbeitgeber in einen Sparvertrag — Geld, das vielen einfach durch die Finger läuft, weil sie es nicht abrufen oder ins falsche Produkt stecken. Genau deshalb ist VL dein perfektes Einstiegsthema: Daran erklärst du in einem Gespräch fast alles, was Geldanlage ausmacht. Es gibt im Kern vier Wege — über eine Bank (Banksparplan), über die Investmentseite (Fondssparplan/ETF), über eine Bausparkasse (Bausparvertrag) und über eine Versicherung (z. B. ETF-Police). An diesen vier Töpfen erklärst du den Unterschied zwischen Zinsen und Investment, die staatliche Förderung und vor allem den Wert der Zeit. Wir empfehlen in der Regel die ETF-Police — heute lernst du, zu erklären, warum.",
+        ex:[
+          "Die 4 Wege: Skizziere die vier VL-Produkte (Bank · Investment/ETF · Bausparen · Versicherung) und schreib zu jedem in einem Satz, was es im Kern ist. Wenn du das frei kannst, hast du den roten Faden fürs Gespräch.",
+          "Zinsen vs. Investment: Erklär in zwei, drei Sätzen den Unterschied zwischen 'Geld bekommt Zinsen' (Banksparplan) und 'Geld ist investiert' (ETF) — ohne Fachchinesisch, so dass ein 20-Jähriger es versteht.",
+          "Der Wert der Zeit: Mach dir klar, warum gerade bei jungen Leuten die lange Laufzeit der größte Hebel ist (langfristige Rendite, Schwankungen werden ausgesessen). Bring ein einfaches Bild dafür.",
+          "Warum ETF-Police: Schreib 3 Gründe auf, warum CF in der Regel die ETF-Police empfiehlt (z. B. günstige ETFs im Versicherungsmantel, langfristig steuerlich attraktiv, läuft nach der VL-Phase als Vorsorge weiter). Die genauen Förderbeträge und Einkommensgrenzen holst du dir aktuell aus der CF-Quelle — die ändern sich, das Prinzip bleibt."
+        ],
+        rsSetup:"Zu zweit. VL einem 'Azubi' erklären.",
+        roleA:"Spiel einen 22-Jährigen, der sagt: 'VL? Hab ich mal gehört, bringt doch eh nichts.'",
+        roleB:"Du. Erklär in 3 Minuten, was VL sind, die 4 Wege und warum sich's lohnt — einfach, am Eye-Level.",
+        rsNote:"Tauschen. Wer VL einfach erklären kann, kann fast jedes Anlagethema einfach erklären."
+      },
+      {
+        cat:"fach",
+        tag:"Fach · Sachversicherung", title:"Private Haftpflicht: die wichtigste günstige Police",
+        teaser:"Wer einen Schaden verursacht, haftet — im Ernstfall mit allem, was er hat. Die PHV ist Pflichtprogramm und kostet fast nichts.",
+        meta:["3 Übungen","Rollenspiel","Video"],
+        frame:"Das deutsche Recht ist hier eindeutig: Wer einem anderen schuldhaft einen Schaden zufügt, muss dafür geradestehen — notfalls ein Leben lang und mit dem gesamten Vermögen (§ 823 BGB). Ein kurzer Moment der Unachtsamkeit kann jemanden lebenslang in die Schuld treiben. Die private Haftpflichtversicherung deckt genau dieses Risiko ab: Sie prüft Ansprüche, zahlt berechtigte und wehrt unberechtigte ab. Sie gehört für praktisch jeden zur Grundausstattung — und ist trotzdem günstig. Heute lernst du, sie klar und ohne Drama zu erklären.",
+        ex:[
+          "Das Grundprinzip: Erklär in zwei Sätzen, warum man haftet und womit man im Ernstfall haftet (mit dem ganzen Vermögen, von Natur aus ohne Limit) — und warum eine ausreichend hohe Versicherungssumme wichtig ist.",
+          "Typische Lücken-Fragen: Notiere kurze, richtige Antworten auf 'Zahlt die auch, wenn mein Hund jemanden beißt?' (nein — dafür braucht es eine Tierhalter-Haftpflicht) und 'Sind meine Kinder mit drin?' (ja, im Rahmen der Aufsichtspflicht; ganz kleine Kinder sind oft noch deliktunfähig).",
+          "Was sie NICHT zahlt: Liste 3 Ausschlüsse, die du parat haben solltest (vorsätzliche Schäden · Schäden mit dem Kfz → Benzinklausel · bestimmte geliehene/gemietete Risiken). Das schützt dich vor Falschaussagen im Gespräch."
+        ],
+        rsSetup:"Zu zweit. PHV in 2 Minuten erklären.",
+        roleA:"Kunde, der meint: 'Hab ich nicht, brauch ich nicht — ich pass schon auf.'",
+        roleB:"Du. Zeig mit einem realistischen Beispiel, warum 'aufpassen' nicht reicht — ohne Angst zu machen.",
+        rsNote:"Tauschen. Die PHV verkauft sich über das Beispiel, nicht über den Paragrafen."
+      },
+      {
+        cat:"fach",
+        tag:"Fach · Das große Bild", title:"Das Sozialsystem & seine Lücken: warum Beratung zählt",
+        teaser:"Wie funktioniert das deutsche Sozialsystem, was steht wem zu — und wo sind die Lücken? Dieses Bild ist das Fundament jeder Beratung.",
+        meta:["3 Übungen","Rollenspiel","Video"],
+        frame:"Jede gute Beratung steht auf einem Fundament: dem Verständnis, was der Staat leistet — und was nicht. Das deutsche Sozialsystem (gesetzliche Kranken-, Renten-, Unfall-, Pflege- und Arbeitslosenversicherung) gibt eine Grundsicherung, aber überall sind Lücken: die gesetzliche Rente reicht im Alter selten, die Erwerbsminderungsrente fängt Berufsunfähigkeit kaum auf, die gesetzliche Unfallversicherung lässt die Freizeit offen. Genau diese Lücken sind der Grund, warum es qualifizierte Beratung überhaupt braucht. Wenn du das große Bild verstehst, verkaufst du keine Produkte mehr — du schließt Lücken, die der Kunde selbst erkennt.",
+        ex:[
+          "Die Säulen skizzieren: Zeichne die gesetzlichen Zweige (Kranken · Renten · Unfall · Pflege · Arbeitslosen) und schreib zu jedem in einem Satz, was er grob leistet — so, wie du es einem Kunden erklären können solltest.",
+          "Die Lücken markieren: Markier bei jeder Säule die wichtigste Lücke (z. B. Rente: Versorgungslücke im Alter · Unfall: keine Freizeit · Erwerbsminderung statt echter BU). Das ist deine Landkarte für jede Bedarfsanalyse.",
+          "Vom Bild zur Beratung: Formuliere, wie du aus diesem Gesamtbild den Bogen zur konkreten Empfehlung schlägst — ohne Angst zu machen, sondern indem der Kunde die Lücke selbst erkennt."
+        ],
+        rsSetup:"Zu zweit. Das große Bild erklären.",
+        roleA:"Kunde: 'Ich zahl doch jeden Monat in die Sozialversicherung — da bin ich doch abgesichert.'",
+        roleB:"Du. Erklär ruhig, was die gesetzliche Absicherung leistet und wo die Lücken sind — lass ihn die erste selbst benennen.",
+        rsNote:"Tauschen. Wer das Fundament erklärt, braucht keine Verkaufsmasche mehr."
+      }
+    ]
+  },
+
+  aufsteiger:{
+    corner:"Klasse II",
+    title:"Aufsteiger",
+    level:"KM / VM",
+    sub:"Dranbleiben & vertiefen",
+    pitch:"Du bist über den Anfang hinaus. Jetzt zählt der lange Atem: den Cycle vertiefen, dranbleiben und in erste Führungsverantwortung wachsen.",
+    themes:[
+      {
+        tag:"Selbstkenntnis", title:"Der lange Atem",
+        teaser:"Meisterschaft braucht Zeit — mit Hochs und zähen Phasen. Stark ist, wer dranbleibt, wenn andere aufgeben.",
+        meta:["4 Übungen","Rollenspiel","Video"],
+        frame:"Der Weg zur Meisterschaft ist nicht gradlinig — er dauert rund sieben Jahre und hat zähe Phasen, in denen Zweifel aufkommen können. Das ist kein Defekt, sondern Teil des Wegs, den jeder geht. Fast jeder durchläuft dabei drei Stufen: erst tut man so, als wäre man voll dabei; dann gibt man bei jedem Problem innerlich auf; bis man irgendwann so satt vom Durchschnitt ist, dass man wirklich entscheidet und dranbleibt. Der beste Verkäufer war nicht schlauer — er war nur länger im Game. Und wenn ein Versuch nicht klappt: Du hast getan, was du tun konntest, also ruf den nächsten Spielzug. Heute schaust du dir ehrlich an, was dich trägt, wenn es mal zäh wird.",
+        ex:[
+          "Welche Ausrede greift bei dir, wenn es zäh wird? („der Markt“, „keine Zeit“, „die Leads“ …) Schreib sie hin — und daneben, was wirklich dahintersteckt.",
+          "Beschreib, wie sich eine zähe Phase bei dir anfühlt — Gedanken, Ausreden, Verhalten. Je genauer, desto früher erkennst du's beim nächsten Mal.",
+          "Notfallplan: 3 konkrete Dinge, die du sofort tust, wenn eine zähe Phase kommt (mehr Gespräche statt weniger, Anruf bei der Führungskraft, Schulung). Schreib sie auf, bevor du sie brauchst.",
+          "Die drei Stufen: Wo stehst du gerade ehrlich — beim Sich-etwas-vormachen, beim Aufgeben bei jedem Problem, oder hast du wirklich entschieden? Schreib es auf — und was dich auf die nächste Stufe bringt."
+        ],
+        rsSetup:"Zu zweit. Regel: nur Fragen, keine Ratschläge.",
+        roleA:"Beschreib eine zähe Phase — aktuell oder vergangen, ehrlich.",
+        roleB:"Frag nur: „Was hat beim letzten Mal geholfen?“ und „Was würdest du einem Einsteiger raten?“",
+        rsNote:"Tauschen. Du merkst: Die Antworten trägst du längst in dir."
+      },
+      {
+        tag:"Ausdauer", title:"Liebe das Plateau",
+        teaser:"Die meisten geben auf dem Plateau auf — weil sie Wurzelwachstum mit Stillstand verwechseln.",
+        meta:["3 Übungen","Rollenspiel","Video"],
+        frame:"George Leonard, „Der längere Atem“: Fortschritt sind lange Plateaus mit kurzen Sprüngen. Die meisten steigen genau auf dem Plateau aus, weil sie es für Stillstand halten. Wie Bambus: jahrelang unsichtbares Wurzelwachstum, dann Rekordhöhe. Heute lernst du, die Arbeit zu lieben — nicht nur das Ergebnis.",
+        ex:[
+          "Wo stehst du gerade auf einem Plateau? Was wächst darunter trotzdem, auch wenn die Zahlen flach sind?",
+          "Nenn eine Sache, die du heute besser machst als vor 6 Monaten — ohne dass es sich nach „Erfolg“ anfühlte.",
+          "Übung statt Ergebnis: Lege eine Tätigkeit für diese Woche fest, die du einfach durchziehst — eine feste Zahl, egal welcher Ausgang."
+        ],
+        rsSetup:"Zu zweit. Führen statt trösten.",
+        roleA:"Frustriert: „Ich gebe alles und es passiert nichts.“",
+        roleB:"Führ A vom Ergebnis-Blick zum Wurzel-Blick — mit Fragen, nicht mit Trost.",
+        rsNote:"Tauschen. Was hat den Blick verschoben?"
+      },
+      {
+        tag:"Cycle", title:"Die 4 Cycle-Fehler bei mir",
+        teaser:"Vier Fehler kosten immer wieder Abschlüsse. Heute findest du deinen — und stellst ihn ab.",
+        meta:["3 Übungen","Rollenspiel","Video"],
+        frame:"Die ersten Cycles laufen mit Führungskraft, in Eigenregie beginnen die Probleme. Vier Fehler kommen immer wieder: zu wenige Gespräche, zu vage, Empfehlung vergessen, mit allen sprechen statt mit den Richtigen. Jeder hat einen Lieblingsfehler — den zu kennen ist Stärke. Heute findest du deinen.",
+        ex:[
+          "Selbsteinschätzung 1–5: zu wenige Gespräche · zu vage · Empfehlung vergessen · mit allen sprechen. Wo bist du am schwächsten? Ehrlich, ohne Schönfärben.",
+          "Nimm deinen schwächsten Wert und schreib EINE konkrete Gegenmaßnahme für diese Woche — mit Zahl und Tag.",
+          "„Mit allen sprechen“: Definiere deinen idealen Gesprächspartner — und genauso klar, mit wem du ab jetzt bewusst keine Zeit mehr verbringst."
+        ],
+        rsSetup:"Zu zweit, kurzes Gesprächs-Fragment.",
+        roleA:"Spiel ein Gespräch, in dem du bewusst „zu vage“ bleibst.",
+        roleB:"Benenn live, wo es vage wurde. A formuliert sofort konkret nach.",
+        rsNote:"Tauschen. Vage kostet Abschlüsse — Klarheit gewinnt sie."
+      },
+      {
+        tag:"Haltung", title:"Führbarkeit: Wo lass ich mich (nicht) führen",
+        teaser:"Führbarkeit + Antrieb schlagen Talent und Auftreten. Die ehrliche Frage: Wie führbar bist du wirklich?",
+        meta:["3 Übungen","Rollenspiel","Video"],
+        frame:"Wer es gegen alle Erwartung schafft, hat zwei Dinge: Führbarkeit und inneren Antrieb. Offen für Coaching, offen für Kritik. Talent und Auftreten schlagen das nicht. Heute prüfst du das ehrlich an dir selbst.",
+        ex:[
+          "Wo nimmst du Kritik leicht an — und wo machst du sofort dicht? Sei konkret. Der Bereich, in dem du dichtmachst, ist oft der, in dem am meisten Wachstum steckt.",
+          "Erinnere ein Feedback, das du erst abgewehrt und später als richtig erkannt hast. Was hat dich damals abwehren lassen?",
+          "Eine Sache, bei der du diese Woche bewusst jemanden machen lässt oder um Hilfe bittest — obwohl du's „selbst kannst“. Nenn die Sache und die Person."
+        ],
+        rsSetup:"Zu zweit. Unbequem, aber fair.",
+        roleA:"Gib B ein ehrliches, unbequemes, faires Feedback.",
+        roleB:"Übe, nur zu sagen: „Danke — erzähl mehr.“ Nicht rechtfertigen.",
+        rsNote:"Tauschen. Spür den Reflex, dich zu verteidigen."
+      },
+      {
+        tag:"Akquise · Cycle-Empfehlung", title:"Empfehlungen & Kanäle ausbauen",
+        teaser:"Dein Umfeld ist endlich. Wer wächst, macht aus jedem Kontakt neue Kontakte — systematisch, über mehrere Kanäle.",
+        meta:["4 Übungen","Rollenspiel","Video"],
+        frame:"Am Anfang reicht das eigene Umfeld. Irgendwann ist es durch — und genau dann entscheidet sich, wer stehenbleibt und wer skaliert. Der hintere Teil des Cycles ist der Motor: aus jedem Termin Empfehlungen, aus jedem Kontakt Sichtbarkeit über mehrere Kanäle. Heute baust du dir diesen Motor.",
+        ex:[
+          "Empfehlungs-Check: Bei deinen letzten 5 Terminen — wie oft hast du aktiv nach Empfehlungen gefragt? Ehrlich. Jede vergessene Empfehlung ist ein verlorener Folgekontakt.",
+          "Dein Empfehlungs-Satz — frag nicht OB, sondern WER. Schwach: „Kennst du vielleicht jemanden?“ — lädt zum Nein ein. Stark, weil's Namen voraussetzt: „Wer fällt dir spontan ein, dem so eine ehrliche Beratung genauso guttäte wie dir? Denk an zwei, drei Leute.“ Formuliere deine eigene Version, die sich natürlich anfühlt.",
+          "Kanal-Check: Wo bist du sichtbar — persönlich, Empfehlung, WhatsApp-Status, Social, Veranstaltungen? Markier den EINEN Kanal, den du diese Woche zusätzlich bespielst, mit einer konkreten Aktion.",
+          "Wiedervorlage: Wähl 3 alte Kontakte oder Kunden, von denen du dich lange nicht gemeldet hast. Schreib auf, wann und wie du dich diese Woche wieder meldest. Pflege ist Akquise."
+        ],
+        rsSetup:"Zu zweit. Üb die Empfehlungsfrage am Ende eines Termins.",
+        roleA:"Zufriedener Kunde am Ende der Beratung — freundlich, gibt aber nicht von allein.",
+        roleB:"Du. Frag nach Namen, nicht nach Erlaubnis — souverän, mit einer konkreten Zahl im Kopf („zwei, drei Leute“).",
+        rsNote:"Tauschen. Wer nicht fragt, bekommt nicht. Wie klingt deine Frage selbstverständlich?"
+      },
+      {
+        cat:"persoenlich",
+        tag:"Persönlichkeit · Wachstum", title:"Raus aus der Komfortzone",
+        teaser:"Wachstum passiert genau dort, wo's unbequem wird. Heute suchst du bewusst die Kante.",
+        meta:["3 Übungen","Rollenspiel","Video"],
+        frame:"Können wächst an der Kante der Komfortzone, nicht in ihrer Mitte. Die meisten meiden genau die Tätigkeit, die sie weiterbringen würde — weil sie sich unangenehm anfühlt. Heute machst du das Unbequeme sichtbar und gehst einen Schritt darauf zu.",
+        ex:[
+          "Deine Vermeidung: Welche eine Tätigkeit schiebst du immer wieder, weil sie unbequem ist? (Empfehlungen ansprechen, alte Kontakte anrufen, ein hartes Gespräch.) Schreib sie hin.",
+          "Warum eigentlich? Was befürchtest du, das passiert, wenn du es tust? Und wie wahrscheinlich ist das wirklich?",
+          "Ein Schritt: Definiere die kleinste konkrete Version, die du diese Woche trotzdem tust — mit Tag und Uhrzeit."
+        ],
+        rsSetup:"Zu zweit. Das unbequeme Gespräch einmal trocken üben.",
+        roleA:"Spiel die Situation, die du vermeidest (z. B. den Kontakt, vor dem du dich drückst).",
+        roleB:"Sei das Gegenüber — freundlich, aber nicht geschenkt.",
+        rsNote:"Tauschen. Einmal geübt ist die halbe Angst weg."
+      },
+      {
+        cat:"vertrieb",
+        tag:"Vertrieb · Cycle-Auswertung", title:"Die Auswertung überzeugend präsentieren",
+        teaser:"Gute Analyse, schwache Präsentation = kein Abschluss. Bring Ergebnisse so rüber, dass der Nutzen ankommt.",
+        meta:["3 Übungen","Rollenspiel","Video"],
+        frame:"In der Auswertung entscheidet sich, ob aus der Analyse ein Abschluss wird. Der Fehler vieler: Fachchinesisch, Zahlenfriedhof, zu viel auf einmal. Stark ist, wer den Nutzen für genau diesen Menschen sichtbar macht — einfach, in Bildern, auf den Punkt. Heute schärfst du deine Präsentation.",
+        ex:[
+          "Nutzen statt Fachbegriff: Nimm 3 Fachbegriffe, die du oft nutzt, und übersetze jeden in einen Satz, den ein Laie sofort versteht.",
+          "Die eine Botschaft: Was ist die EINE Sache, die der Kunde aus deiner Auswertung mitnehmen soll? Wer drei nennt, hinterlässt keine.",
+          "Bild statt Tabelle: Überleg dir ein einfaches Bild oder einen Vergleich, der dein Kernargument greifbar macht (z. B. Inflation = Kaufkraft schmilzt)."
+        ],
+        rsSetup:"Zu zweit. 3-Minuten-Auswertung.",
+        roleA:"Kunde, der die Analyse gesehen hat und jetzt die Auswertung hört. Frag nach, wenn's zu kompliziert wird.",
+        roleB:"Du. Präsentiere das Kernergebnis in 3 Minuten — Nutzen, einfach, mit einem Bild.",
+        rsNote:"Tauschen. Wenn dein Kunde es einem Freund erklären könnte, hast du gewonnen."
+      },
+      {
+        cat:"vertrieb",
+        tag:"Vertrieb · Cycle-Abschluss", title:"Vorabschluss & Abschluss: den Sack zumachen",
+        teaser:"Viele beraten gut und schließen nie ab. Lern, ohne Druck zur Entscheidung zu führen — und „zu teuer“ zu drehen.",
+        meta:["3 Übungen","Rollenspiel","Video"],
+        frame:"Der häufigste Grund für ausbleibende Abschlüsse ist nicht der Preis — es ist die fehlende Frage. Wer gut beraten hat, darf und muss zur Entscheidung führen. Mit Vorabschluss-Fragen testest du früh, wo der Kunde steht; mit ruhiger Einwandbehandlung drehst du „zu teuer“ und „muss ich überlegen“. Heute übst du das Zumachen.",
+        ex:[
+          "Vorabschluss-Frage: Formuliere eine Frage, mit der du mitten in der Beratung testest, ob der Kunde innerlich dabei ist (z. B. „Können Sie sich vorstellen, dass das für Sie passt?“).",
+          "Die 3 Klassiker: Schreib zu „zu teuer“, „muss ich überlegen“ und „muss mit Partner reden“ je eine ruhige Antwort, die nicht überredet, sondern den wahren Grund freilegt.",
+          "Die Abschlussfrage als Alternativfrage — nicht ob, sondern wie/wann: z. B. „Starten wir zum Ersten oder lieber zum Fünfzehnten?“"
+        ],
+        rsSetup:"Zu zweit. Abschluss-Sequenz inkl. Einwand.",
+        roleA:"Kunde, überzeugt, aber zögerlich: bring einen Einwand („muss ich überlegen“).",
+        roleB:"Du. Nimm den Einwand ernst, leg den echten Grund frei und führ ruhig zur Alternativfrage.",
+        rsNote:"Tauschen. Kein Druck — aber auch kein Davonschleichen. Die Frage muss kommen."
+      },
+      {
+        cat:"fach",
+        tag:"Fach · Existenzabsicherung", title:"Berufsunfähigkeit: wenn die Arbeitskraft wegbricht",
+        teaser:"Die Arbeitskraft ist das größte Vermögen der meisten Menschen — und der Staat fängt den Ausfall kaum auf. Hier sitzt eine echte Lücke.",
+        meta:["4 Übungen","Rollenspiel","Video"],
+        frame:"Für die meisten Menschen ist die eigene Arbeitskraft das Wertvollste, was sie haben — alles andere hängt am monatlichen Einkommen. Fällt es durch Krankheit oder Unfall weg, springt der Staat nur sehr begrenzt ein: Wer nach 1961 geboren ist, bekommt keine gesetzliche Berufsunfähigkeitsrente mehr, sondern nur eine stark reduzierte, zweistufige Erwerbsminderungsrente — und die gibt's voll erst, wenn man praktisch in keinem Job mehr drei Stunden täglich arbeiten kann. Genau diese Lücke schließt die private BU. Sie ist erklärungsintensiv (Definition, Verweisung, Gesundheitsfragen) — und genau deshalb dein Thema als Aufsteiger.",
+        ex:[
+          "Die Lücke greifbar machen: Erklär in drei Sätzen, warum die gesetzliche Absicherung NICHT reicht (Erwerbsminderungsrente stark reduziert, bezieht sich auf irgendeinen Job, nicht den erlernten). Das ist dein stärkstes Argument.",
+          "Berufsunfähig — wann genau? Formuliere die Kernidee einfach: den zuletzt ausgeübten Beruf voraussichtlich dauerhaft zu mindestens 50 % nicht mehr ausüben können. Übersetze 'abstrakte vs. konkrete Verweisung' in Alltagssprache.",
+          "Ehrliche Gesundheitsfragen: Notiere, warum die Angaben im Antrag absolut ehrlich sein müssen (sonst droht im Leistungsfall der Verlust des Anspruchs). Wie sprichst du das sensibel, aber klar an?",
+          "Die richtige Höhe: Merke dir die Faustregel (Orientierung am Nettoeinkommen, üblich rund 75-80 %) und warum eine Dynamik gegen die Inflation wichtig ist. Konkrete aktuelle Werte/Grenzen prüfst du im CF-Stand."
+        ],
+        rsSetup:"Zu zweit. Die Lücke aufzeigen.",
+        roleA:"Kunde, 30, gesund: 'Ich bin doch über die gesetzliche Rente abgesichert, wenn was ist.'",
+        roleB:"Du. Mach mit ruhigen Fragen und einem Beispiel klar, wie groß die Lücke wirklich ist — ohne Panikmache.",
+        rsNote:"Tauschen. BU verkaufst du nicht mit Angst, sondern indem der Kunde die Lücke selbst sieht."
+      },
+      {
+        cat:"fach",
+        tag:"Fach · Existenzabsicherung", title:"Private Unfallversicherung: 24/7 statt nur auf der Arbeit",
+        teaser:"Die gesetzliche Unfallversicherung zahlt nur bei Arbeit und Arbeitsweg. Die Freizeit — wo die meisten Unfälle passieren — ist eine Lücke.",
+        meta:["4 Übungen","Rollenspiel","Video"],
+        frame:"Viele glauben, sie seien 'über die Arbeit unfallversichert' — und das stimmt nur halb. Die gesetzliche Unfallversicherung greift im Wesentlichen bei Arbeit und Arbeitsweg. Die meisten Unfälle passieren aber in der Freizeit, zu Hause oder beim Sport. Die private Unfallversicherung gilt rund um die Uhr und weltweit. Wie hoch sie leistet, richtet sich vor allem nach dem Invaliditätsgrad (Gliedertaxe) und der vereinbarten Summe. Wichtig ist die saubere Abgrenzung zur BU: Die UV setzt einen Unfall voraus, die BU greift auch bei Krankheit. Heute lernst du, beides richtig einzuordnen.",
+        ex:[
+          "Die Lücke benennen: Erklär in zwei Sätzen, was die gesetzliche Unfallversicherung NICHT abdeckt (Freizeit/zuhause/Sport) — und warum gerade dort das meiste passiert.",
+          "Gliedertaxe einfach: Erklär das Prinzip, dass sich die Leistung nach dem Grad der dauerhaften Beeinträchtigung richtet (eine feste Bewertungstabelle) — an einem simplen Beispiel, ohne in Prozenten zu ertrinken.",
+          "UV vs. BU: Schreib den Kernunterschied in je einem Satz auf (UV: braucht einen Unfall, zahlt Summe/Rente nach Invalidität · BU: ersetzt das Einkommen, auch bei Krankheit). Wann empfiehlst du beides zusammen?",
+          "Progression verstehen: Notiere kurz, was eine Progression bewirkt (bei schweren Invaliditätsgraden überproportional mehr Leistung) und warum das sinnvoll sein kann."
+        ],
+        rsSetup:"Zu zweit. Den Irrtum auflösen.",
+        roleA:"Kunde: 'Ich bin doch über die Arbeit unfallversichert, ich brauch nichts Privates.'",
+        roleB:"Du. Klär freundlich auf, wo die gesetzliche aufhört, und grenze sauber zur BU ab.",
+        rsNote:"Tauschen. Wer UV und BU sauber trennt, wirkt sofort kompetenter als die halbe Konkurrenz."
+      },
+      {
+        cat:"fach",
+        tag:"Fach · Sachversicherung", title:"Rechtsschutz: Recht haben heißt nicht Recht bekommen",
+        teaser:"Ein Rechtsstreit über zwei Instanzen geht schnell ins Geld. Der Rechtsschutz nimmt die finanzielle Angst aus dem Konflikt.",
+        meta:["3 Übungen","Rollenspiel","Video"],
+        frame:"Sein Recht durchzusetzen kostet — Anwalt, Gericht, Gutachter, oft als Vorschuss. Schon ein Streit über zwei Instanzen kann teurer werden als der eigentliche Schaden. Die Rechtsschutzversicherung übernimmt diese Kosten und gibt Orientierung im Konflikt (z. B. telefonische Rechtsberatung, Mediation). Sie ist in Bausteine aufgeteilt — Privat, Beruf/Arbeit, Wohnen, Verkehr — und man kombiniert, was zur Lebenssituation passt. Heute lernst du, die Bausteine und die Stolpersteine (Wartezeiten, Ausschlüsse) sauber zu erklären.",
+        ex:[
+          "Die Bausteine: Nenne die wichtigsten Rechtsschutz-Bausteine (Privat · Arbeit/Beruf · Wohnen · Verkehr) und je ein typisches Beispiel — so kombinierst du bedarfsgerecht, statt 'alles' zu verkaufen.",
+          "Stolperstein Wartezeit: Erklär das Prinzip der Wartezeit (in der Regel rund 3 Monate für viele Bausteine) und warum ein Vertrag NICHT mehr hilft, wenn der Streit schon absehbar ist. Das schützt vor enttäuschten Kunden.",
+          "Was NICHT versichert ist: Liste 3 typische Ausschlüsse (z. B. Hausbau · Kapitalanlagen · Urheber-/Markenrecht), damit du keine falschen Versprechen machst."
+        ],
+        rsSetup:"Zu zweit. Erwartung sauber setzen.",
+        roleA:"Kunde, der heute abschließen und morgen gegen den Vermieter klagen will.",
+        roleB:"Du. Erklär freundlich die Wartezeit und was sie bezweckt — ehrlich, ohne den Abschluss zu zerreden.",
+        rsNote:"Tauschen. Ehrliche Erwartung heute spart den Frust-Anruf in drei Monaten."
+      }
+    ]
+  },
+
+  fuehrung:{
+    corner:"Klasse III",
+    title:"Führungskräfte",
+    level:"VM / GD",
+    sub:"Andere tragen",
+    pitch:"Du führst andere durch das, was du selbst durchgemacht hast. Heute geht's nicht um deine Zahlen, sondern um die Köpfe deiner Leute.",
+    themes:[
+      {
+        tag:"Frühwarnung", title:"Den Zweifelspunkt beim anderen erkennen",
+        teaser:"Jeder im Team kommt ans Tief. Deine Aufgabe ist nicht, es zu verhindern — sondern es zu sehen, bevor der Partner geht.",
+        meta:["3 Übungen","Rollenspiel","Video"],
+        frame:"Jeder in deinem Team kommt an den Zweifelspunkt. Deine Aufgabe ist nicht, ihn zu verhindern — sondern ihn früh zu erkennen und den Partner durchzutragen. Wer wartet, bis es jemand offen ausspricht, wartet oft zu lange. Frühe Zeichen für „dabei“: viel Kommunikation, kommt zu Schulungen, fragt, holt sich Hilfe. Heute schärfst du den Blick.",
+        ex:[
+          "Geh dein Team durch: Wer kommuniziert gerade weniger, kommt seltener, fragt nicht mehr? Schreib die Namen auf — das sind deine roten Lampen.",
+          "Gegenindikator „große Worte schwingen“: Wer kündigt viel an und liefert wenig? Was ist dein nächster, konkreter Schritt mit dieser Person?",
+          "Wähl EINEN Partner im Tief. Schreib 3 Fragen auf, die du ihm diese Woche stellst — echte Fragen, keine getarnten Vorträge."
+        ],
+        rsSetup:"Zu zweit oder zu dritt (mit Beobachter).",
+        roleA:"Partner im Tief, der's nicht zugeben will. Bleib ausweichend.",
+        roleB:"Führungskraft. Führ das Gespräch so, dass A selbst zum Kern kommt.",
+        rsNote:"Beobachter gibt Feedback. Rollen tauschen."
+      },
+      {
+        tag:"Vorbild", title:"Die Koryphäe-Falle",
+        teaser:"Die Koryphäe wird bewundert, aber nicht kopiert. Wer zu glänzend vormacht, lähmt sein Team.",
+        meta:["3 Übungen","Rollenspiel","Video"],
+        frame:"Kerngedanke: Die Koryphäe wird bewundert, aber nicht kopiert. Wenn du zu beeindruckend vormachst, applaudieren deine Leute — und trauen sich nicht, es dir nachzumachen. Heute prüfst du, wo du unerreichbar wirkst, und machst dich bewusst kopierbar.",
+        ex:[
+          "Wo bist du für dein Team die unerreichbare Koryphäe? Wo trauen sich deine Leute nicht, dich nachzumachen?",
+          "Zerleg eine Sache, die du „einfach kannst“, in 3 Schritte, die ein Einsteiger 1:1 nachgehen kann. Wenn du's nicht zerlegen kannst, kannst du's nicht weitergeben.",
+          "Erste Cycles laufen mit dir. Eine konkrete Änderung, mit der du dich nächste Woche kopierbar machst statt nur beeindruckend."
+        ],
+        rsSetup:"Zu zweit. Zwei Versionen derselben Sache.",
+        roleA:"Partner. Schau B bei einer kurzen „Vorführung“ zu.",
+        roleB:"Führungskraft. Mach es einmal beeindruckend, einmal bewusst kopierbar.",
+        rsNote:"A sagt, bei welcher Version er sich zutraut, es selbst zu tun. Besprechen."
+      },
+      {
+        tag:"Auswahl", title:"Filtern statt festhalten",
+        teaser:"Nicht jeder passt. Deine Energie an die Falschen zu binden, kostet dich die Richtigen.",
+        meta:["3 Übungen","Rollenspiel","Video"],
+        frame:"Nicht jeder passt — und das ist nicht traurig, das ist Führung. Drei Gruppen scheitern fast immer: die Haken-Sucher (suchen den Grund, warum's nicht geht), die Gegenwind-Abbrecher (gehen, sobald jemand schlecht denken könnte), die Arroganten (lassen sich nicht aufs System ein). Jede Stunde bei ihnen fehlt deinen Führbaren. Heute übst du, früh und fair zu filtern.",
+        ex:[
+          "Bei wem hältst du gerade fest, obwohl die Zeichen klar sind? Schreib den Namen hin — und ehrlich daneben: Was hält DICH fest? (Hoffnung, investierte Zeit, Bequemlichkeit?)",
+          "Ordne (vertraulich) aktuelle Kandidaten den Mustern zu: Haken-Sucher · Gegenwind-Abbrecher · Arrogant · führbar + Antrieb. Wo investierst du gerade falsch?",
+          "Formuliere den einen klaren, fairen Satz, mit dem du einem Nicht-Passenden ehrlich begegnest — ohne ihn kleinzumachen."
+        ],
+        rsSetup:"Zu zweit. Muster benennen statt widerlegen.",
+        roleA:"Haken-Sucher: zu allem ein „Ja, aber …“.",
+        roleB:"Übe, das Muster freundlich zu benennen — statt jedes „Aber“ zu entkräften.",
+        rsNote:"Tauschen. Spür den Sog, dich rechtfertigen zu wollen."
+      },
+      {
+        tag:"Entwicklung", title:"Begeisterung in Überzeugung verwandeln",
+        teaser:"Begeisterte Neue verpuffen leicht. Deine Aufgabe: aus dem Feuer etwas machen, das trägt.",
+        meta:["3 Übungen","Rollenspiel","Video"],
+        frame:"Begeisterung trägt am Anfang, reicht aber nicht. Deine Führungsaufgabe: aus dem Strohfeuer deiner Leute echte Überzeugung machen — Sinn verstanden, persönlichen Nutzen erkannt. Wer das versäumt, verliert die Begeisterten beim ersten Gegenwind. Heute baust du den Weg von „voll geil“ zu „das ist meins“.",
+        ex:[
+          "Bei wem deiner Kern-Leute kennst du das echte, persönliche Warum NICHT — nicht die Floskel? Schreib die Namen auf.",
+          "Nimm einen begeisterten Neuen: Was versteht er vom SINN — und was klingt nur gut? Wo musst du nachbohren, bevor das erste Tief kommt?",
+          "Plane EIN Gespräch diese Woche, in dem du nicht motivierst, sondern den persönlichen Nutzen des anderen herausarbeitest. Name + Tag."
+        ],
+        rsSetup:"Zu zweit. Von der Oberfläche in die Tiefe.",
+        roleA:"Neuer, oberflächlich begeistert: „Voll geil, das Geld!“",
+        roleB:"Führungskraft. Führ A mit Fragen zu einem tragfähigen persönlichen Warum.",
+        rsNote:"Tauschen. Echte Überzeugung hält, wo Begeisterung verpufft."
+      },
+      {
+        tag:"Akquise · Team & Cycle", title:"Das Team sichtbar machen",
+        teaser:"Deine Leute scheitern selten am Können — meist an zu wenig Sichtbarkeit. Deine Aufgabe: Akquise zur Gewohnheit im Team machen.",
+        meta:["4 Übungen","Rollenspiel","Video"],
+        frame:"Die meisten Partner scheitern nicht am Fachwissen, sondern an zu wenigen Kontakten. Als Führungskraft baust du keine eigene Akquise mehr — du baust ein Team, das konsequent sichtbar ist: Standards setzen, vorleben, und jedem den Teil des Cycles geben, der zu seinem Stand passt. Einsteiger vorne (Umfeld, Erstkontakt), Fortgeschrittene hinten (Empfehlung, Kanäle, Pflege).",
+        ex:[
+          "Geh dein Team durch: Wer hat zu wenige Kontakte oder Termine in der Pipeline? Schreib die Namen auf — fast immer ist zu wenig Sichtbarkeit das Problem, nicht zu wenig Talent.",
+          "Cycle-Zuordnung: Ordne jedem zu, an welchem Teil des Cycles er gerade arbeiten sollte (vorne = Umfeld/Erstkontakt, hinten = Empfehlung/Kanäle/Pflege). Wer arbeitet gerade am falschen Teil?",
+          "Akquise-Standard: Definiere EINEN einfachen, messbaren Sichtbarkeits-Standard pro Woche fürs Team (z. B. X neue Ansprachen) — klein genug, dass ihn auch der Unsicherste schafft.",
+          "Vorleben: Eine konkrete Sache, mit der du diese Woche selbst sichtbar wirst — sichtbar genug, dass dein Team es sieht und kopiert."
+        ],
+        rsSetup:"Zu zweit. Coaching-Gespräch zu dünner Pipeline.",
+        roleA:"Partner mit wenig Kontakten, der ausweicht: „Ich hab gerade niemanden, den ich ansprechen kann.“",
+        roleB:"Führungskraft. Hilf A mit Fragen, den nächsten konkreten Kontakt-Schritt selbst zu finden.",
+        rsNote:"Tauschen. Du gibst keine Leads — du baust die Gewohnheit."
+      },
+      {
+        cat:"persoenlich",
+        tag:"Persönlichkeit · Haltung", title:"Selbstführung unter Druck",
+        teaser:"Dein Team spürt deinen Zustand. Wer sich selbst führt, kann andere führen.",
+        meta:["3 Übungen","Rollenspiel","Video"],
+        frame:"Als Führungskraft überträgt sich dein Zustand aufs Team — Ruhe wie Hektik. Wer unter Druck den Fokus verliert, verliert ihn doppelt: bei sich und bei den Leuten. Heute schaust du, wie du dich selbst steuerst, bevor du andere steuerst.",
+        ex:[
+          "Dein Druck-Muster: Wie reagierst du, wenn's eng wird — hektisch, Rückzug, hart? Benenn dein Muster ehrlich.",
+          "Energie-Check: Was lädt deine Energie auf, was zieht sie ab? Liste je drei. Wovon brauchst du in dichten Wochen mehr?",
+          "Anker: Leg eine konkrete Sache fest, die dich in stressigen Phasen runterbringt und fokussiert (fester Termin, kurze Pause, Bewegung) — und plane sie diese Woche aktiv ein."
+        ],
+        rsSetup:"Zu zweit. Kurzes Coaching unter Zeitdruck.",
+        roleA:"Komm als gestresster Partner mit einem Problem — du willst sofort eine Lösung.",
+        roleB:"Führungskraft. Bleib ruhig, frag statt zu lösen, nimm das Tempo raus.",
+        rsNote:"Tauschen. Wer das Tempo rausnimmt, führt — wer mitrennt, wird getrieben."
+      },
+      {
+        cat:"vertrieb",
+        tag:"Vertrieb · Cycle-Service", title:"Servicetermin & Bestandspflege: Kunden zu Fans",
+        teaser:"Der Cycle endet nicht beim Abschluss. Aus zufriedenen Kunden werden Fans — und Fans empfehlen weiter.",
+        meta:["3 Übungen","Rollenspiel","Video"],
+        frame:"Der hinterste Teil des Cycles ist der wertvollste und der am meisten vernachlässigte: der Servicetermin. Wer Bestand pflegt, macht aus Kunden Fans — und Fans speisen den Anfang des Cycles mit neuen Empfehlungen. Als Führungskraft sorgst du dafür, dass dein Team diesen Teil nicht liegen lässt.",
+        ex:[
+          "Bestands-Check: Wie systematisch macht dein Team Servicetermine — gar nicht, zufällig oder geplant? Sei ehrlich und schreib den Ist-Zustand hin.",
+          "Servicetermin-Anlässe: Sammle 3 konkrete Anlässe, zu denen sich ein Servicetermin natürlich ergibt (Jahresgespräch, Lebensereignis, Vertragsanpassung).",
+          "Vom Service zur Empfehlung: Formuliere, wie aus einem guten Servicetermin selbstverständlich die Empfehlungsfrage wird — so schließt sich der Cycle."
+        ],
+        rsSetup:"Zu zweit. Coaching: Servicetermin einführen.",
+        roleA:"Partner, der sagt: „Servicetermine bringen doch nichts, ich brauch Neugeschäft.“",
+        roleB:"Führungskraft. Zeig mit Fragen, wie Service der günstigste Weg zu Neugeschäft ist.",
+        rsNote:"Tauschen. Der teuerste Kunde ist der neue — der günstigste der zufriedene alte."
+      },
+      {
+        cat:"vertrieb",
+        tag:"Vertrieb · Cycle-Führung", title:"Den Cycle im Team verankern",
+        teaser:"Deine Leute scheitern meist an einer Station. Lern, den ganzen Cycle zu coachen — und die Schwachstelle zu finden.",
+        meta:["3 Übungen","Rollenspiel","Video"],
+        frame:"Jeder Partner hat eine Station im Cycle, an der es klemmt — zu wenig Kontakte, schwache Auswertung, kein Abschluss, kein Service. Deine Aufgabe als Führungskraft: nicht alles gleichzeitig verbessern wollen, sondern die EINE Schwachstelle finden und gezielt coachen. Heute schärfst du diesen diagnostischen Blick.",
+        ex:[
+          "Cycle-Diagnose: Nimm 3 deiner Leute. Markier bei jedem, an welcher Station es gerade hakt (Kontakt · Analyse · Auswertung · Abschluss · Service).",
+          "Eine Baustelle pro Person: Für jeden den EINEN nächsten Coaching-Schritt — nicht fünf. Wo holst du den größten Hebel?",
+          "Vorleben oder begleiten: Entscheide pro Person, ob sie es vorgemacht bekommen muss (mitlaufen) oder begleitet werden kann (nachbesprechen)."
+        ],
+        rsSetup:"Zu zweit. Diagnose-Gespräch.",
+        roleA:"Partner, der sagt „läuft alles okay“, obwohl die Abschlüsse fehlen.",
+        roleB:"Führungskraft. Finde mit Fragen heraus, an welcher Cycle-Station es wirklich klemmt.",
+        rsNote:"Tauschen. Wer die richtige Station trifft, spart Monate — wer alles coacht, verbessert nichts."
+      },
+      {
+        cat:"fuehrung",
+        tag:"Führung · Vision", title:"Groß denken: die Vision, die zieht",
+        teaser:"Ein Team wächst nur so groß wie das Bild, das du ihm gibst. Klein gedacht, klein geblieben.",
+        meta:["3 Übungen","Rollenspiel","Video"],
+        frame:"Als Führungskraft ist deine erste Aufgabe nicht zu verkaufen, sondern ein Bild zu zeichnen, das größer ist als der nächste Abschluss. Menschen folgen keiner To-do-Liste, sie folgen einer Richtung. Wer nur das Quartal sieht, bekommt ein Team, das nur das Quartal sieht. Heute schärfst du deine Vision — und wie du sie so erzählst, dass andere sie zu ihrer machen.",
+        ex:[
+          "Dein Zielbild in 3 Jahren: Beschreib in 5 Sätzen, wo dein Team in drei Jahren steht (Größe, Qualität, Kultur). Konkret genug, dass man es sich vorstellen kann.",
+          "Vom Ich zum Wir: Übersetze dein Zielbild in einen Nutzen für den einzelnen Partner — warum lohnt sich der Weg für IHN, nicht nur für dich?",
+          "Der eine Satz: Formuliere deine Vision in einem Satz, den jeder im Team nachsprechen könnte. Wenn er zu kompliziert ist, ist er noch nicht fertig."
+        ],
+        rsSetup:"Zu zweit. Vision erzählen.",
+        roleA:"Partner, der gerade nur auf seine eigenen Zahlen schaut.",
+        roleB:"Du. Mal ihm das große Bild — und zeig ihm seinen Platz darin.",
+        rsNote:"Tauschen. Ein Team wächst in die Größe des Bildes, das es sieht."
+      },
+      {
+        cat:"fuehrung",
+        tag:"Führung · Recruiting", title:"Recruiting: die Pipeline, die nie leer wird",
+        teaser:"Ohne neue Partner kein Wachstum. Recruiting ist kein Event, sondern eine Gewohnheit.",
+        meta:["3 Übungen","Rollenspiel","Video"],
+        frame:"Wachstum im Team beginnt mit einer einzigen Disziplin: ständig neue Menschen kennenlernen und ansprechen. Die meisten Führungskräfte recruiten in Schüben — viel, wenn's brennt, gar nicht, wenn's läuft. Stark ist, wer Recruiting zur festen Gewohnheit macht, mit System (z. B. dem 5-Wochen-Schema) statt aus Not. Heute baust du dir deinen Recruiting-Rhythmus.",
+        ex:[
+          "Deine Quellen: Liste die 3 Wege, über die du am ehesten an geeignete Menschen kommst (Empfehlungen, eigenes Umfeld, passende Kunden). Wo holst du den meisten Hebel?",
+          "Der feste Rhythmus: Leg fest, wie viele Recruiting-Gespräche du pro Woche fix einplanst — und wann. Eine Zahl, kein Gefühl.",
+          "Die Ansprache: Formuliere, wie du jemanden auf eine mögliche Partnerschaft ansprichst, ohne zu drängen — neugierig machen, nicht überreden."
+        ],
+        rsSetup:"Zu zweit. Recruiting-Ansprache üben.",
+        roleA:"Jemand aus deinem Umfeld, der mit seinem Job unzufrieden ist, aber nie an Vertrieb gedacht hat.",
+        roleB:"Du. Mach neugierig auf ein Gespräch — kein Pitch, eine Einladung.",
+        rsNote:"Tauschen. Wer Recruiting zur Gewohnheit macht, hat nie ein leeres Team."
+      },
+      {
+        cat:"fuehrung",
+        tag:"Führung · Auswahl", title:"Die richtige Auswahl: wen du reinholst",
+        teaser:"Die teuersten Fehler macht man bei der Auswahl. Wer jeden nimmt, verbrennt Zeit und Energie.",
+        meta:["3 Übungen","Rollenspiel","Video"],
+        frame:"Nicht jeder, der will, passt — und nicht jeder, der glänzt, bleibt. Die wertvollste Führungsfähigkeit ist, früh zu erkennen, wer wirklich dabei ist. Die Zeichen sind bekannt: Wer kommuniziert, zu Schulungen kommt, fragt und sich führen lässt, ist meist dabei. Wer große Worte schwingt, ohne zu handeln, meistens nicht. Heute schärfst du deinen Blick für die richtige Auswahl — bevor du Monate in die Falschen steckst.",
+        ex:[
+          "Deine Ja-Zeichen: Schreib 3 konkrete Verhaltensweisen auf, an denen du in den ersten Wochen erkennst, dass jemand wirklich dabei ist (Kommunikation, Lernbereitschaft, Führbarkeit).",
+          "Deine Stopp-Zeichen: Schreib 3 Warnsignale auf, bei denen du vorsichtig wirst (nur große Worte, keine Umsetzung, lässt sich nicht führen, sucht den Haken).",
+          "Ehrlicher Blick: Nimm einen aktuellen Kandidaten und ordne ihn ehrlich ein — investierst du gerade in den Richtigen?"
+        ],
+        rsSetup:"Zu zweit. Auswahl-Gespräch.",
+        roleA:"Interessent, der im Gespräch viel verspricht, aber bei Nachfragen ausweicht.",
+        roleB:"Du. Finde mit Fragen heraus, ob hinter den Worten Umsetzung steckt.",
+        rsNote:"Tauschen. Die richtige Auswahl spart dir mehr Zeit als jedes Coaching."
+      },
+      {
+        cat:"fuehrung",
+        tag:"Führung · Entwicklung", title:"Teamentwicklung & Motivation: Menschen wachsen lassen",
+        teaser:"Dein Team wächst, wenn die Menschen wachsen. Deine Aufgabe: jeden dort abholen, wo er steht.",
+        meta:["3 Übungen","Rollenspiel","Video"],
+        frame:"Ein Team ist kein Durchschnitt, sondern eine Summe einzelner Menschen — jeder an einem anderen Punkt, mit anderem Antrieb. Motivation auf Dauer entsteht nicht durch Sprüche, sondern dadurch, dass Menschen Fortschritt bei sich sehen. Deine Aufgabe ist, jeden individuell zu entwickeln und durch die zähen Phasen zu tragen, statt alle gleich zu behandeln. Heute schaust du, wie du Entwicklung gezielt steuerst.",
+        ex:[
+          "Standort pro Person: Nimm 3 Leute und schreib bei jedem in einem Satz, wo er gerade steht und was sein nächster Entwicklungsschritt ist.",
+          "Was motiviert wen? Notiere, was die Einzelnen wirklich antreibt (Geld, Anerkennung, Freiheit, Status) — Motivation ist individuell, nicht pauschal.",
+          "Fortschritt sichtbar machen: Überleg dir, wie du jedem regelmäßig seinen eigenen Fortschritt zeigst — sichtbarer Fortschritt ist der stärkste Motor."
+        ],
+        rsSetup:"Zu zweit. Entwicklungsgespräch.",
+        roleA:"Partner, der seit Wochen auf einem Plateau hängt und die Lust verliert.",
+        roleB:"Du. Mach ihm seinen bisherigen Fortschritt sichtbar und setz mit ihm den nächsten kleinen Schritt.",
+        rsNote:"Tauschen. Menschen bleiben, wo sie wachsen — sie gehen, wo sie stillstehen."
+      },
+      {
+        cat:"fuehrung",
+        tag:"Führung · Feedback", title:"Richtig kritisieren: Feedback, das ankommt",
+        teaser:"Kritik kann aufbauen oder zerstören — der Unterschied liegt im Wie. Hart in der Sache, weich zum Menschen.",
+        meta:["3 Übungen","Rollenspiel","Video"],
+        frame:"Führung ohne Kritik ist Gefälligkeit, Kritik ohne Respekt ist Beschädigung. Die Kunst ist, das Verhalten klar anzusprechen, ohne den Menschen kleinzumachen. Wer nie kritisiert, lässt sein Team schleifen; wer falsch kritisiert, verliert es. Heute übst du, ehrliches Feedback so zu geben, dass es ankommt und etwas verändert — statt zu verletzen.",
+        ex:[
+          "Verhalten statt Person: Nimm eine konkrete Situation und formuliere die Kritik so, dass sie das Verhalten benennt ('zweimal unvorbereitet') statt den Menschen abwertet ('unzuverlässig').",
+          "Der Rahmen: Überleg dir, wie du ein Kritikgespräch eröffnest, sodass dein Gegenüber zuhört statt dichtzumachen (Wertschätzung zuerst, dann klar zur Sache).",
+          "Der Abschluss: Formuliere, wie du das Gespräch mit einer konkreten Vereinbarung beendest — Kritik ohne nächsten Schritt verpufft."
+        ],
+        rsSetup:"Zu zweit. Kritikgespräch führen.",
+        roleA:"Partner, der eine Zusage nicht eingehalten hat und sich rechtfertigen will.",
+        roleB:"Du. Sprich das Verhalten klar an, bleib respektvoll, ende mit einer Vereinbarung.",
+        rsNote:"Tauschen. Hart in der Sache, weich zum Menschen — so trägt Kritik."
+      },
+      {
+        cat:"fuehrung",
+        tag:"Führung · Entscheidung", title:"Sich trennen: wenn es nicht passt",
+        teaser:"Die schwerste Führungsentscheidung ist loslassen. Festhalten aus Bequemlichkeit kostet das ganze Team.",
+        meta:["3 Übungen","Rollenspiel","Video"],
+        frame:"Manchmal ist die richtige Entscheidung die unbequemste: sich von einem Partner zu trennen. Wer aus Harmoniebedürfnis an jemandem festhält, der nicht will oder nicht passt, schadet nicht nur sich, sondern dem ganzen Team — denn die anderen sehen genau, was du duldest. Eine Trennung muss nicht hart sein, aber klar und fair. Heute schaust du dir an, wann der Punkt erreicht ist und wie du sauber trennst.",
+        ex:[
+          "Der ehrliche Check: Woran erkennst du, dass eine Trennung dran ist (wiederholt keine Umsetzung trotz Hilfe, fehlende Führbarkeit, schlechter Einfluss aufs Team)? Schreib deine Kriterien auf.",
+          "Fair statt feige: Überleg dir, wie eine Trennung ablaufen sollte — klar, respektvoll, ohne Hängepartie. Was schuldest du dem anderen, was dem Team?",
+          "Die Vorbeugung: Was hättest du früher tun können? Oft beginnt die saubere Trennung mit ehrlicher Auswahl und klarem Feedback davor."
+        ],
+        rsSetup:"Zu zweit. Trennungsgespräch.",
+        roleA:"Partner, der trotz vieler Chancen nicht umsetzt und nun überrascht reagiert.",
+        roleB:"Du. Sei klar und fair — keine falschen Hoffnungen, kein Drama.",
+        rsNote:"Tauschen. Was du duldest, definiert dein Team mehr als das, was du forderst."
+      },
+      {
+        cat:"fuehrung",
+        tag:"Führung · Organisation", title:"Organisation: dich und das Team im Griff",
+        teaser:"Wachstum ohne Struktur wird Chaos. Wer führt, organisiert zuerst sich selbst, dann das Team.",
+        meta:["3 Übungen","Rollenspiel","Video"],
+        frame:"Je größer dein Team, desto mehr entscheidet Organisation über Erfolg. Ohne klare Struktur — wer macht was, wann finden welche Termine statt, wie läuft die Nachverfolgung — versinkt jede Führungskraft im Tagesgeschäft und hat keine Zeit mehr für das Wesentliche: Menschen entwickeln. Heute baust du dir die Grundstruktur, die dich und dein Team trägt, auch wenn es wächst.",
+        ex:[
+          "Deine festen Takte: Lege die wiederkehrenden Termine fest, die dein Team strukturieren (z. B. Wochenstart, Schulung, 1:1s, Auswertung). Was ist fix, was beliebig?",
+          "Wer macht was: Schreib auf, welche Aufgaben nur du machen kannst — und welche du abgeben solltest, um Zeit für Führung zu haben.",
+          "Nachverfolgung: Überleg dir ein einfaches System, mit dem du den Stand deiner Leute im Blick behältst, ohne ständig nachzufragen."
+        ],
+        rsSetup:"Zu zweit. Struktur prüfen.",
+        roleA:"Führungskraft, die im Tagesgeschäft untergeht und keine Zeit für ihre Leute hat.",
+        roleB:"Du. Hilf mit Fragen, eine Sache zu finden, die sie abgeben oder fest takten kann.",
+        rsNote:"Tauschen. Wer sich nicht organisiert, wird vom Tag organisiert."
+      },
+      {
+        cat:"fuehrung",
+        tag:"Führung · Haltung", title:"Pushing Up People: andere hochziehen",
+        teaser:"Du wirst nicht groß, indem du nach oben kletterst, sondern indem du andere hochhebst. Wer das dreht, verliert sein Team.",
+        meta:["3 Übungen","Rollenspiel","Video"],
+        frame:"Die ehrlichste Führungshaltung ist auch die wirksamste: Du steigst, indem du deine Leute steigen lässt. Je mehr Menschen du zu Geld und Beförderung verhilfst, desto mehr wächst du selbst — nie umgekehrt. Das Gegenteil, ein Team für die eigene Beförderung antreiben, riecht jeder sofort. Heute prüfst du ehrlich, ob du für deine Leute arbeitest oder sie für dich.",
+        ex:[
+          "Der Ehrlichkeits-Check: Bei deinem letzten Push oder Wettbewerb — ging es um DEINE Zahl oder um die Beförderung deiner Leute? Schreib es ehrlich hin.",
+          "Wen hebst du als Nächstes? Nimm 2 Partner und schreib bei jedem auf, was IHR nächster Erfolg wäre — und was du konkret tust, damit sie ihn erreichen.",
+          "Sprache umdrehen: Streich aus deinem nächsten Team-Talk jedes 'ich brauche / ich will' und ersetz es durch 'damit ihr ...'. Notier 3 Sätze in der neuen Form."
+        ],
+        rsSetup:"Zu zweit. Ziel-Gespräch.",
+        roleA:"Partner, der spürt, dass die Führungskraft ihn nur für ihre eigene Zahl pusht.",
+        roleB:"Du. Dreh das Gespräch komplett auf SEIN Ziel — und zeig, wie du ihm hilfst, es zu erreichen.",
+        rsNote:"Tauschen. Wer seine Leute erfolgreich macht, wird selbst erfolgreich — nie andersrum."
+      },
+      {
+        cat:"fuehrung",
+        tag:"Führung · Energie", title:"Negatives nach oben, Positives nach unten",
+        teaser:"Deine Stimmung färbt aufs ganze Team ab. Probleme trägst du nach oben — nach unten gibst du nur Energie.",
+        meta:["3 Übungen","Rollenspiel","Video"],
+        frame:"Niemand folgt einem genervten, frustrierten Miesepeter. Menschen folgen dem, der oben bleibt. Die Regel ist einfach und knallhart: Deine eigenen Sorgen und Zweifel trägst du nach oben, zu deiner Führungskraft — nach unten gibst du nur Zuversicht weiter. Gleichzeitig lässt du deine Leute ihre Sorgen bei dir abladen, sodass sie positiver rausgehen, als sie reinkamen. Heute übst du, dieser Puffer zu sein.",
+        ex:[
+          "Wohin mit deinem Frust? Schreib auf, an wen du dich wendest, wenn DU unten bist — und ob du das gerade tust oder den Frust unbewusst ins Team trägst.",
+          "Der Energie-Check: Wie gehen deine Leute aus einem Gespräch mit dir raus — positiver oder müder? Sei ehrlich. Was änderst du?",
+          "Abladen lassen: Überleg dir, wie du ein Sorgen-Gespräch so führst, dass der andere erleichtert und zuversichtlicher rausgeht (zuhören, ernst nehmen, Lösung andeuten, den Sinn neu zeigen)."
+        ],
+        rsSetup:"Zu zweit. Sorgen abladen.",
+        roleA:"Partner, der frustriert ankommt: zwei Absagen, zweifelt am Ganzen.",
+        roleB:"Du. Lass ihn abladen, nimm's ernst, und schick ihn zuversichtlicher wieder raus — ohne schönzureden.",
+        rsNote:"Tauschen. Was du an Stimmung reingibst, bekommst du als Leistung zurück."
+      },
+      {
+        cat:"fuehrung",
+        tag:"Führung · Anerkennung", title:"Anerkennung: der stärkste Motor",
+        teaser:"Menschen wollen vor allem eins: jemand sein. Anerkennung kostet fast nichts und bewegt mehr als jeder Bonus.",
+        meta:["3 Übungen","Rollenspiel","Video"],
+        frame:"Das tiefste Bedürfnis fast jedes Menschen ist, jemand zu sein — gesehen, geschätzt, herausgehoben. Anerkennung ist deshalb der stärkste und billigste Motor, den eine Führungskraft hat. Die Faustregel: bei JEDEM Meeting einen guten Teil der Leute auszeichnen — persönlich, konkret, mit Humor, und auch die, die gerade einen Rückschlag hatten. Heute baust du dir deine Anerkennungs-Routine.",
+        ex:[
+          "Wen hast du zuletzt übersehen? Nimm dein letztes Meeting: Wen hättest du auszeichnen können und hast es nicht? Schreib 3 Namen + wofür.",
+          "Konkret statt allgemein: 'Gut gemacht' bewegt nichts. Formuliere zu 3 Leuten je eine konkrete, persönliche Anerkennung (was genau, warum stark).",
+          "Auch die Abgerutschten: Überleg dir, wie du jemanden mit Potenzial nach einem Tief anerkennst, ohne unehrlich zu wirken — das Potenzial sehen, nicht das Ergebnis loben."
+        ],
+        rsSetup:"Zu zweit. Anerkennung aussprechen.",
+        roleA:"Partner, der solide arbeitet, aber selten gesehen wird.",
+        roleB:"Du. Sprich eine konkrete, ehrliche Anerkennung aus — so, dass sie wirklich ankommt.",
+        rsNote:"Tauschen. Du kannst nie zu viel ehrliche Anerkennung geben."
+      }
+    ]
+  }
+};
+
+const VIDEOS={
+  einsteiger:[
+    {id:"q7MwHaj04ek",title:"Anders als alle anderen"},
+    {id:"gDfzZP8FSBY",title:"CF aus Mitarbeitersicht"},
+    {id:"8oXaQ595J1U",title:"CF aus Kundensicht"},
+    {id:"zYPBsOwSn3Q",title:"Glaubenssätze"},
+    {id:"_nBFeTFobmY",title:"Telefonkontakt eigenes Umfeld"},
+    {id:"d4bpd0v8hqw",title:"Wochenplan"},
+    {id:"MAdt4XpRFHg",title:"Einstieg Analysetermin"},
+    {id:"xuadjuZg-tM",title:"TK Einwandbehandlung (Umfeld)"},
+    {id:"hGQBYAGOkGU",title:"VL Vorstellung"},
+    {id:"3Kp1t_MWgio",title:"Private Haftpflicht (PHV)"},
+    {id:"rUHGuAVDgqg",title:"Lebensgrafik"}
+  ],
+  aufsteiger:[
+    {id:"6lAimpizXrg",title:"Willenskraft"},
+    {id:"CLxblu2eHzA",title:"Die Komfortzone"},
+    {id:"KzvR0n6J8cs",title:"Sich bewegen – Ansprache"},
+    {id:"qUAMugL25Ek",title:"Neugier und Skepsis"},
+    {id:"GWOd7DhU6H4",title:"Empfehlungen Grundlagen"},
+    {id:"CLxblu2eHzA",title:"Die Komfortzone"},
+    {id:"B3gF2mWax_Y",title:"Auswertung – Teil 1"},
+    {id:"hKDhurGirG0",title:"Vorabschlusstechnik"},
+    {id:"tB3ITgiJc5Q",title:"BU-Verkauf"},
+    {id:"ZV3MBkj36vM",title:"Arbeitskraftsicherung"},
+    {id:"Sk_a4Dwi4HY",title:"Rechtsschutz"}
+  ],
+  fuehrung:[
+    {id:"4ZEmM8hrnAc",title:"Verkäuferischer Erfolg (Teil 1)"},
+    {id:"gDfzZP8FSBY",title:"CF aus Mitarbeitersicht"},
+    {id:"9eO-8cLDB0w",title:"Umgang mit Gästen des Perspektiv-Meetings"},
+    {id:"baTB2H4WRQo",title:"Vertrauen aufbauen"},
+    {id:"Clzn0PzxIMs",title:"Kontaktmanagement"},
+    {id:"6lAimpizXrg",title:"Willenskraft"},
+    {id:"3vJgMkObc4o",title:"Servicetermin"},
+    {id:"gIoj__m18Fc",title:"Vorauswertung"},
+    {id:"ndp3UuEpz1c",title:"CF Partner (Videoanimation)"},
+    {id:"W75ImJUwfrc",title:"Recruiting – 5-Wochen-Schema"},
+    {id:"9eO-8cLDB0w",title:"Gäste im Perspektiv-Meeting"},
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ]
+};
+
+const ICONS={frame:"❝",ex:"✎",rs:"⇄",video:"▶"};
+
+/* ============== RENDER ============== */
+const CATS=[
+  {id:'mindset',label:'Mindset'},
+  {id:'vertrieb',label:'Vertrieb'},
+  {id:'persoenlich',label:'Persönlichkeit'},
+  {id:'fach',label:'Fach'},
+  {id:'fuehrung',label:'Führung'}
+];
+
+// category: existing themes default by position; new themes carry their own .cat
+Object.values(DATA).forEach(c=>{
+  c.themes.forEach((t,i)=>{ if(!t.cat) t.cat = i<4 ? 'mindset' : 'vertrieb'; });
+});
+
+function tid(key,t){ return key+':'+t.title.toLowerCase().replace(/[^a-z0-9äöüß]+/g,'-').replace(/^-+|-+$/g,'').slice(0,30); }
+
+// done state — persists on the live site, degrades gracefully in preview
+const DKEY='cf_werkstatt_done_v1';
+function loadDone(){ try{ return new Set(JSON.parse(localStorage.getItem(DKEY)||'[]')); }catch(e){ return new Set(); } }
+function saveDone(s){ try{ localStorage.setItem(DKEY, JSON.stringify([...s])); }catch(e){} }
+let done=loadDone();
+function isDone(id){ return done.has(id); }
+function setDone(id,v){ v?done.add(id):done.delete(id); saveDone(done); }
+
+const classCards=document.getElementById('classCards');
+Object.entries(DATA).forEach(([key,c])=>{
+  const el=document.createElement('button');
+  el.className='class-card';
+  el.innerHTML=`
+    <span class="count">${c.themes.length} Themen</span>
+    <span class="corner">${c.corner}</span>
+    <h3>${c.title}</h3>
+    <span class="lvl">${c.level} · ${c.sub}</span>
+    <p>${c.pitch}</p>
+    <span class="go">Themen ansehen →</span>`;
+  el.addEventListener('click',()=>openStage(key));
+  classCards.appendChild(el);
+});
+
+let currentKey=null, currentCat='alle', readerIdx=null, doneOpen=false;
+const home=document.getElementById('home');
+const stage=document.getElementById('stage');
+const reader=document.getElementById('reader');
+
+function setStageHeader(){
+  const c=DATA[currentKey];
+  document.getElementById('stageEyebrow').textContent=`${c.corner} · ${c.level}`;
+  document.getElementById('stageTitle').textContent=`${c.title} — ${c.sub}`;
+  document.getElementById('stageSub').textContent=c.pitch;
+}
+
+function emptyMsg(cat,poolLen){
+  if(poolLen===0) return cat==='fach'
+    ? 'Fach-Themen folgen, sobald die geprüfte Quelle abgestimmt ist.'
+    : 'Hier kommen bald weitere Themen dazu.';
+  return 'Alles in dieser Kategorie erledigt — stark.';
+}
+
+function renderStage(){
+  const key=currentKey, c=DATA[key];
+  const total=c.themes.length;
+  const doneCount=c.themes.filter(t=>isDone(tid(key,t))).length;
+
+  const chips=[{id:'alle',label:'Alle'}].concat(CATS);
+  document.getElementById('catBar').innerHTML =
+    chips.map(ch=>{
+      const pool = ch.id==='alle' ? c.themes : c.themes.filter(t=>t.cat===ch.id);
+      if(ch.id!=='alle' && pool.length===0) return '';
+      const openN = pool.filter(t=>!isDone(tid(key,t))).length;
+      return `<button class="chip ${currentCat===ch.id?'on':''}" data-cat="${ch.id}">${ch.label}<span class="chip-n">${openN}</span></button>`;
+    }).join('') + `<span class="progress">${doneCount}/${total} erledigt</span>`;
+
+  const pool = currentCat==='alle' ? c.themes : c.themes.filter(t=>t.cat===currentCat);
+  const openThemes = pool.filter(t=>!isDone(tid(key,t)));
+  document.getElementById('themeGrid').innerHTML = openThemes.length
+    ? openThemes.map(t=>{ const i=c.themes.indexOf(t);
+        return `<div class="theme-card" data-open="${i}">
+          <button class="card-done" data-donecard="${i}" title="Als erledigt markieren">erledigt ✓</button>
+          <span class="tag">${t.tag}</span>
+          <h4>${t.title}</h4>
+          <p>${t.teaser}</p>
+          <div class="meta">${t.meta.map(m=>`<span class="pill">${m}</span>`).join('')}</div>
+          <span class="open">Thema öffnen →</span>
+        </div>`;
+      }).join('')
+    : `<div class="empty">${emptyMsg(currentCat,pool.length)}</div>`;
+
+  const doneThemes = pool.filter(t=>isDone(tid(key,t)));
+  document.getElementById('doneWrap').innerHTML = doneThemes.length
+    ? `<button class="done-head" data-toggledone>Erledigt <span class="done-n">${doneThemes.length}</span> <span class="chev">${doneOpen?'▴':'▾'}</span></button>
+       <div class="done-list ${doneOpen?'show':''}">
+         ${doneThemes.map(t=>{ const i=c.themes.indexOf(t);
+           return `<div class="done-chip"><button class="dc-open" data-open="${i}">${t.title}</button><button class="dc-undo" data-undo="${i}" title="Wieder öffnen">↩</button></div>`;
+         }).join('')}
+       </div>`
+    : '';
+}
+
+function showStage(){
+  home.style.display='none';
+  reader.classList.remove('active');
+  stage.classList.add('active');
+  renderStage();
+  window.scrollTo(0,0);
+}
+
+function openStage(key){
+  currentKey=key; currentCat='alle'; doneOpen=false;
+  setStageHeader();
+  showStage();
+}
+
+function openReader(key,idx){
+  currentKey=key; readerIdx=idx;
+  const c=DATA[key], t=c.themes[idx];
+  const vid=(VIDEOS[key]||[])[idx];
+  document.getElementById('paper').innerHTML=`
+    <div class="kicker">${c.corner} · ${c.title} · ${c.sub}</div>
+    <h2>${t.title}</h2>
+    <div class="frame">${t.frame}</div>
+    <div class="howto">
+      <span><b>Allein</b> oder zu zweit/dritt</span><span class="dot">·</span>
+      <span><b>ca. 30 Min</b></span><span class="dot">·</span>
+      <span><b>Schreib mit</b></span><span class="dot">·</span>
+      <span>Am Ende: <b>1 Satz</b> für die Runde</span>
+    </div>
+
+    <div class="block">
+      <div class="block-h"><span class="bi">${ICONS.ex}</span><h3>Übungsaufgaben</h3></div>
+      ${t.ex.map((q,i)=>`
+        <div class="ex">
+          <div class="q"><span class="num">${i+1}</span><span>${q}</span></div>
+          <textarea placeholder="Deine Notizen …"></textarea>
+        </div>`).join('')}
+    </div>
+
+    <div class="block">
+      <div class="block-h"><span class="bi">${ICONS.rs}</span><h3>Rollenspiel</h3></div>
+      <p class="rs-setup">${t.rsSetup}</p>
+      <div class="roles">
+        <div class="role"><div class="who">Rolle A</div><p>${t.roleA}</p></div>
+        <div class="role"><div class="who">Rolle B</div><p>${t.roleB}</p></div>
+      </div>
+      <p class="rs-note">${t.rsNote}</p>
+    </div>
+
+    <div class="block">
+      <div class="block-h"><span class="bi">${ICONS.video}</span><h3>Video</h3></div>
+      ${vid
+        ? `<div class="video has-video">
+             <iframe src="https://www.youtube-nocookie.com/embed/${vid.id}" title="${vid.title}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+             <a class="yt-link" href="https://youtu.be/${vid.id}" target="_blank" rel="noopener">↗ „${vid.title}“ auf YouTube öffnen</a>
+           </div>`
+        : `<div class="video"><div class="vi">▶</div><p>Video-Slot — hier kann ein kurzer Clip ergänzt werden.</p></div>`}
+    </div>
+
+    <div class="takeaway">
+      <div class="block-h"><span class="bi">★</span><h3>Mein Standard ab heute</h3></div>
+      <p class="ta-sub">Eine kleine, konkrete Sache, die du ab morgen anders machst — gern messbar. Den Satz teilst du gleich in der Runde.</p>
+      <textarea placeholder="Ab morgen mache ich: …"></textarea>
+      <button class="ta-done" onclick="this.classList.add('ok');this.textContent='✓ Steht — das teilst du gleich';">Festhalten</button>
+    </div>`;
+  stage.classList.remove('active');
+  reader.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+/* ============== NAV ============== */
+document.addEventListener('click',e=>{
+  const dc=e.target.closest('[data-donecard]');
+  if(dc){ setDone(tid(currentKey,DATA[currentKey].themes[+dc.dataset.donecard]),true); renderStage(); return; }
+  const un=e.target.closest('[data-undo]');
+  if(un){ setDone(tid(currentKey,DATA[currentKey].themes[+un.dataset.undo]),false); renderStage(); return; }
+  const tg=e.target.closest('[data-toggledone]');
+  if(tg){ doneOpen=!doneOpen; renderStage(); return; }
+  const ca=e.target.closest('[data-cat]');
+  if(ca){ currentCat=ca.dataset.cat; renderStage(); return; }
+  const op=e.target.closest('[data-open]');
+  if(op){ openReader(currentKey, +op.dataset.open); return; }
+  const act=e.target.closest('[data-act]')?.dataset.act;
+  if(!act)return;
+  if(act==='toClasses'){
+    stage.classList.remove('active');reader.classList.remove('active');
+    home.style.display='';
+    document.getElementById('waehlen').scrollIntoView({behavior:'smooth'});
+  }
+  if(act==='home'){
+    stage.classList.remove('active');reader.classList.remove('active');
+    home.style.display='';
+    window.scrollTo(0,0);
+  }
+  if(act==='toStage'){ if(currentKey)showStage(); }
+  if(act==='markdone'){
+    if(currentKey!=null&&readerIdx!=null) setDone(tid(currentKey,DATA[currentKey].themes[readerIdx]),true);
+    showStage();
+  }
+  if(act==='print'){ window.print(); }
+});
+
+/* ============== TIMER ============== */
+(function(){
+  let total=30*60, left=total, running=false, iv=null;
+  const clock=document.getElementById('clock');
+  const toggle=document.getElementById('tToggle');
+  const reset=document.getElementById('tReset');
+  function fmt(s){const m=Math.floor(s/60),x=s%60;return `${String(m).padStart(2,'0')}:${String(x).padStart(2,'0')}`;}
+  function tick(){ if(left>0){left--;clock.textContent=fmt(left);} else {stop();clock.textContent="00:00";} }
+  function start(){ running=true;toggle.textContent="Pause";iv=setInterval(tick,1000); }
+  function stop(){ running=false;toggle.textContent="Start";clearInterval(iv); }
+  toggle.addEventListener('click',()=>running?stop():start());
+  reset.addEventListener('click',()=>{stop();left=total;clock.textContent=fmt(left);});
+  clock.textContent=fmt(left);
+})();
+</script>
+</body>
+</html>
