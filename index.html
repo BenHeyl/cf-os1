@@ -2625,15 +2625,29 @@ function submitCheckin(){
     document.getElementById('ciSuggTitle').textContent=s.hit.title;
     document.getElementById('ciSuggWhy').textContent=s.why;
     const goBtn=document.getElementById('ciSuggGo');
-    goBtn.dataset.ciLevel=s.hit.level; goBtn.dataset.ciIdx=s.hit.idx; goBtn.dataset.ciAct='reader';
+    goBtn.replaceWith(goBtn.cloneNode(true));
+    const goBtnF=document.getElementById('ciSuggGo');
+    goBtnF.addEventListener('click',function(){
+      closeCheckin();
+      openReader(s.hit.level, s.hit.idx, true);
+    });
     const stBtn=document.getElementById('ciSuggStage');
-    stBtn.dataset.ciLevel=s.level; stBtn.dataset.ciAct='stage'; stBtn.style.display='';
+    stBtn.replaceWith(stBtn.cloneNode(true));
+    const stBtnF=document.getElementById('ciSuggStage');
+    stBtnF.style.display='';
+    stBtnF.addEventListener('click',function(){
+      closeCheckin(); openStage(s.level);
+    });
   } else {
     document.getElementById('ciSuggKick').textContent='Themenvorschlag';
     document.getElementById('ciSuggTitle').textContent='Wähl deine Gewichtsklasse';
     document.getElementById('ciSuggWhy').textContent='Leg einfach in deiner Stufe los.';
     const goBtn2=document.getElementById('ciSuggGo');
-    goBtn2.dataset.ciLevel=s.level; goBtn2.dataset.ciAct='stage';
+    goBtn2.replaceWith(goBtn2.cloneNode(true));
+    const goBtn2F=document.getElementById('ciSuggGo');
+    goBtn2F.addEventListener('click',function(){
+      closeCheckin(); openStage(s.level);
+    });
     document.getElementById('ciSuggStage').style.display='none';
   }
   document.getElementById('ciForm').style.display='none';
