@@ -2310,6 +2310,12 @@ document.addEventListener('click',e=>{
   if(act==='switchmodal'){ modalSwitch(); return; }
   if(act==='submitci'){ if(window.submitCheckin) submitCheckin(); return; }
   if(act==='closeci'){ if(window.closeCheckin) closeCheckin(); return; }
+  const ciBtn=e.target.closest('[data-ci-act]');
+  if(ciBtn){
+    const ciAct=ciBtn.dataset.ciAct;
+    if(ciAct==='reader'){ closeCheckin(); openReader(ciBtn.dataset.ciLevel, +ciBtn.dataset.ciIdx, true); return; }
+    if(ciAct==='stage'){ closeCheckin(); openStage(ciBtn.dataset.ciLevel); return; }
+  }
   if(act==='home'){
     stage.classList.remove('active');reader.classList.remove('active');
     home.style.display='';renderClasses();
@@ -2505,13 +2511,16 @@ function submitCheckin(){
     document.getElementById('ciSuggKick').textContent='Themenvorschlag · '+ciLevelLabel(s.level);
     document.getElementById('ciSuggTitle').textContent=s.hit.title;
     document.getElementById('ciSuggWhy').textContent=s.why;
-    document.getElementById('ciSuggGo').onclick=function(){ closeCheckin(); openReader(s.hit.level, s.hit.idx, true); };
-    document.getElementById('ciSuggStage').onclick=function(){ closeCheckin(); openStage(s.level); };
+    const goBtn=document.getElementById('ciSuggGo');
+    goBtn.dataset.ciLevel=s.hit.level; goBtn.dataset.ciIdx=s.hit.idx; goBtn.dataset.ciAct='reader';
+    const stBtn=document.getElementById('ciSuggStage');
+    stBtn.dataset.ciLevel=s.level; stBtn.dataset.ciAct='stage'; stBtn.style.display='';
   } else {
     document.getElementById('ciSuggKick').textContent='Themenvorschlag';
     document.getElementById('ciSuggTitle').textContent='Wähl deine Gewichtsklasse';
     document.getElementById('ciSuggWhy').textContent='Leg einfach in deiner Stufe los.';
-    document.getElementById('ciSuggGo').onclick=function(){ closeCheckin(); openStage(s.level); };
+    const goBtn2=document.getElementById('ciSuggGo');
+    goBtn2.dataset.ciLevel=s.level; goBtn2.dataset.ciAct='stage';
     document.getElementById('ciSuggStage').style.display='none';
   }
   document.getElementById('ciForm').style.display='none';
