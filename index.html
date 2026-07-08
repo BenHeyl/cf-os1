@@ -632,7 +632,7 @@
     <div class="hero-logo cflogo" role="img" aria-label="Capital Future"></div>
     <h1>Du bist der <span class="gold">Architekt und Bauherr</span> deiner Karriere.</h1>
     <p class="lead"><b>Bau dir deine Zukunft.</b> Wähl deine Gewichtsklasse und nimm dir 30–40 Minuten für genau ein Thema — allein oder zu zweit. Jede Übung ist ein Stein.</p>
-    <button class="ci-trigger" id="ciTrigger" onclick="openCheckin()"><span class="ci-dot"></span>Wochen-Check-in starten</button>
+    <button class="ci-trigger" id="ciTrigger" data-act="checkin"><span class="ci-dot"></span>Wochen-Check-in starten</button>
   </div>
 </section>
 
@@ -659,10 +659,10 @@
         </div>
       </div>
       <div class="sh-actions">
-        <button class="sh-go sh-go--primary" onclick="openStage('einsteiger')">→ Einsteiger</button>
-        <button class="sh-go sh-go--sec" onclick="openStage('aufsteiger')">→ Aufsteiger</button>
-        <button class="sh-go sh-go--sec" onclick="openStage('fuehrung')">→ Führungskräfte</button>
-        <button class="sh-go sh-go--ghost" onclick="document.getElementById('pfad').scrollIntoView({behavior:'smooth'})">Karrierepfad ↓</button>
+        <button class="sh-go sh-go--primary" data-open-class="einsteiger">→ Einsteiger</button>
+        <button class="sh-go sh-go--sec" data-open-class="aufsteiger">→ Aufsteiger</button>
+        <button class="sh-go sh-go--sec" data-open-class="fuehrung">→ Führungskräfte</button>
+        <button class="sh-go sh-go--ghost" data-scrollto="pfad">Karrierepfad ↓</button>
       </div>
     </div>
   </div>
@@ -2102,7 +2102,7 @@ function renderLesson(t,key){
   return (t.lesson||[]).map((s,i)=>{
     if(s.quote) return `<blockquote class="pullq"><span class="pq-mark">\u201e</span>${s.quote}</blockquote>`;
     if(s.prompt) return `<div class="inlq"><div class="inlq-q"><span class="inlq-ic">\u270e</span><span><b>Kurz für dich:</b> ${s.prompt}</span></div><textarea data-fk="${tid(key,t)}#inl${i}" placeholder="${s.ph||'Ein, zwei Sätze reichen …'}"></textarea></div>`;
-    if(s.reveal) return `<div class="reveal"><button class="rv-q" type="button" onclick="this.parentNode.classList.toggle('open')"><span class="rv-ic">?</span><span>${s.reveal.q}</span><span class="rv-caret">\u25be</span></button><div class="rv-a">${s.reveal.a}</div></div>`;
+    if(s.reveal) return `<div class="reveal"><button class="rv-q" type="button" data-act="reveal"><span class="rv-ic">?</span><span>${s.reveal.q}</span><span class="rv-caret">\u25be</span></button><div class="rv-a">${s.reveal.a}</div></div>`;
     if(s.note){const k=s.note.kind||'merke';return `<div class="callout callout-${k}"><div class="co-h">${s.note.h||noteLabel[k]||''}</div>${s.note.p?s.note.p.map(x=>`<p>${x}</p>`).join(''):''}${s.note.b?`<ul>${s.note.b.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}</div>`;}
     if(s.stages) return `<div class="stageladder"><div class="sl-h">\u2197 So wächst dieses Thema mit dir</div>${s.stages.map(st=>`<div class="sl-row"><span class="sl-stage">${st.stage}</span><span class="sl-txt">${st.txt}</span></div>`).join('')}</div>`;
     return `<div class="lsec"><h4>${s.h}</h4>${s.p?s.p.map(x=>`<p class="lsec-p">${x}</p>`).join(''):''}${s.b?`<ul>${s.b.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}</div>`;
@@ -2144,8 +2144,8 @@ function renderStage(){
   const openThemes = pool.filter(t=>!isDone(tid(key,t)));
   document.getElementById('themeGrid').innerHTML = openThemes.length
     ? openThemes.map(t=>{ const i=c.themes.indexOf(t);
-        return `<div class="theme-card" onclick="openReader('${key}',${i})" style="cursor:pointer">
-          <button class="card-done" data-donecard="${i}" title="Als erledigt markieren" onclick="event.stopPropagation()">erledigt ✓</button>
+        return `<div class="theme-card" data-open="${i}">
+          <button class="card-done" data-donecard="${i}" title="Als erledigt markieren">erledigt ✓</button>
           <span class="tag">${t.tag}</span>
           <h4>${t.title}</h4>
           <p>${t.teaser}</p>
@@ -2160,7 +2160,7 @@ function renderStage(){
     ? `<button class="done-head" data-toggledone>Erledigt <span class="done-n">${doneThemes.length}</span> <span class="chev">${doneOpen?'▴':'▾'}</span></button>
        <div class="done-list ${doneOpen?'show':''}">
          ${doneThemes.map(t=>{ const i=c.themes.indexOf(t);
-           return `<div class="done-chip"><button class="dc-open" onclick="openReader('${key}',${i})">${t.title}</button><button class="dc-undo" data-undo="${i}" title="Wieder öffnen">↩</button></div>`;
+           return `<div class="done-chip"><button class="dc-open" data-open="${i}">${t.title}</button><button class="dc-undo" data-undo="${i}" title="Wieder öffnen">↩</button></div>`;
          }).join('')}
        </div>`
     : '';
@@ -2274,7 +2274,7 @@ ${t.lesson ? `
       <div class="ta-field"><label>Meine Erkenntnis</label><textarea data-fk="${tid(key,t)}#take0" placeholder="Was ist mir bei diesem Thema klar geworden? …"></textarea></div>
       <div class="ta-field"><label>Mein nächster Schritt</label><textarea data-fk="${tid(key,t)}#take1" placeholder="Eine konkrete, möglichst messbare Sache, die ich ab jetzt anders mache: …"></textarea></div>
       <p class="ta-share">Zu mehreren? Teilt reihum eure Erkenntnis — und hört, was die anderen mitnehmen. Oft ist der fremde Blick das Wertvollste.</p>
-      <button class="ta-done" data-fk="${tid(key,t)}#takedone" onclick="markDone(this)">Speichern</button>
+      <button class="ta-done" data-fk="${tid(key,t)}#takedone" data-act="takedone">Speichern</button>
       <div class="ta-summary" id="taSummary" hidden></div>
     </div>`;
   document.querySelectorAll('#paper textarea[data-fk]').forEach(ta=>{ const v=notes[ta.dataset.fk]; if(v!=null) ta.value=v; });
@@ -2298,8 +2298,10 @@ document.addEventListener('click',e=>{
   if(ca){ currentCat=ca.dataset.cat; renderStage(); return; }
   const oc=e.target.closest('[data-open-class]');
   if(oc){ openStage(oc.dataset.openClass); window.scrollTo(0,0); return; }
+  const sc=e.target.closest('[data-scrollto]');
+  if(sc){ const el=document.getElementById(sc.dataset.scrollto); if(el) el.scrollIntoView({behavior:'smooth'}); return; }
   const op=e.target.closest('[data-open]');
-  if(op){ openReader(currentKey, +op.dataset.open); return; }
+  if(op && currentKey){ openReader(currentKey, +op.dataset.open); return; }
   const act=e.target.closest('[data-act]')?.dataset.act;
   if(!act)return;
   if(act==='toClasses'){
@@ -2307,6 +2309,12 @@ document.addEventListener('click',e=>{
     home.style.display='';renderClasses();
     document.getElementById('waehlen').scrollIntoView({behavior:'smooth'});
   }
+  if(act==='checkin'){ if(window.openCheckin) openCheckin(); return; }
+  if(act==='closemodal'){ if(event.target.id==='switchModal') hideSwitchModal(); return; }
+  if(act==='staymodal'){ hideSwitchModal(); return; }
+  if(act==='switchmodal'){ modalSwitch(); return; }
+  if(act==='submitci'){ if(window.submitCheckin) submitCheckin(); return; }
+  if(act==='closeci'){ if(window.closeCheckin) closeCheckin(); return; }
   if(act==='home'){
     stage.classList.remove('active');reader.classList.remove('active');
     home.style.display='';renderClasses();
@@ -2318,6 +2326,8 @@ document.addEventListener('click',e=>{
     showStage();
   }
   if(act==='print'){ window.print(); }
+  if(act==='takedone'){ const btn=e.target; markDone(btn); }
+  if(act==='reveal'){ e.target.closest('.reveal').classList.toggle('open'); }
 });
 
 /* ============== TIMER ============== */
@@ -2533,13 +2543,13 @@ function ciInit(){
 if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', ciInit); } else { ciInit(); }
 
 </script>
-<div id="switchModal" class="modal-ov" hidden onclick="if(event.target.id==='switchModal')hideSwitchModal()">
+<div id="switchModal" class="modal-ov" hidden data-act="closemodal">
   <div class="modal-box">
     <h3>Noch nicht fertig?</h3>
     <p>Dieses Thema ist noch offen. Bleib lieber dran, bis du es abgeschlossen hast — lieber eines wirklich tief als drei nur angeschnitten.</p>
     <div class="modal-actions">
-      <button class="btn-stay" onclick="hideSwitchModal()">Dranbleiben</button>
-      <button class="btn-switch" onclick="modalSwitch()">Trotzdem wechseln</button>
+      <button class="btn-stay" data-act="staymodal">Dranbleiben</button>
+      <button class="btn-switch" data-act="switchmodal">Trotzdem wechseln</button>
     </div>
   </div>
 </div>
@@ -2620,8 +2630,8 @@ if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded
         </div>
       </div>
       <div class="ci-actions">
-        <button class="ci-go" onclick="submitCheckin()">Auswerten & Thema vorschlagen →</button>
-        <button class="ci-skip" onclick="closeCheckin()">Überspringen</button>
+        <button class="ci-go" data-act="submitci">Auswerten & Thema vorschlagen →</button>
+        <button class="ci-skip" data-act="closeci">Überspringen</button>
       </div>
     </div>
 
@@ -2642,7 +2652,7 @@ if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded
         </div>
       </div>
       <div class="ci-actions">
-        <button class="ci-skip" onclick="closeCheckin()" style="margin-left:auto;">Schließen</button>
+        <button class="ci-skip" data-act="closeci" style="margin-left:auto;">Schließen</button>
       </div>
     </div>
   </div>
