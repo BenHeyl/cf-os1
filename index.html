@@ -427,7 +427,7 @@
   .ta-summary b{color:#6b5d2f;}
 
   /* Wechsel-Modal */
-  .modal-ov{position:fixed;inset:0;background:rgba(10,16,30,.74);display:flex;align-items:center;justify-content:center;z-index:200;padding:20px;}
+  .modal-ov{position:absolute;top:0;left:0;width:100%;min-height:100%;background:rgba(10,16,30,.74);display:flex;align-items:flex-start;justify-content:center;z-index:200;padding:60px 20px;box-sizing:border-box;}
   .modal-ov[hidden]{display:none;}
   .modal-box{background:var(--navy-card);border:1px solid var(--gold);border-radius:18px;padding:28px 26px;max-width:430px;box-shadow:0 20px 60px rgba(0,0,0,.5);}
   .modal-box h3{font-family:'Fraunces',serif;font-size:22px;color:var(--cream);margin:0 0 10px;}
@@ -446,7 +446,7 @@
 .ci-trigger{display:inline-flex;align-items:center;gap:8px;margin-top:16px;background:transparent;border:1px solid var(--gold);color:var(--cream);font-family:'Inter',sans-serif;font-size:13px;font-weight:600;letter-spacing:.02em;padding:9px 16px;border-radius:999px;cursor:pointer;transition:all .15s;}
 .ci-trigger:hover{background:var(--gold);color:var(--navy-deep);}
 .ci-trigger .ci-dot{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 3px rgba(200,168,75,.25);}
-.ci-overlay{position:fixed;inset:0;z-index:120;background:rgba(10,18,35,.86);backdrop-filter:blur(3px);display:none;align-items:flex-start;justify-content:center;overflow-y:auto;padding:28px 16px;}
+.ci-overlay{position:absolute;top:0;left:0;width:100%;min-height:100%;z-index:120;background:rgba(10,18,35,.86);display:none;align-items:flex-start;justify-content:center;overflow-y:auto;padding:28px 16px;box-sizing:border-box;}
 .ci-overlay.show{display:flex;}
 .ci-box{background:var(--paper);color:var(--ink);width:100%;max-width:560px;border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.4);border-top:5px solid var(--gold);overflow:hidden;margin:auto;}
 .ci-head{padding:24px 26px 14px;}
@@ -607,7 +607,7 @@
 
 </style>
 </head>
-<body>
+<body style="position:relative;min-height:100vh;">
 
 <!-- TOPBAR -->
 <div class="topbar">
