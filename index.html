@@ -2290,6 +2290,7 @@ function openReader(key,idx,force){
   }
   activeTheme=_nid;
   currentKey=key; readerIdx=idx;
+  home.style.display='none';
   const c=DATA[key], t=c.themes[idx];
   const vid=(VIDEOS[key]||[])[idx];
   const lh = (t.cat==='mindset'||t.cat==='persoenlich') ? ['Vertiefung — worum es wirklich geht','Die Idee hinter dem Thema — zum Verstehen, nicht nur Abhaken.']
