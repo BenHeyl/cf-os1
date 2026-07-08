@@ -427,7 +427,10 @@
   .ta-summary b{color:#6b5d2f;}
 
   /* Wechsel-Modal */
-  .modal-ov{position:absolute;top:0;left:0;width:100%;min-height:100%;background:rgba(10,16,30,.74);display:flex;align-items:flex-start;justify-content:center;z-index:200;padding:60px 20px;box-sizing:border-box;}
+  .modal-ov{display:none;padding:40px 16px;background:rgba(10,16,30,.74);}
+  .modal-ov[hidden]{display:none!important;}
+  .modal-ov:not([hidden]){display:block;}
+  .modal-box{background:var(--paper);color:var(--ink);max-width:420px;margin:0 auto;border-radius:16px;padding:28px 24px;border-top:4px solid var(--gold);}
   .modal-ov[hidden]{display:none;}
   .modal-box{background:var(--navy-card);border:1px solid var(--gold);border-radius:18px;padding:28px 26px;max-width:430px;box-shadow:0 20px 60px rgba(0,0,0,.5);}
   .modal-box h3{font-family:'Fraunces',serif;font-size:22px;color:var(--cream);margin:0 0 10px;}
@@ -446,9 +449,9 @@
 .ci-trigger{display:inline-flex;align-items:center;gap:8px;margin-top:16px;background:transparent;border:1px solid var(--gold);color:var(--cream);font-family:'Inter',sans-serif;font-size:13px;font-weight:600;letter-spacing:.02em;padding:9px 16px;border-radius:999px;cursor:pointer;transition:all .15s;}
 .ci-trigger:hover{background:var(--gold);color:var(--navy-deep);}
 .ci-trigger .ci-dot{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 3px rgba(200,168,75,.25);}
-.ci-overlay{position:absolute;top:0;left:0;width:100%;min-height:100%;z-index:120;background:rgba(10,18,35,.86);display:none;align-items:flex-start;justify-content:center;overflow-y:auto;padding:28px 16px;box-sizing:border-box;}
-.ci-overlay.show{display:flex;}
-.ci-box{background:var(--paper);color:var(--ink);width:100%;max-width:560px;border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.4);border-top:5px solid var(--gold);overflow:hidden;margin:auto;}
+.ci-overlay{display:none;padding:32px 16px 48px;background:var(--navy-deep);}
+.ci-overlay.show{display:block;}
+.ci-box{background:var(--paper);color:var(--ink);width:100%;max-width:560px;border-radius:18px;border-top:5px solid var(--gold);overflow:hidden;margin:0 auto;}
 .ci-head{padding:24px 26px 14px;}
 .ci-kick{font-family:'Inter',sans-serif;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#9a823a;}
 .ci-head h3{font-family:'Fraunces',serif;font-size:25px;line-height:1.15;margin:7px 0 6px;color:var(--navy);}
@@ -607,7 +610,7 @@
 
 </style>
 </head>
-<body style="position:relative;min-height:100vh;">
+<body>
 
 <!-- TOPBAR -->
 <div class="topbar">
@@ -621,6 +624,109 @@
       <span class="sep"></span>
       <button id="tToggle">Start</button>
       <button id="tReset">Reset</button>
+    </div>
+  </div>
+</div>
+
+<div class="ci-overlay" id="ciOverlay" role="dialog" aria-modal="true" aria-labelledby="ciTitle">
+  <div class="ci-box">
+    <div id="ciForm">
+      <div class="ci-head">
+        <div class="ci-kick">Dein Wochen-Check-in</div>
+        <h3 id="ciTitle">Kurz Bilanz ziehen — dann gezielt üben</h3>
+        <p>Eine Minute ehrliche Zahlen zur letzten Woche. Daraus schlagen wir dir ein passendes Thema vor — und du behältst gemeinsam mit deiner Führungskraft deine Entwicklung im Blick.</p>
+      </div>
+      <div class="ci-body">
+        <div class="ci-field">
+          <label for="ciName">Dein Name</label>
+          <input type="text" id="ciName" autocomplete="name" placeholder="Vor- und Nachname">
+        </div>
+        <div class="ci-field">
+          <label for="ciStage">Deine aktuelle Karrierestufe</label>
+          <select id="ciStage">
+            <option value="">— bitte wählen —</option>
+            <optgroup label="Einsteiger (FA/FM)">
+              <option value="einsteiger:FA">FA — Finanzassistent</option>
+              <option value="einsteiger:FM">FM — Finanzmanager</option>
+            </optgroup>
+            <optgroup label="Aufsteiger (KM/VM)">
+              <option value="aufsteiger:KM">KM — Konzeptmanager</option>
+              <option value="aufsteiger:VM">VM — Vertriebsmanager</option>
+            </optgroup>
+            <optgroup label="Führung (GD/SP)">
+              <option value="fuehrung:GD">GD — Generaldirektor</option>
+              <option value="fuehrung:SP">SP — Senior Partner</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="ci-row">
+          <div class="ci-field">
+            <label for="ciTeam">Team-Stärke <span class="hint">(Partner)</span></label>
+            <input type="number" id="ciTeam" min="0" inputmode="numeric" placeholder="z. B. 4">
+          </div>
+          <div class="ci-field">
+            <label for="ciEinheiten">Einheiten letzte Woche</label>
+            <input type="number" id="ciEinheiten" min="0" step="0.01" inputmode="decimal" placeholder="z. B. 12">
+            <div class="ci-trend" id="ciTrendEinheiten"></div>
+          </div>
+        </div>
+        <div class="ci-row">
+          <div class="ci-field">
+            <label for="ciTermine">Termine letzte Woche</label>
+            <input type="number" id="ciTermine" min="0" inputmode="numeric" placeholder="z. B. 6">
+          </div>
+          <div class="ci-field">
+            <label for="ciAbschluesse">Abschlüsse letzte Woche</label>
+            <input type="number" id="ciAbschluesse" min="0" inputmode="numeric" placeholder="z. B. 2">
+          </div>
+        </div>
+        <div class="ci-row">
+          <div class="ci-field">
+            <label for="ciEmpf">Empfehlungen / neue Kontakte</label>
+            <input type="number" id="ciEmpf" min="0" inputmode="numeric" placeholder="z. B. 5">
+            <div class="ci-trend" id="ciTrendEmpf"></div>
+          </div>
+          <div class="ci-field">
+            <label for="ciRecruiting">Recruiting-Gespräche <span class="hint">(opt.)</span></label>
+            <input type="number" id="ciRecruiting" min="0" inputmode="numeric" placeholder="z. B. 1">
+          </div>
+        </div>
+        <div class="ci-field">
+          <label>Wie war deine Energie diese Woche?</label>
+          <div class="ci-mood" id="ciMood">
+            <button type="button" data-mood="1" title="leer">😮‍💨</button>
+            <button type="button" data-mood="2" title="zäh">😕</button>
+            <button type="button" data-mood="3" title="ok">😐</button>
+            <button type="button" data-mood="4" title="gut">🙂</button>
+            <button type="button" data-mood="5" title="stark">🔥</button>
+          </div>
+        </div>
+      </div>
+      <div class="ci-actions">
+        <button class="ci-go" data-act="submitci">Auswerten & Thema vorschlagen →</button>
+        <button class="ci-skip" data-act="closeci">Überspringen</button>
+      </div>
+    </div>
+
+    <div id="ciResult" style="display:none;">
+      <div class="ci-head">
+        <div class="ci-kick">Stark — eingetragen</div>
+        <h3>Das nimmst du dir heute vor</h3>
+        <p>Auf Basis deiner Woche. Wenn etwas anderes drückt, wähl einfach selbst.</p>
+      </div>
+      <div class="ci-result">
+        <div class="ci-rsum" id="ciRsum"></div>
+        <div class="ci-sugg">
+          <div class="s-kick" id="ciSuggKick">Themenvorschlag</div>
+          <h4 id="ciSuggTitle"></h4>
+          <p class="s-why" id="ciSuggWhy"></p>
+          <button class="s-go" id="ciSuggGo">Dieses Thema öffnen →</button>
+          <button class="s-stage" id="ciSuggStage">Lieber selbst stöbern in dieser Gewichtsklasse</button>
+        </div>
+      </div>
+      <div class="ci-actions">
+        <button class="ci-skip" data-act="closeci" style="margin-left:auto;">Schließen</button>
+      </div>
     </div>
   </div>
 </div>
@@ -2305,16 +2411,20 @@ document.addEventListener('click',e=>{
     document.getElementById('waehlen').scrollIntoView({behavior:'smooth'});
   }
   if(act==='checkin'){ if(window.openCheckin) openCheckin(); return; }
-  if(act==='closemodal'){ if(event.target.id==='switchModal') hideSwitchModal(); return; }
+  if(e.target.id==='switchModal'){ hideSwitchModal(); return; }
   if(act==='staymodal'){ hideSwitchModal(); return; }
   if(act==='switchmodal'){ modalSwitch(); return; }
   if(act==='submitci'){ if(window.submitCheckin) submitCheckin(); return; }
   if(act==='closeci'){ if(window.closeCheckin) closeCheckin(); return; }
-  const ciBtn=e.target.closest('[data-ci-act]');
-  if(ciBtn){
-    const ciAct=ciBtn.dataset.ciAct;
-    if(ciAct==='reader'){ closeCheckin(); openReader(ciBtn.dataset.ciLevel, +ciBtn.dataset.ciIdx, true); return; }
-    if(ciAct==='stage'){ closeCheckin(); openStage(ciBtn.dataset.ciLevel); return; }
+  const ciGo=e.target.closest('#ciSuggGo');
+  if(ciGo){
+    const act2=ciGo.dataset.ciAct;
+    if(act2==='reader'){ closeCheckin(); openReader(ciGo.dataset.ciLevel, +ciGo.dataset.ciIdx, true); return; }
+    if(act2==='stage'){ closeCheckin(); openStage(ciGo.dataset.ciLevel); return; }
+  }
+  const ciStg=e.target.closest('#ciSuggStage');
+  if(ciStg){
+    closeCheckin(); openStage(ciStg.dataset.ciLevel); return;
   }
   if(act==='home'){
     stage.classList.remove('active');reader.classList.remove('active');
@@ -2455,6 +2565,9 @@ function ciWireMood(){
 }
 function openCheckin(){
   ciWireMood();
+  document.getElementById('home').style.display='none';
+  document.getElementById('stage').classList.remove('active');
+  document.getElementById('reader').classList.remove('active');
   var prev=ciLoad();
   // Vorbelegung Karrierestufe + Trend-Hinweise aus letztem Eintrag
   var last=(prev.history&&prev.history.length)?prev.history[prev.history.length-1]:null;
@@ -2463,11 +2576,13 @@ function openCheckin(){
   document.getElementById('ciForm').style.display='';
   document.getElementById('ciResult').style.display='none';
   document.getElementById('ciOverlay').classList.add('show');
-  document.body.style.overflow='hidden';
+  
 }
 function closeCheckin(){
   document.getElementById('ciOverlay').classList.remove('show');
-  document.body.style.overflow='';
+  document.getElementById('home').style.display='';
+  renderClasses();
+  
   // Auch beim Überspringen die Woche merken, damit es nicht jedes Mal aufpoppt
   var o=ciLoad(); o.week=ciIsoWeek(new Date()); ciSave(o);
 }
@@ -2547,7 +2662,7 @@ function ciInit(){
 if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', ciInit); } else { ciInit(); }
 
 </script>
-<div id="switchModal" class="modal-ov" hidden data-act="closemodal">
+<div id="switchModal" class="modal-ov" hidden>
   <div class="modal-box">
     <h3>Noch nicht fertig?</h3>
     <p>Dieses Thema ist noch offen. Bleib lieber dran, bis du es abgeschlossen hast — lieber eines wirklich tief als drei nur angeschnitten.</p>
@@ -2559,108 +2674,7 @@ if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded
 </div>
 
 <!-- ===== Wochen-Check-in Overlay ===== -->
-<div class="ci-overlay" id="ciOverlay" role="dialog" aria-modal="true" aria-labelledby="ciTitle">
-  <div class="ci-box">
-    <div id="ciForm">
-      <div class="ci-head">
-        <div class="ci-kick">Dein Wochen-Check-in</div>
-        <h3 id="ciTitle">Kurz Bilanz ziehen — dann gezielt üben</h3>
-        <p>Eine Minute ehrliche Zahlen zur letzten Woche. Daraus schlagen wir dir ein passendes Thema vor — und du behältst gemeinsam mit deiner Führungskraft deine Entwicklung im Blick.</p>
-      </div>
-      <div class="ci-body">
-        <div class="ci-field">
-          <label for="ciName">Dein Name</label>
-          <input type="text" id="ciName" autocomplete="name" placeholder="Vor- und Nachname">
-        </div>
-        <div class="ci-field">
-          <label for="ciStage">Deine aktuelle Karrierestufe</label>
-          <select id="ciStage">
-            <option value="">— bitte wählen —</option>
-            <optgroup label="Einsteiger (FA/FM)">
-              <option value="einsteiger:FA">FA — Finanzassistent</option>
-              <option value="einsteiger:FM">FM — Finanzmanager</option>
-            </optgroup>
-            <optgroup label="Aufsteiger (KM/VM)">
-              <option value="aufsteiger:KM">KM — Konzeptmanager</option>
-              <option value="aufsteiger:VM">VM — Vertriebsmanager</option>
-            </optgroup>
-            <optgroup label="Führung (GD/SP)">
-              <option value="fuehrung:GD">GD — Generaldirektor</option>
-              <option value="fuehrung:SP">SP — Senior Partner</option>
-            </optgroup>
-          </select>
-        </div>
-        <div class="ci-row">
-          <div class="ci-field">
-            <label for="ciTeam">Team-Stärke <span class="hint">(Partner)</span></label>
-            <input type="number" id="ciTeam" min="0" inputmode="numeric" placeholder="z. B. 4">
-          </div>
-          <div class="ci-field">
-            <label for="ciEinheiten">Einheiten letzte Woche</label>
-            <input type="number" id="ciEinheiten" min="0" step="0.01" inputmode="decimal" placeholder="z. B. 12">
-            <div class="ci-trend" id="ciTrendEinheiten"></div>
-          </div>
-        </div>
-        <div class="ci-row">
-          <div class="ci-field">
-            <label for="ciTermine">Termine letzte Woche</label>
-            <input type="number" id="ciTermine" min="0" inputmode="numeric" placeholder="z. B. 6">
-          </div>
-          <div class="ci-field">
-            <label for="ciAbschluesse">Abschlüsse letzte Woche</label>
-            <input type="number" id="ciAbschluesse" min="0" inputmode="numeric" placeholder="z. B. 2">
-          </div>
-        </div>
-        <div class="ci-row">
-          <div class="ci-field">
-            <label for="ciEmpf">Empfehlungen / neue Kontakte</label>
-            <input type="number" id="ciEmpf" min="0" inputmode="numeric" placeholder="z. B. 5">
-            <div class="ci-trend" id="ciTrendEmpf"></div>
-          </div>
-          <div class="ci-field">
-            <label for="ciRecruiting">Recruiting-Gespräche <span class="hint">(opt.)</span></label>
-            <input type="number" id="ciRecruiting" min="0" inputmode="numeric" placeholder="z. B. 1">
-          </div>
-        </div>
-        <div class="ci-field">
-          <label>Wie war deine Energie diese Woche?</label>
-          <div class="ci-mood" id="ciMood">
-            <button type="button" data-mood="1" title="leer">😮‍💨</button>
-            <button type="button" data-mood="2" title="zäh">😕</button>
-            <button type="button" data-mood="3" title="ok">😐</button>
-            <button type="button" data-mood="4" title="gut">🙂</button>
-            <button type="button" data-mood="5" title="stark">🔥</button>
-          </div>
-        </div>
-      </div>
-      <div class="ci-actions">
-        <button class="ci-go" data-act="submitci">Auswerten & Thema vorschlagen →</button>
-        <button class="ci-skip" data-act="closeci">Überspringen</button>
-      </div>
-    </div>
 
-    <div id="ciResult" style="display:none;">
-      <div class="ci-head">
-        <div class="ci-kick">Stark — eingetragen</div>
-        <h3>Das nimmst du dir heute vor</h3>
-        <p>Auf Basis deiner Woche. Wenn etwas anderes drückt, wähl einfach selbst.</p>
-      </div>
-      <div class="ci-result">
-        <div class="ci-rsum" id="ciRsum"></div>
-        <div class="ci-sugg">
-          <div class="s-kick" id="ciSuggKick">Themenvorschlag</div>
-          <h4 id="ciSuggTitle"></h4>
-          <p class="s-why" id="ciSuggWhy"></p>
-          <button class="s-go" id="ciSuggGo">Dieses Thema öffnen →</button>
-          <button class="s-stage" id="ciSuggStage">Lieber selbst stöbern in dieser Gewichtsklasse</button>
-        </div>
-      </div>
-      <div class="ci-actions">
-        <button class="ci-skip" data-act="closeci" style="margin-left:auto;">Schließen</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 </body>
 </html>
