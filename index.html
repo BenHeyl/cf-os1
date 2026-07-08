@@ -2403,6 +2403,14 @@ document.addEventListener('click',e=>{
   if(sc){ const el=document.getElementById(sc.dataset.scrollto); if(el) el.scrollIntoView({behavior:'smooth'}); return; }
   const op=e.target.closest('[data-open]');
   if(op && currentKey){ openReader(currentKey, +op.dataset.open); return; }
+  const ciGo=e.target.closest('#ciSuggGo');
+  if(ciGo){
+    const ciAct=ciGo.dataset.ciAct;
+    if(ciAct==='reader'){ closeCheckin(); openReader(ciGo.dataset.ciLevel, +ciGo.dataset.ciIdx, true); return; }
+    if(ciAct==='stage'){ closeCheckin(); openStage(ciGo.dataset.ciLevel); return; }
+  }
+  const ciStg=e.target.closest('#ciSuggStage');
+  if(ciStg){ closeCheckin(); openStage(ciStg.dataset.ciLevel); return; }
   const act=e.target.closest('[data-act]')?.dataset.act;
   if(!act)return;
   if(act==='toClasses'){
@@ -2416,16 +2424,6 @@ document.addEventListener('click',e=>{
   if(act==='switchmodal'){ modalSwitch(); return; }
   if(act==='submitci'){ if(window.submitCheckin) submitCheckin(); return; }
   if(act==='closeci'){ if(window.closeCheckin) closeCheckin(); return; }
-  const ciGo=e.target.closest('#ciSuggGo');
-  if(ciGo){
-    const act2=ciGo.dataset.ciAct;
-    if(act2==='reader'){ closeCheckin(); openReader(ciGo.dataset.ciLevel, +ciGo.dataset.ciIdx, true); return; }
-    if(act2==='stage'){ closeCheckin(); openStage(ciGo.dataset.ciLevel); return; }
-  }
-  const ciStg=e.target.closest('#ciSuggStage');
-  if(ciStg){
-    closeCheckin(); openStage(ciStg.dataset.ciLevel); return;
-  }
   if(act==='home'){
     stage.classList.remove('active');reader.classList.remove('active');
     home.style.display='';renderClasses();
