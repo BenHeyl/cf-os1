@@ -531,6 +531,8 @@
 .sh-go--primary:hover{filter:brightness(1.07);}
 .sh-go--sec{background:none;border:1px solid rgba(200,168,75,.45);color:var(--gold);font-size:13px;font-weight:600;border-radius:10px;padding:12px 18px;cursor:pointer;transition:.15s;}
 .sh-go--sec:hover{border-color:var(--gold);}
+  .sh-go--ghost{background:none;border:1px solid var(--navy-line);color:var(--muted);font-size:12px;font-weight:500;border-radius:10px;padding:11px 16px;cursor:pointer;transition:.15s;}
+  .sh-go--ghost:hover{border-color:var(--gold);color:var(--gold);}
 
 /* Karrierepfad — neu */
 .sec-karriere{padding:52px 0 60px;}
@@ -657,8 +659,10 @@
         </div>
       </div>
       <div class="sh-actions">
-        <button class="sh-go sh-go--primary" onclick="openStage('einsteiger')">→ Jetzt starten — Einsteiger</button>
-        <button class="sh-go sh-go--sec" onclick="document.getElementById('pfad').scrollIntoView({behavior:'smooth'})">Karrierepfad ansehen ↓</button>
+        <button class="sh-go sh-go--primary" onclick="openStage('einsteiger')">→ Einsteiger</button>
+        <button class="sh-go sh-go--sec" onclick="openStage('aufsteiger')">→ Aufsteiger</button>
+        <button class="sh-go sh-go--sec" onclick="openStage('fuehrung')">→ Führungskräfte</button>
+        <button class="sh-go sh-go--ghost" onclick="document.getElementById('pfad').scrollIntoView({behavior:'smooth'})">Karrierepfad ↓</button>
       </div>
     </div>
   </div>
@@ -668,7 +672,7 @@
 <section class="sec sec-pick" id="waehlen">
   <div class="wrap">
     <div class="pick-head">
-      <h2>Wähl deine Ecke <span class="pick-hint">— hier sind deine Übungen</span></h2>
+      <h2>Wähl dein Level <span class="pick-hint">— und starte direkt in deine Themen</span></h2>
     </div>
     <div class="classes" id="classCards"></div>
   </div>
@@ -2140,8 +2144,8 @@ function renderStage(){
   const openThemes = pool.filter(t=>!isDone(tid(key,t)));
   document.getElementById('themeGrid').innerHTML = openThemes.length
     ? openThemes.map(t=>{ const i=c.themes.indexOf(t);
-        return `<div class="theme-card" data-open="${i}">
-          <button class="card-done" data-donecard="${i}" title="Als erledigt markieren">erledigt ✓</button>
+        return `<div class="theme-card" onclick="openReader('${key}',${i})" style="cursor:pointer">
+          <button class="card-done" data-donecard="${i}" title="Als erledigt markieren" onclick="event.stopPropagation()">erledigt ✓</button>
           <span class="tag">${t.tag}</span>
           <h4>${t.title}</h4>
           <p>${t.teaser}</p>
@@ -2156,7 +2160,7 @@ function renderStage(){
     ? `<button class="done-head" data-toggledone>Erledigt <span class="done-n">${doneThemes.length}</span> <span class="chev">${doneOpen?'▴':'▾'}</span></button>
        <div class="done-list ${doneOpen?'show':''}">
          ${doneThemes.map(t=>{ const i=c.themes.indexOf(t);
-           return `<div class="done-chip"><button class="dc-open" data-open="${i}">${t.title}</button><button class="dc-undo" data-undo="${i}" title="Wieder öffnen">↩</button></div>`;
+           return `<div class="done-chip"><button class="dc-open" onclick="openReader('${key}',${i})">${t.title}</button><button class="dc-undo" data-undo="${i}" title="Wieder öffnen">↩</button></div>`;
          }).join('')}
        </div>`
     : '';
