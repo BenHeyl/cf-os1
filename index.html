@@ -467,6 +467,10 @@
 .ci-mood{display:flex;gap:8px;}
 .ci-mood button{flex:1;font-size:22px;line-height:1;padding:9px 0;background:#fff;border:1px solid #d8cfb8;border-radius:10px;cursor:pointer;transition:all .12s;filter:grayscale(.6);opacity:.7;}
 .ci-mood button.on{border-color:var(--gold);background:#fbf6e8;filter:none;opacity:1;transform:translateY(-1px);}
+  .ci-hurdle{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;}
+  .ci-hurdle button{background:#fff;border:1.5px solid #e0d8c4;color:#33404a;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;border-radius:999px;padding:8px 13px;cursor:pointer;transition:border-color .12s,background .12s,color .12s;}
+  .ci-hurdle button:hover{border-color:var(--gold);}
+  .ci-hurdle button.on{background:var(--navy);border-color:var(--navy);color:#fff;}
 .ci-actions{display:flex;align-items:center;gap:12px;padding:16px 26px 24px;border-top:1px solid #e7dec9;flex-wrap:wrap;}
 .ci-actions .ci-go{background:var(--navy);color:#fff;font-family:'Inter',sans-serif;font-weight:700;font-size:15px;border:none;border-radius:10px;padding:13px 22px;cursor:pointer;flex:1;min-width:180px;}
 .ci-actions .ci-go:hover{background:var(--navy-deep);}
@@ -736,6 +740,18 @@
             <button type="button" data-mood="3" title="ok">😐</button>
             <button type="button" data-mood="4" title="gut">🙂</button>
             <button type="button" data-mood="5" title="stark">🔥</button>
+          </div>
+        </div>
+        <div class="ci-field">
+          <label>Was war diese Woche deine größte Hürde? <span class="hint">(optional — macht den Vorschlag treffsicherer)</span></label>
+          <div class="ci-hurdle" id="ciHurdle">
+            <button type="button" data-hurdle="kopf">Motivation / Kopf</button>
+            <button type="button" data-hurdle="kontakte">Kontakte &amp; Empfehlungen</button>
+            <button type="button" data-hurdle="termine">Terminierung</button>
+            <button type="button" data-hurdle="abschluss">Abschluss</button>
+            <button type="button" data-hurdle="menschen">Menschen einschätzen</button>
+            <button type="button" data-hurdle="team">Team / Recruiting</button>
+            <button type="button" data-hurdle="bestand">Bestand / Service</button>
           </div>
         </div>
       </div>
@@ -2787,8 +2803,9 @@ function ciIsoWeek(d){d=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate
 function ciLoad(){try{return JSON.parse(localStorage.getItem(CI_KEY))||{};}catch(e){return {};}}
 function ciSave(o){try{localStorage.setItem(CI_KEY,JSON.stringify(o));}catch(e){}}
 var _ciMood=0;
+var _ciHurdle=null;
 function ciNum(id){var v=document.getElementById(id).value;if(v===''||v===null)return null;var n=Number(v);return isNaN(n)?null:n;}
-function ciFindTheme(level,subs){var arr=(DATA[level]||{}).themes||[];for(var s=0;s<subs.length;s++){for(var i=0;i<arr.length;i++){if(arr[i].title.indexOf(subs[s])>-1)return {level:level,idx:i,title:arr[i].title};}}return null;}
+function ciFindTheme(level,subs){var arr=(DATA[level]||{}).themes||[];var firstAny=null;for(var s=0;s<subs.length;s++){for(var i=0;i<arr.length;i++){if(arr[i].title.indexOf(subs[s])>-1){var res={level:level,idx:i,title:arr[i].title};if(!firstAny)firstAny=res;var dn=false;try{dn=isDone(tid(level,arr[i]));}catch(e){dn=false;}if(!dn)return res;}}}return firstAny;}
 function ciPick(level,subsByLevel){ // try given level, then fall back across all
   var order=[level].concat(['einsteiger','aufsteiger','fuehrung'].filter(function(l){return l!==level;}));
   for(var o=0;o<order.length;o++){var hit=ciFindTheme(order[o], subsByLevel[order[o]]||subsByLevel['*']||[]);if(hit)return hit;}
@@ -2799,17 +2816,22 @@ function suggestTheme(d){
   var team=d.team, einh=d.einheiten, term=d.termine, abs=d.abschluesse, emp=d.empfehlungen, rec=d.recruiting, mood=d.energie;
   // Kandidaten je Bereich, pro Ebene passend benannt
   var C={
-    mindset:{einsteiger:['Der Antrieb','Begeisterung','Ist das hier echt'],aufsteiger:['Der lange Atem','Liebe das Plateau','sehen die Welt'],fuehrung:['Zweifelspunkt','Filtern','Koryphäe'],'*':['Der lange Atem','Liebe das Plateau','Der Antrieb']},
-    akquise:{einsteiger:['Sichtbar werden','Der Antrieb','Wer fragt'],aufsteiger:['Empfehlungen','kreative Akquise','Spontan'],fuehrung:['Team sichtbar','Cycle im Team','Empfehlungen'],'*':['Empfehlungen','kreative Akquise','Sichtbar werden']},
-    termine:{einsteiger:['Wochenplan','diszipliniert','Sichtbar werden'],aufsteiger:['Absagen','Follow-up','kreative Akquise'],fuehrung:['Cycle im Team','Team sichtbar'],'*':['Wochenplan','diszipliniert']},
+    mindset:{einsteiger:['Von Begeisterung','Ist das hier echt','Der Antrieb'],aufsteiger:['Der Sämann','Der lange Atem','Liebe das Plateau','sehen die Welt'],fuehrung:['Zweifelspunkt','Filtern','Koryphäe'],'*':['Der lange Atem','Von Begeisterung']},
+    akquise:{einsteiger:['Empfehlungen: dein Multiplikator','Sichtbar werden','Wer fragt'],aufsteiger:['Empfehlungen: die Grundhaltung','Das Empfehlungsgespräch','kreative Akquise','Sichtbar'],fuehrung:['Team sichtbar','Cycle im Team','Recruiting'],'*':['Empfehlungen','kreative Akquise','Sichtbar werden']},
+    termine:{einsteiger:['Wochenplan','diszipliniert','Sichtbar werden'],aufsteiger:['Souverän mit Absagen','kreative Akquise','Follow-up'],fuehrung:['Cycle im Team','Team sichtbar'],'*':['Wochenplan','diszipliniert']},
     abschluss:{einsteiger:['Erste Einwände','Analysetermin','Wer fragt'],aufsteiger:['Einwandbehandlung im Beratungstermin','Vorabschluss','Abschlusstechniken','Wertgleichung'],fuehrung:['Einwandbehandlung','Denk wie ein Unternehmer'],'*':['Einwandbehandlung','Vorabschluss','Abschlusstechniken']},
-    team:{einsteiger:['Wer fragt','diszipliniert'],aufsteiger:['Empfehlungen','Führbarkeit'],fuehrung:['Recruiting','richtige Auswahl','Teamentwicklung','Groß denken'],'*':['Recruiting','Teamentwicklung','Groß denken']},
+    farbe:{einsteiger:['Die vier Farbtypen'],aufsteiger:['Die vier Farbtypen','Wahrgenommene Kompetenz'],fuehrung:['Die vier Farbtypen','Filtern'],'*':['Die vier Farbtypen','Wer fragt']},
+    bestand:{einsteiger:['Upselling & Cross-Selling'],aufsteiger:['Upselling & Cross-Selling','Betreuungsvergütung','Servicetermin'],fuehrung:['Upselling & Cross-Selling','Servicetermin'],'*':['Upselling & Cross-Selling','Servicetermin']},
+    team:{einsteiger:['Der Recruiting-Pitch'],aufsteiger:['Der Recruiting-Pitch','Das Empfehlungsgespräch'],fuehrung:['Recruiting','richtige Auswahl','Teamentwicklung','Groß denken'],'*':['Der Recruiting-Pitch','Recruiting','Teamentwicklung']},
     begeistern:{einsteiger:['Analysetermin','Sichtbar werden'],aufsteiger:['begeistern','Servicetermin','Wahrgenommene Kompetenz'],fuehrung:['Anerkennung','Pushing Up People'],'*':['begeistern','Servicetermin']}
   };
   var why='', area=null;
   var leads = lvl==='fuehrung' || (team!=null && team>=1) || (rec!=null && rec>0);
+  var H={kopf:'mindset',kontakte:'akquise',termine:'termine',abschluss:'abschluss',menschen:'farbe',team:'team',bestand:'bestand'};
+  var HW={mindset:'Du hast selbst gesagt: der Kopf war diese Woche die größte Hürde. Genau da setzen wir an — Energie und Haltung zuerst.',akquise:'Du hast Kontakte & Empfehlungen als größte Hürde genannt — der Nachschub entscheidet alles. Lass uns die Pipeline füllen.',termine:'Du hast die Terminierung als größte Hürde genannt — Termine selbst zu legen ist die Chefaufgabe. Genau da setzen wir an.',abschluss:'Du hast den Abschluss als größte Hürde genannt — da steckt der größte Hebel. Wir schärfen Einwand & Abschluss.',farbe:'Du willst Menschen besser einschätzen — genau dafür sind die Farbtypen dein stärkstes Werkzeug.',team:'Du hast Team & Recruiting als größte Hürde genannt — Wachstum kommt über Menschen. Lass uns am Team arbeiten.',bestand:'Du hast Bestand & Service als größte Hürde genannt — hier liegt Umsatz, der schon da ist. Lass uns ihn heben.'};
+  if(d.hurdle && H[d.hurdle]){ area=H[d.hurdle]; why=HW[area]||''; }
   // Priorität: Energie tief → Mindset
-  if(mood && mood<=2){ area='mindset'; why='Deine Energie war diese Woche eher niedrig — bevor die Technik kommt, der Kopf. Hol dir Rückenwind.'; }
+  else if(mood && mood<=2){ area='mindset'; why='Deine Energie war diese Woche eher niedrig — bevor die Technik kommt, der Kopf. Hol dir Rückenwind.'; }
   // wenig Empfehlungen/Kontakte → Akquise (der Lebensnerv)
   else if(emp!=null && emp<=2){ area='akquise'; why='Wenige neue Kontakte/Empfehlungen letzte Woche — der Nachschub entscheidet alles. Lass uns die Pipeline füllen.'; }
   // wenig Termine → Terminierung/Disziplin
@@ -2832,8 +2854,17 @@ function ciWireMood(){
     _ciMood=Number(b.getAttribute('data-mood'));
     Array.prototype.forEach.call(mb.querySelectorAll('button'),function(x){x.classList.toggle('on',x===b);}); });
 }
+function ciWireHurdle(){
+  var hb=document.getElementById('ciHurdle');
+  if(!hb || hb._wired) return; hb._wired=true;
+  hb.addEventListener('click',function(e){ var b=e.target.closest('button[data-hurdle]'); if(!b)return;
+    _ciHurdle=b.getAttribute('data-hurdle');
+    Array.prototype.forEach.call(hb.querySelectorAll('button'),function(x){x.classList.toggle('on',x===b);}); });
+}
 function openCheckin(){
-  ciWireMood();
+  ciWireMood(); ciWireHurdle();
+  _ciHurdle=null;
+  var _hb=document.getElementById('ciHurdle'); if(_hb) Array.prototype.forEach.call(_hb.querySelectorAll('button'),function(x){x.classList.remove('on');});
   document.getElementById('home').style.display='none';
   document.getElementById('stage').classList.remove('active');
   document.getElementById('reader').classList.remove('active');
@@ -2863,7 +2894,7 @@ function submitCheckin(){
   var d={ name:name, level:level||'aufsteiger', stageName:stageName, stageVal:sv,
     team:ciNum('ciTeam'), einheiten:ciNum('ciEinheiten'), termine:ciNum('ciTermine'),
     abschluesse:ciNum('ciAbschluesse'), empfehlungen:ciNum('ciEmpf'), recruiting:ciNum('ciRecruiting'),
-    energie:_ciMood||null };
+    energie:_ciMood||null, hurdle:_ciHurdle||null };
   // Speichern (Historie, max 16 Wochen)
   var o=ciLoad(); var wk=ciIsoWeek(new Date());
   o.week=wk; o.history=o.history||[];
