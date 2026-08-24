@@ -692,6 +692,13 @@
 .deck-hint{text-align:center;font-size:12px;opacity:.6;padding:3px 0 8px;}
 .deck-start{display:inline-flex;align-items:center;gap:9px;margin:2px 0 8px;background:#1A2A4A;color:#fff;border:0;border-radius:10px;padding:12px 20px;font-family:'Inter',sans-serif;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 3px 11px rgba(26,42,74,.26);}
 .deck-start:hover{background:#24365C;}
+.deck-rail{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;}
+.dr-seg{font-size:clamp(10px,1.15vw,13px);font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:4px 11px;border-radius:999px;border:1.5px solid rgba(200,168,75,.35);color:rgba(255,255,255,.5);white-space:nowrap;}
+#deckOverlay:not(.deck-dark) .dr-seg{color:rgba(26,42,74,.4);border-color:rgba(26,42,74,.18);}
+.dr-seg.done{color:#C8A84B;border-color:rgba(200,168,75,.55);}
+#deckOverlay:not(.deck-dark) .dr-seg.done{color:#A9863A;border-color:rgba(169,134,58,.45);}
+.dr-seg.active{background:#C8A84B;border-color:#C8A84B;color:#1A2A4A;}
+#deckOverlay:not(.deck-dark) .dr-seg.active{background:#1A2A4A;border-color:#1A2A4A;color:#fff;}
 @media(max-width:620px){.deck-stage{padding:5vh 6vw;gap:11px;}}
 </style>
 </head>
@@ -2500,44 +2507,44 @@ rsScenarios:["B hat „gerade keine Zeit“ — A bietet ruhig einen konkreten A
 rsNote:"Nach jeder Runde tauschen. Feedback-Regel: erst was stark war, dann der eine Hebel. Wer allein übt, nutzt die Solo-Variante unten.",
 deck:[
  {kind:"title", kicker:"Seminar · Capital Future", title:"Kontakt & Analyse", lead:"Interesse wecken, den Analysetermin gewinnen — und ihn zum starken ersten Miteinander machen."},
- {kind:"section", title:"Wo die Zusammenarbeit wirklich entschieden wird", lead:"Nicht bei der Unterschrift — sondern viel früher.", points:[
+ {kind:"section", phase:"Ausgangslage", title:"Wo die Zusammenarbeit entschieden wird", lead:"Nicht bei der Unterschrift — sondern viel früher.", points:[
    {h:"Der Weg hat drei Schritte", t:"Terminvereinbarung, dann der Analysetermin, und erst danach in einem separaten Gespräch die eigentliche Beratung und die Entscheidung."},
    {h:"Entschieden wird im Analysetermin", t:"Ob der Klient mit uns arbeiten will, klärt sich schon dort — im ersten echten Miteinander, in dem die Fronten geklärt werden."},
-   {h:"Und der gute Analysetermin?", t:"Der wird im Vorgespräch entschieden. Genau diese Kette üben wir heute."}
+   {h:"Der gute Analysetermin?", t:"Der wird im Vorgespräch entschieden. Genau diese Kette üben wir heute."}
  ]},
  {kind:"quote", quote:"Die Zusammenarbeit entscheidet sich nicht bei der Unterschrift — sondern schon im Analysegespräch."},
- {kind:"content", kicker:"Der rote Faden", title:"Vier Schritte vom Kontakt zum Termin", lead:"Jeder Schritt hat eine klare Aufgabe.", points:[
-   {h:"1 · Erstkontakt / Aufhänger", t:"Ein natürlicher Einstieg, der nicht nach Verkauf klingt — ein echter Grund für das Gespräch."},
+ {kind:"content", phase:"Der Weg", kicker:"Der rote Faden", title:"Vier Schritte vom Kontakt zum Termin", lead:"Jeder Schritt hat eine klare Aufgabe.", points:[
+   {h:"1 · Erstkontakt", t:"Ein natürlicher Einstieg, der nicht nach Verkauf klingt — ein echter Grund für das Gespräch."},
    {h:"2 · Interesse wecken", t:"In zwei Sätzen einen echten Nutzen andeuten und Neugier erzeugen — ohne alles vorwegzunehmen."},
    {h:"3 · Analysetermin vereinbaren", t:"Ein konkreter Terminvorschlag als Alternativfrage: „Passt dir eher Dienstag oder Donnerstag?“."},
    {h:"4 · Erwartung setzen", t:"Kurz sagen, was im Termin passiert und was der Klient mitbringt — damit er vorbereitet und mit gutem Gefühl kommt."}
  ]},
- {kind:"content", kicker:"Die Ansprache", title:"So weckst du Interesse", lead:"Fertige Sätze, die du dir zu eigen machen kannst.", points:[
+ {kind:"content", phase:"Der Weg", kicker:"Die Ansprache", title:"So weckst du Interesse", lead:"Fertige Sätze, die du dir zu eigen machen kannst.", points:[
    {h:"Der Einstieg", t:"„Sag mal — hast du deine Finanzen eigentlich schon einmal in Ruhe anschauen lassen?“ Locker, echt, ohne Druck."},
    {h:"Der Nutzen, nicht das Produkt", t:"Sprich über das, was der Klient davon hat — Klarheit, Sicherheit, ein echter Plan — nicht über Verträge."},
    {h:"Der Übergang zum Termin", t:"Immer ein konkreter Vorschlag mit zwei Zeitfenstern — nie das schwache „hättest du mal Zeit?“."}
  ]},
- {kind:"content", title:"Der Analysetermin ist kein Verhör", lead:"Er ist das erste echte Miteinander — so soll er sich für den Klienten anfühlen.", points:[
-   {h:"Zuhören schlägt reden", t:"Im Analysetermin führt der, der die besseren Fragen stellt — nicht der, der am meisten erzählt."},
-   {h:"Offenheit erzeugt Offenheit", t:"Wer dem Klienten offen den Zweck zeigt, bekommt im Gegenzug Ehrlichkeit — und Vertrauen."},
-   {h:"Der Klient kauft zuerst dich", t:"Nicht das Produkt entscheidet, sondern ob er spürt, bei dir an der richtigen Adresse zu sein."}
- ]},
- {kind:"content", kicker:"Für gemischte Teams", title:"Jede Ebene hat ihre Aufgabe", lead:"Am selben Thema — aber mit unterschiedlicher Tiefe.", points:[
-   {h:"Einsteiger bauen", t:"Ihr Vorgespräch: Aufhänger, Interesse, Terminvorschlag. Und dann: einmal laut üben."},
-   {h:"Aufsteiger schärfen & coachen", t:"Farbtypgerecht ansprechen, erste Einwände am Kontakt entkräften — und einem Neuen ein konkretes Feedback geben."},
-   {h:"Führung moderiert", t:"Auf Redeanteile achten, die Zeit halten und dafür sorgen, dass jeder mit einem nächsten Schritt rausgeht."}
- ]},
- {kind:"content", title:"Die häufigsten Hürden am Kontakt", lead:"Sie kommen immer — mit einer ruhigen Antwort sind sie kein Problem.", points:[
+ {kind:"content", phase:"Einwände", title:"Die häufigsten Hürden am Kontakt", lead:"Sie kommen immer — mit einer ruhigen Antwort sind sie kein Problem.", points:[
    {h:"„Keine Zeit“", t:"„Verstehe — genau darum geht es nur um 15 Minuten, mit denen du danach vielleicht monatlich sparst. Eher diese oder nächste Woche?“"},
    {h:"„Kein Interesse“", t:"Kein Gegenreden, sondern Neugier wecken: „Das dachten viele — bis sie gesehen haben, was sie jeden Monat liegen lassen.“"},
    {h:"„Schick mir was per Mail“", t:"„Mach ich gern — aber in 15 Minuten persönlich bringt es dir mehr als jedes PDF. Wann passt es dir?“"}
  ]},
- {kind:"section", title:"Deine Aufgabe für diese Woche", lead:"Aus dem Seminar wird erst durch Anwendung ein Ergebnis.", points:[
-   {h:"Ein klarer Aufhänger", t:"Schreib deinen Erstkontakt-Einstieg in einem Satz — so, dass er sich für dich natürlich anfühlt."},
-   {h:"Fünf Menschen", t:"Nenn fünf Personen, die du diese Woche auf einen Analysetermin ansprichst."},
-   {h:"Ein konkreter Terminvorschlag", t:"Übe den Satz, mit dem du zum Termin führst — als Alternativfrage, verbindlich."}
+ {kind:"content", phase:"Umsetzung", title:"Der Analysetermin: das erste Miteinander", lead:"Er ist kein Verhör — so setzt du ihn richtig um.", points:[
+   {h:"Zuhören schlägt reden", t:"Im Analysetermin führt der, der die besseren Fragen stellt — nicht der, der am meisten erzählt."},
+   {h:"Offenheit erzeugt Offenheit", t:"Wer dem Klienten offen den Zweck zeigt, bekommt im Gegenzug Ehrlichkeit — und Vertrauen."},
+   {h:"Der Klient kauft zuerst dich", t:"Nicht das Produkt entscheidet, sondern ob er spürt, bei dir an der richtigen Adresse zu sein."}
+ ]},
+ {kind:"content", phase:"Ergebnis", title:"Woran du merkst, dass es läuft", lead:"Ein gelungener Kontakt hat ein klares Ergebnis — kein vages „ich meld mich“.", points:[
+   {h:"Ein fester Termin steht", t:"Mit Tag und Uhrzeit, nicht „irgendwann“ — das ist der eigentliche Erfolg des Vorgesprächs."},
+   {h:"Der Klient freut sich darauf", t:"Weil er einen echten Nutzen erwartet, kommt er vorbereitet und offen — nicht aus Höflichkeit."},
+   {h:"Die Basis fürs Miteinander steht", t:"Ihr habt eine gemeinsame Erwartung. Der Analysetermin kann zum ersten echten Miteinander werden."}
  ]},
  {kind:"quote", quote:"Ein gutes Vorgespräch ist eine Einladung, kein Verkauf."},
+ {kind:"content", phase:"Handeln", kicker:"Call to Action", title:"Deine Aufgabe für diese Woche", lead:"Aus dem Seminar wird erst durch Anwendung ein Ergebnis.", points:[
+   {h:"Ein klarer Aufhänger", t:"Schreib deinen Erstkontakt-Einstieg in einem Satz — so, dass er sich für dich natürlich anfühlt."},
+   {h:"Fünf Menschen", t:"Nenn fünf Personen, die du diese Woche konkret auf einen Analysetermin ansprichst."},
+   {h:"Ein konkreter Terminvorschlag", t:"Übe den Satz, mit dem du zum Termin führst — als Alternativfrage, verbindlich."}
+ ]},
  {kind:"close", title:"Jetzt ansprechen.", lead:"Weck Interesse, gewinn den Analysetermin — und mach ihn zum starken ersten Miteinander.", note:"Nächster Schritt: ab in die Werkstatt und die Vertiefungsthemen nutzen — Sichtbar werden, Der Analysetermin, Erste Einwände."}
 ]
 },
@@ -2650,46 +2657,46 @@ rsScenarios:["Lockerer Einstieg bei einem Bekannten — A bringt das Thema spiel
 rsNote:"Nach jeder Runde tauschen. Zählt die Versuche, nicht die Ergebnisse — wer am meisten spielt, gewinnt. Solo? Nutze die Variante unten.",
 deck:[
  {kind:"title", kicker:"Seminar · Capital Future", title:"Spaß am Vertrieb", lead:"Aus Input wird Output — warum Vertrieb ein Spiel ist und wie du lernst, es zu lieben."},
- {kind:"section", title:"Zuerst die unbequeme Wahrheit", lead:"Die meisten von uns tun zu wenig — und zwar nicht aus Faulheit, sondern aus drei sehr menschlichen Gründen.", points:[
+ {kind:"section", phase:"Ausgangslage", title:"Die unbequeme Wahrheit", lead:"Die meisten von uns tun zu wenig — nicht aus Faulheit, sondern aus drei sehr menschlichen Gründen.", points:[
    {h:"Sie starten im eigenen Umfeld", t:"Genau dort, wo eine Absage am meisten wehtut — bei Freunden und Familie. Das lähmt, bevor es richtig losgeht."},
    {h:"Sie werten jedes Nein als Niederlage", t:"Ein Nein fühlt sich an wie Versagen, statt wie ein ganz normaler Spielzug auf dem Weg zum Ja."},
    {h:"Sie warten auf Motivation", t:"Motivation kommt aber nicht vor dem Tun — sie entsteht durch das Tun. Wer auf sie wartet, wartet ewig."}
  ]},
- {kind:"content", kicker:"Das Naturgesetz", title:"Input bestimmt Output", lead:"Das ist der wichtigste Satz für deinen Erfolg — und er nimmt dir gleichzeitig den Druck.", svg:"<svg viewBox='0 0 500 250' xmlns='http://www.w3.org/2000/svg' font-family='Inter,Arial,sans-serif'><rect x='16' y='52' width='176' height='98' rx='13' fill='#1A2A4A'/><text x='104' y='88' text-anchor='middle' fill='#C8A84B' font-size='21' font-weight='700'>INPUT</text><text x='104' y='113' text-anchor='middle' fill='#F4EFE2' font-size='13'>Kontakte &#183; Anrufe</text><text x='104' y='132' text-anchor='middle' fill='#F4EFE2' font-size='13'>Fragen &#183; Empfehlungen</text><line x1='198' y1='101' x2='300' y2='101' stroke='#C8A84B' stroke-width='9'/><polygon points='298,85 332,101 298,117' fill='#C8A84B'/><rect x='308' y='52' width='176' height='98' rx='13' fill='#C8A84B'/><text x='396' y='88' text-anchor='middle' fill='#1A2A4A' font-size='21' font-weight='700'>OUTPUT</text><text x='396' y='113' text-anchor='middle' fill='#1A2A4A' font-size='13'>Termine &#183; Abschl&#252;sse</text><text x='396' y='132' text-anchor='middle' fill='#1A2A4A' font-size='13'>Erfolgserlebnisse</text><path d='M 396 150 C 396 220, 104 220, 104 152' fill='none' stroke='#1A2A4A' stroke-width='3' stroke-dasharray='7 5'/><polygon points='96,158 104,138 112,158' fill='#1A2A4A'/><text x='250' y='214' text-anchor='middle' fill='#1A2A4A' font-size='13.5' font-style='italic'>Erfolg macht Spa&#223; &#8594; mehr Input</text></svg>", points:[
+ {kind:"content", phase:"Ausgangslage", kicker:"Das Naturgesetz", title:"Input bestimmt Output", lead:"Der wichtigste Satz für deinen Erfolg — und er nimmt dir zugleich den Druck.", svg:"<svg viewBox='0 0 500 250' xmlns='http://www.w3.org/2000/svg' font-family='Inter,Arial,sans-serif'><rect x='16' y='52' width='176' height='98' rx='13' fill='#1A2A4A'/><text x='104' y='88' text-anchor='middle' fill='#C8A84B' font-size='21' font-weight='700'>INPUT</text><text x='104' y='113' text-anchor='middle' fill='#F4EFE2' font-size='13'>Kontakte &#183; Anrufe</text><text x='104' y='132' text-anchor='middle' fill='#F4EFE2' font-size='13'>Fragen &#183; Empfehlungen</text><line x1='198' y1='101' x2='300' y2='101' stroke='#C8A84B' stroke-width='9'/><polygon points='298,85 332,101 298,117' fill='#C8A84B'/><rect x='308' y='52' width='176' height='98' rx='13' fill='#C8A84B'/><text x='396' y='88' text-anchor='middle' fill='#1A2A4A' font-size='21' font-weight='700'>OUTPUT</text><text x='396' y='113' text-anchor='middle' fill='#1A2A4A' font-size='13'>Termine &#183; Abschl&#252;sse</text><text x='396' y='132' text-anchor='middle' fill='#1A2A4A' font-size='13'>Erfolgserlebnisse</text><path d='M 396 150 C 396 220, 104 220, 104 152' fill='none' stroke='#1A2A4A' stroke-width='3' stroke-dasharray='7 5'/><polygon points='96,158 104,138 112,158' fill='#1A2A4A'/><text x='250' y='214' text-anchor='middle' fill='#1A2A4A' font-size='13.5' font-style='italic'>Erfolg macht Spa&#223; &#8594; mehr Input</text></svg>", points:[
    {h:"Den Abschluss kannst du nicht erzwingen", t:"Ob jemand Ja sagt, hängt von vielem ab, das du nicht steuerst. Verkrampfen bringt dich keinen Schritt weiter."},
    {h:"Deinen Input steuerst du zu 100 %", t:"Wie viele Menschen du ansprichst, anrufst und fragst — das liegt ganz allein bei dir."},
-   {h:"Mehr Versuche = mehr Treffer", t:"Deine Quote bleibt ungefähr gleich. Wer doppelt so oft fragt, hat doppelt so viele Abschlüsse. So einfach ist die Rechnung."}
+   {h:"Mehr Versuche = mehr Treffer", t:"Deine Quote bleibt ungefähr gleich. Doppelt so oft fragen heißt doppelt so viele Abschlüsse. So einfach ist die Rechnung."}
  ]},
  {kind:"quote", quote:"Nicht der Beste gewinnt — sondern der, der am meisten Freude am Spielen hat."},
- {kind:"content", kicker:"Der Schlüssel", title:"Mach den Input zum Spiel", lead:"Wenn sich Aktivität wie ein Spiel anfühlt, machst du automatisch mehr — ganz ohne Zwang.", points:[
+ {kind:"content", phase:"Der Weg", kicker:"Die Lösung", title:"Mach den Input zum Spiel", lead:"Wenn sich Aktivität wie ein Spiel anfühlt, machst du automatisch mehr — ohne Zwang.", points:[
    {h:"Spielstand", t:"Gib dir einen täglichen Punktestand: z. B. 10 Kontakte = Tagesziel erreicht. Ein klares Ziel macht aus Arbeit ein Spiel."},
    {h:"Neins sammeln", t:"Dreh das Ziel um: Sammle 15 Neins pro Woche. Plötzlich ist jedes Nein ein Punkt — und die Angst davor löst sich auf."},
    {h:"Strähnen & Belohnung", t:"Drei Tage in Folge das Ziel erreicht? Gönn dir bewusst etwas. Belohnung hält das Spiel am Laufen."},
    {h:"Team-Leaderboard", t:"Ein gemeinsames Ranking macht aus dem Einzelkampf ein Spiel mit Freunden — und Wettbewerb beflügelt."}
  ]},
- {kind:"content", title:"Warum das Neins-Sammeln so mächtig ist", lead:"Der größte Bremser im Vertrieb ist die Angst vor dem Nein. Genau die knackst du damit.", points:[
-   {t:"Wer Neins bewusst sammelt, sucht sie aktiv — und wer sie sucht, hat keine Angst mehr vor ihnen."},
-   {t:"Ohne diese Angst fragst du viel öfter. Und mehr Fragen heißt ganz nebenbei: mehr Jas."},
-   {t:"Jedes Nein bringt dich statistisch näher ans nächste Ja. Es ist kein Stich — es ist Fortschritt."}
- ]},
- {kind:"content", title:"Der Kreislauf, der sich selbst antreibt", lead:"Spaß und Erfolg sind kein Zufall — sie verstärken sich gegenseitig.", points:[
-   {h:"Spaß", t:"Wenn es Spaß macht, machst du mehr Input — ganz freiwillig."},
-   {h:"→ mehr Input", t:"Mehr Input bringt mehr Output: mehr Termine, mehr Abschlüsse."},
-   {h:"→ Erfolgserlebnisse", t:"Erfolge fühlen sich gut an — und machen sofort Lust auf mehr."},
-   {h:"→ zurück zum Spaß", t:"So dreht sich das Rad immer schneller. Du musst es nur einmal anschieben."}
- ]},
- {kind:"content", kicker:"Dein Startpunkt", title:"Fang im Umfeld an — aber richtig", lead:"Dein Umfeld ist kein Hindernis, sondern dein größter Vorteil.", points:[
+ {kind:"content", phase:"Der Weg", title:"Fang im Umfeld an — aber richtig", lead:"Dein Umfeld ist kein Hindernis, sondern dein größter Vorteil.", points:[
    {h:"Warme Kontakte vertrauen dir schon", t:"Bei Menschen, die dich kennen, musst du kein Vertrauen aufbauen — das ist längst da."},
    {h:"Spielerisch statt verkäuferisch", t:"Nicht „ich muss dir etwas verkaufen“, sondern „ich mach jetzt etwas Spannendes — willst du davon hören?“."},
-   {h:"Die Umfeld-Landkarte", t:"Schreib 20 Menschen auf, die du kennst. Markier die 5, die du diese Woche spielerisch ansprichst. Mehr braucht es zum Start nicht."}
+   {h:"Die Umfeld-Landkarte", t:"Schreib 20 Menschen auf, die du kennst, und markier die 5, die du diese Woche ansprichst. Mehr braucht es zum Start nicht."}
  ]},
- {kind:"section", title:"Deine Challenge für diese Woche", lead:"Kein Vorsatz ohne Spielregel. Leg deine jetzt fest.", points:[
-   {h:"Eine Spielregel", t:"Z. B. 10 Kontakte pro Tag oder 15 Neins in der Woche. Eine Zahl, die du dir selbst gibst."},
-   {h:"Eine Belohnung", t:"Was gönnst du dir, wenn du sie schaffst? Schreib es auf — das macht es echt."},
-   {h:"Ein Startzeitpunkt", t:"Nicht „irgendwann“, sondern heute. Der erste Kontakt heute entscheidet, ob das Spiel läuft."}
+ {kind:"content", phase:"Einwände", title:"Wenn die Angst vorm Nein kommt", lead:"Die häufigste Hürde sitzt im eigenen Kopf. So gehst du souverän damit um.", points:[
+   {h:"Sammle sie, statt sie zu fürchten", t:"Wer Neins bewusst sammelt, sucht sie aktiv — und wer sie sucht, hat keine Angst mehr vor ihnen."},
+   {h:"Jedes Nein ist Fortschritt", t:"Statistisch bringt dich jedes Nein näher ans nächste Ja. Es ist kein Stich, sondern ein Schritt nach vorn."},
+   {h:"Trenne dich von der Person", t:"Das Nein gilt dem Zeitpunkt oder dem Thema, nicht dir. Wer das versteht, fragt beim Nächsten genauso locker weiter."}
+ ]},
+ {kind:"content", phase:"Umsetzung", title:"So spielst du — diese Woche", lead:"Aus dem Prinzip wird erst durch eine klare Spielregel ein Ergebnis.", points:[
+   {h:"Leg deine Spielregel fest", t:"Eine konkrete Zahl, die du dir selbst gibst — z. B. 10 Kontakte pro Tag oder 15 Neins in der Woche."},
+   {h:"Bestimme deine Belohnung", t:"Was gönnst du dir, wenn du sie schaffst? Schreib es auf — das macht das Spiel verbindlich."},
+   {h:"Starte heute, nicht irgendwann", t:"Der erste Kontakt heute entscheidet, ob das Spiel läuft. Nicht planen — anfangen."}
+ ]},
+ {kind:"content", phase:"Ergebnis", title:"Der Kreislauf, der dich zum Besten macht", lead:"Wenn du dranbleibst, trägt sich das Spiel selbst — und du wirst besser, fast nebenbei.", points:[
+   {h:"Spaß → mehr Input", t:"Was Spaß macht, tust du öfter. Mehr Input ist die logische Folge."},
+   {h:"Input → Output", t:"Mehr Aktivität bringt mehr Termine und mehr Abschlüsse — ganz von selbst."},
+   {h:"Output → Erfolgserlebnis", t:"Erfolge fühlen sich gut an und machen sofort Lust auf die nächste Runde."},
+   {h:"So wirst du der Beste", t:"Das Rad dreht sich immer schneller. Wer am längsten mit Freude spielt, wird am Ende der Beste."}
  ]},
  {kind:"quote", quote:"Erfolg macht Spaß — und Spaß macht Erfolg."},
- {kind:"close", title:"Jetzt spielen.", lead:"Werde besser, werde der Beste — und hab dabei Spaß. Genau dafür sind wir hier.", note:"Nächster Schritt: ab in die Werkstatt und dein Spiel starten. Erster Kontakt heute."}
+ {kind:"close", phase:"Handeln", title:"Jetzt spielen.", lead:"Werde besser, werde der Beste — und hab dabei Spaß. Genau dafür sind wir hier.", note:"Dein erster Zug heute: Leg deine Spielregel fest und sprich die erste Person aus deiner Umfeld-Landkarte an. Jetzt."}
 ]
 },
     {cat:"vertrieb", tag:"Seminar · Fokusthema", title:"Berufsunfähigkeit & Arbeitskraftsicherung: das Fundament jedes Konzepts",
@@ -2989,6 +2996,8 @@ function openStage(key){
 /* ===== Präsentationsmodus-Engine ===== */
 var deckSlides=null, deckI=0, deckP=0;
 var DECK_DARK={title:1,section:1,quote:1,close:1};
+var DECK_PHASES=["Ausgangslage","Der Weg","Einw\u00e4nde","Umsetzung","Ergebnis","Handeln"];
+function deckRail(phase){ var ci=DECK_PHASES.indexOf(phase); if(ci<0) return ""; return '<div class="deck-rail">'+DECK_PHASES.map(function(p,i){var cl=i===ci?"active":(i<ci?"done":"");return '<span class="dr-seg '+cl+'">'+p+'</span>';}).join("")+'</div>'; }
 function startDeck(slides){
   if(!slides||!slides.length) return;
   deckSlides=slides; deckI=0; deckP=0;
@@ -3037,6 +3046,7 @@ function deckRenderSlide(){
   ov.classList.toggle('deck-dark', !!DECK_DARK[s.kind||'content']);
   st.className='deck-stage kind-'+(s.kind||'content');
   var h='';
+  if(s.phase) h+=deckRail(s.phase);
   if(s.kicker) h+='<div class="ds-kicker">'+s.kicker+'</div>';
   if(s.title) h+='<h2 class="ds-title">'+s.title+'</h2>';
   if(s.lead) h+='<p class="ds-lead">'+s.lead+'</p>';
