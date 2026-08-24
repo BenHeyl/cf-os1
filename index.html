@@ -663,6 +663,36 @@
   .ftr-combo-d{font-size:.9rem;margin-top:7px;line-height:1.45;opacity:.98}
   .ftr-note-inc{font-size:.8rem;color:#8a6d1f;margin-top:8px}
   @media(max-width:560px){.ft-row{grid-template-columns:repeat(2,1fr)}}
+
+/* ===== Präsentationsmodus ===== */
+#deckOverlay{position:fixed;inset:0;z-index:99999;display:none;flex-direction:column;background:#F4EFE2;color:#20242c;font-family:'Inter',system-ui,sans-serif;}
+#deckOverlay.deck-dark{background:#1A2A4A;color:#F4EFE2;}
+.deck-stage{flex:1;display:flex;flex-direction:column;justify-content:center;gap:14px;width:100%;max-width:1080px;margin:0 auto;padding:7vh 7vw;box-sizing:border-box;overflow:auto;}
+.deck-stage.anim-in{animation:deckIn .42s cubic-bezier(.2,.7,.2,1);}
+@keyframes deckIn{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:none;}}
+.ds-kicker{color:#C8A84B;font-weight:700;letter-spacing:3px;text-transform:uppercase;font-size:clamp(12px,1.5vw,16px);}
+.ds-title{font-family:'Cambria',Georgia,serif;font-weight:700;line-height:1.12;font-size:clamp(30px,5vw,58px);margin:2px 0;}
+#deckOverlay:not(.deck-dark) .ds-title{color:#1A2A4A;}
+.ds-lead{font-size:clamp(17px,2.2vw,25px);line-height:1.5;opacity:.93;max-width:62ch;}
+.ds-quote{font-family:'Cambria',Georgia,serif;font-style:italic;font-weight:700;font-size:clamp(24px,4vw,44px);line-height:1.26;color:#C8A84B;border:0;margin:0;max-width:24ch;}
+.ds-svg{margin:4px 0;}.ds-svg svg{max-width:min(560px,82%);height:auto;display:block;}
+.ds-points{display:flex;flex-direction:column;gap:16px;margin-top:6px;}
+.deck-point{opacity:0;transform:translateY(10px);transition:opacity .4s ease,transform .4s ease;font-size:clamp(17px,2.05vw,25px);line-height:1.5;display:flex;gap:13px;align-items:flex-start;}
+.deck-point:before{content:"";flex:0 0 auto;width:11px;height:11px;border-radius:50%;background:#C8A84B;margin-top:.55em;}
+.deck-point.shown{opacity:1;transform:none;}
+.dp-h{font-weight:700;color:#C8A84B;}
+#deckOverlay:not(.deck-dark) .dp-h{color:#1A2A4A;}
+.ds-note{margin-top:10px;padding:14px 18px;border-left:4px solid #C8A84B;background:rgba(200,168,75,.14);border-radius:8px;font-size:clamp(15px,1.8vw,20px);line-height:1.5;}
+.deck-bar{display:flex;align-items:center;gap:14px;justify-content:center;padding:10px;background:rgba(0,0,0,.07);}
+#deckOverlay.deck-dark .deck-bar{background:rgba(0,0,0,.25);}
+.deck-btn{background:#C8A84B;color:#1A2A4A;border:0;border-radius:10px;min-width:46px;height:40px;font-size:22px;font-weight:700;cursor:pointer;line-height:1;display:flex;align-items:center;justify-content:center;padding:0 6px;}
+.deck-btn:hover{filter:brightness(1.08);}
+.deck-x{background:transparent;color:inherit;border:1.5px solid currentColor;}
+.deck-prog{min-width:64px;text-align:center;font-weight:700;font-size:15px;opacity:.82;}
+.deck-hint{text-align:center;font-size:12px;opacity:.6;padding:3px 0 8px;}
+.deck-start{display:inline-flex;align-items:center;gap:9px;margin:2px 0 8px;background:#1A2A4A;color:#fff;border:0;border-radius:10px;padding:12px 20px;font-family:'Inter',sans-serif;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 3px 11px rgba(26,42,74,.26);}
+.deck-start:hover{background:#24365C;}
+@media(max-width:620px){.deck-stage{padding:5vh 6vw;gap:11px;}}
 </style>
 </head>
 <body>
@@ -2467,7 +2497,50 @@ rsSetup:"Zwei Personen, idealerweise ein Erfahrener und ein Neuer. A führt ein 
 roleA:"Führ dein Vorgespräch von der Ansprache bis zum konkreten Terminvorschlag — weck Interesse über den Nutzen, ohne zu verkaufen, und setz am Ende die Erwartung für den Termin.",
 roleB:"Sei ein ganz normaler Kontakt: erst zurückhaltend, dann neugierig, sobald A einen echten Nutzen zeigt. Bring unterwegs eine kleine Hürde ein.",
 rsScenarios:["B hat „gerade keine Zeit“ — A bietet ruhig einen konkreten Alternativtermin an, statt aufzugeben.","B fragt „worum geht es denn genau?“ — A weckt in zwei Sätzen Neugier auf den Nutzen, ohne alles vorwegzunehmen.","B ist offen — A führt sauber zum konkreten Terminvorschlag (Tag + Uhrzeit) und setzt die Erwartung für den Analysetermin.","Coaching-Runde: Der erfahrenere Part gibt dem neuen genau EIN konkretes Feedback — was war stark, und was ist der eine Hebel?"],
-rsNote:"Nach jeder Runde tauschen. Feedback-Regel: erst was stark war, dann der eine Hebel. Wer allein übt, nutzt die Solo-Variante unten."},
+rsNote:"Nach jeder Runde tauschen. Feedback-Regel: erst was stark war, dann der eine Hebel. Wer allein übt, nutzt die Solo-Variante unten.",
+deck:[
+ {kind:"title", kicker:"Seminar · Capital Future", title:"Kontakt & Analyse", lead:"Interesse wecken, den Analysetermin gewinnen — und ihn zum starken ersten Miteinander machen."},
+ {kind:"section", title:"Wo die Zusammenarbeit wirklich entschieden wird", lead:"Nicht bei der Unterschrift — sondern viel früher.", points:[
+   {h:"Der Weg hat drei Schritte", t:"Terminvereinbarung, dann der Analysetermin, und erst danach in einem separaten Gespräch die eigentliche Beratung und die Entscheidung."},
+   {h:"Entschieden wird im Analysetermin", t:"Ob der Klient mit uns arbeiten will, klärt sich schon dort — im ersten echten Miteinander, in dem die Fronten geklärt werden."},
+   {h:"Und der gute Analysetermin?", t:"Der wird im Vorgespräch entschieden. Genau diese Kette üben wir heute."}
+ ]},
+ {kind:"quote", quote:"Die Zusammenarbeit entscheidet sich nicht bei der Unterschrift — sondern schon im Analysegespräch."},
+ {kind:"content", kicker:"Der rote Faden", title:"Vier Schritte vom Kontakt zum Termin", lead:"Jeder Schritt hat eine klare Aufgabe.", points:[
+   {h:"1 · Erstkontakt / Aufhänger", t:"Ein natürlicher Einstieg, der nicht nach Verkauf klingt — ein echter Grund für das Gespräch."},
+   {h:"2 · Interesse wecken", t:"In zwei Sätzen einen echten Nutzen andeuten und Neugier erzeugen — ohne alles vorwegzunehmen."},
+   {h:"3 · Analysetermin vereinbaren", t:"Ein konkreter Terminvorschlag als Alternativfrage: „Passt dir eher Dienstag oder Donnerstag?“."},
+   {h:"4 · Erwartung setzen", t:"Kurz sagen, was im Termin passiert und was der Klient mitbringt — damit er vorbereitet und mit gutem Gefühl kommt."}
+ ]},
+ {kind:"content", kicker:"Die Ansprache", title:"So weckst du Interesse", lead:"Fertige Sätze, die du dir zu eigen machen kannst.", points:[
+   {h:"Der Einstieg", t:"„Sag mal — hast du deine Finanzen eigentlich schon einmal in Ruhe anschauen lassen?“ Locker, echt, ohne Druck."},
+   {h:"Der Nutzen, nicht das Produkt", t:"Sprich über das, was der Klient davon hat — Klarheit, Sicherheit, ein echter Plan — nicht über Verträge."},
+   {h:"Der Übergang zum Termin", t:"Immer ein konkreter Vorschlag mit zwei Zeitfenstern — nie das schwache „hättest du mal Zeit?“."}
+ ]},
+ {kind:"content", title:"Der Analysetermin ist kein Verhör", lead:"Er ist das erste echte Miteinander — so soll er sich für den Klienten anfühlen.", points:[
+   {h:"Zuhören schlägt reden", t:"Im Analysetermin führt der, der die besseren Fragen stellt — nicht der, der am meisten erzählt."},
+   {h:"Offenheit erzeugt Offenheit", t:"Wer dem Klienten offen den Zweck zeigt, bekommt im Gegenzug Ehrlichkeit — und Vertrauen."},
+   {h:"Der Klient kauft zuerst dich", t:"Nicht das Produkt entscheidet, sondern ob er spürt, bei dir an der richtigen Adresse zu sein."}
+ ]},
+ {kind:"content", kicker:"Für gemischte Teams", title:"Jede Ebene hat ihre Aufgabe", lead:"Am selben Thema — aber mit unterschiedlicher Tiefe.", points:[
+   {h:"Einsteiger bauen", t:"Ihr Vorgespräch: Aufhänger, Interesse, Terminvorschlag. Und dann: einmal laut üben."},
+   {h:"Aufsteiger schärfen & coachen", t:"Farbtypgerecht ansprechen, erste Einwände am Kontakt entkräften — und einem Neuen ein konkretes Feedback geben."},
+   {h:"Führung moderiert", t:"Auf Redeanteile achten, die Zeit halten und dafür sorgen, dass jeder mit einem nächsten Schritt rausgeht."}
+ ]},
+ {kind:"content", title:"Die häufigsten Hürden am Kontakt", lead:"Sie kommen immer — mit einer ruhigen Antwort sind sie kein Problem.", points:[
+   {h:"„Keine Zeit“", t:"„Verstehe — genau darum geht es nur um 15 Minuten, mit denen du danach vielleicht monatlich sparst. Eher diese oder nächste Woche?“"},
+   {h:"„Kein Interesse“", t:"Kein Gegenreden, sondern Neugier wecken: „Das dachten viele — bis sie gesehen haben, was sie jeden Monat liegen lassen.“"},
+   {h:"„Schick mir was per Mail“", t:"„Mach ich gern — aber in 15 Minuten persönlich bringt es dir mehr als jedes PDF. Wann passt es dir?“"}
+ ]},
+ {kind:"section", title:"Deine Aufgabe für diese Woche", lead:"Aus dem Seminar wird erst durch Anwendung ein Ergebnis.", points:[
+   {h:"Ein klarer Aufhänger", t:"Schreib deinen Erstkontakt-Einstieg in einem Satz — so, dass er sich für dich natürlich anfühlt."},
+   {h:"Fünf Menschen", t:"Nenn fünf Personen, die du diese Woche auf einen Analysetermin ansprichst."},
+   {h:"Ein konkreter Terminvorschlag", t:"Übe den Satz, mit dem du zum Termin führst — als Alternativfrage, verbindlich."}
+ ]},
+ {kind:"quote", quote:"Ein gutes Vorgespräch ist eine Einladung, kein Verkauf."},
+ {kind:"close", title:"Jetzt ansprechen.", lead:"Weck Interesse, gewinn den Analysetermin — und mach ihn zum starken ersten Miteinander.", note:"Nächster Schritt: ab in die Werkstatt und die Vertiefungsthemen nutzen — Sichtbar werden, Der Analysetermin, Erste Einwände."}
+]
+},
     {cat:"vertrieb", tag:"Seminar · Moderation", title:"Terminierung: Termine, die wirklich zustande kommen",
 teaser:"Der Beruf steht und fällt mit vollen Terminkalendern. In diesem Seminar üben alle Ebenen, Termine selbst zu legen — diszipliniert, souverän und mit einer Quote, die trägt.",
 meta:["Seminar","Moderation","Level-Aufgaben","Tandem-Übung"],
@@ -2574,7 +2647,51 @@ rsSetup:"Speed-Runde zu zweit. A spricht B locker und spielerisch im Umfeld an, 
 roleA:"Sprich locker an, wie im echten Leben — neugierig, leicht, ohne Verkaufsdruck. Sieh es als Spielzug, nicht als Prüfung.",
 roleB:"Reagier mal offen, mal zurückhaltend. Gib danach kurz zurück, wann es sich leicht und sympathisch angefühlt hat.",
 rsScenarios:["Lockerer Einstieg bei einem Bekannten — A bringt das Thema spielerisch auf.","B blockt zuerst ab — A bleibt locker und macht ein Spiel daraus, statt zu drängen.","Speed-Runde: so viele kurze Ansprachen wie möglich in 3 Minuten — ein Punkt für jeden Versuch.","Coaching-Runde: Der Erfahrenere gibt dem Neuen EIN Feedback, das Mut macht."],
-rsNote:"Nach jeder Runde tauschen. Zählt die Versuche, nicht die Ergebnisse — wer am meisten spielt, gewinnt. Solo? Nutze die Variante unten."},
+rsNote:"Nach jeder Runde tauschen. Zählt die Versuche, nicht die Ergebnisse — wer am meisten spielt, gewinnt. Solo? Nutze die Variante unten.",
+deck:[
+ {kind:"title", kicker:"Seminar · Capital Future", title:"Spaß am Vertrieb", lead:"Aus Input wird Output — warum Vertrieb ein Spiel ist und wie du lernst, es zu lieben."},
+ {kind:"section", title:"Zuerst die unbequeme Wahrheit", lead:"Die meisten von uns tun zu wenig — und zwar nicht aus Faulheit, sondern aus drei sehr menschlichen Gründen.", points:[
+   {h:"Sie starten im eigenen Umfeld", t:"Genau dort, wo eine Absage am meisten wehtut — bei Freunden und Familie. Das lähmt, bevor es richtig losgeht."},
+   {h:"Sie werten jedes Nein als Niederlage", t:"Ein Nein fühlt sich an wie Versagen, statt wie ein ganz normaler Spielzug auf dem Weg zum Ja."},
+   {h:"Sie warten auf Motivation", t:"Motivation kommt aber nicht vor dem Tun — sie entsteht durch das Tun. Wer auf sie wartet, wartet ewig."}
+ ]},
+ {kind:"content", kicker:"Das Naturgesetz", title:"Input bestimmt Output", lead:"Das ist der wichtigste Satz für deinen Erfolg — und er nimmt dir gleichzeitig den Druck.", svg:"<svg viewBox='0 0 500 250' xmlns='http://www.w3.org/2000/svg' font-family='Inter,Arial,sans-serif'><rect x='16' y='52' width='176' height='98' rx='13' fill='#1A2A4A'/><text x='104' y='88' text-anchor='middle' fill='#C8A84B' font-size='21' font-weight='700'>INPUT</text><text x='104' y='113' text-anchor='middle' fill='#F4EFE2' font-size='13'>Kontakte &#183; Anrufe</text><text x='104' y='132' text-anchor='middle' fill='#F4EFE2' font-size='13'>Fragen &#183; Empfehlungen</text><line x1='198' y1='101' x2='300' y2='101' stroke='#C8A84B' stroke-width='9'/><polygon points='298,85 332,101 298,117' fill='#C8A84B'/><rect x='308' y='52' width='176' height='98' rx='13' fill='#C8A84B'/><text x='396' y='88' text-anchor='middle' fill='#1A2A4A' font-size='21' font-weight='700'>OUTPUT</text><text x='396' y='113' text-anchor='middle' fill='#1A2A4A' font-size='13'>Termine &#183; Abschl&#252;sse</text><text x='396' y='132' text-anchor='middle' fill='#1A2A4A' font-size='13'>Erfolgserlebnisse</text><path d='M 396 150 C 396 220, 104 220, 104 152' fill='none' stroke='#1A2A4A' stroke-width='3' stroke-dasharray='7 5'/><polygon points='96,158 104,138 112,158' fill='#1A2A4A'/><text x='250' y='214' text-anchor='middle' fill='#1A2A4A' font-size='13.5' font-style='italic'>Erfolg macht Spa&#223; &#8594; mehr Input</text></svg>", points:[
+   {h:"Den Abschluss kannst du nicht erzwingen", t:"Ob jemand Ja sagt, hängt von vielem ab, das du nicht steuerst. Verkrampfen bringt dich keinen Schritt weiter."},
+   {h:"Deinen Input steuerst du zu 100 %", t:"Wie viele Menschen du ansprichst, anrufst und fragst — das liegt ganz allein bei dir."},
+   {h:"Mehr Versuche = mehr Treffer", t:"Deine Quote bleibt ungefähr gleich. Wer doppelt so oft fragt, hat doppelt so viele Abschlüsse. So einfach ist die Rechnung."}
+ ]},
+ {kind:"quote", quote:"Nicht der Beste gewinnt — sondern der, der am meisten Freude am Spielen hat."},
+ {kind:"content", kicker:"Der Schlüssel", title:"Mach den Input zum Spiel", lead:"Wenn sich Aktivität wie ein Spiel anfühlt, machst du automatisch mehr — ganz ohne Zwang.", points:[
+   {h:"Spielstand", t:"Gib dir einen täglichen Punktestand: z. B. 10 Kontakte = Tagesziel erreicht. Ein klares Ziel macht aus Arbeit ein Spiel."},
+   {h:"Neins sammeln", t:"Dreh das Ziel um: Sammle 15 Neins pro Woche. Plötzlich ist jedes Nein ein Punkt — und die Angst davor löst sich auf."},
+   {h:"Strähnen & Belohnung", t:"Drei Tage in Folge das Ziel erreicht? Gönn dir bewusst etwas. Belohnung hält das Spiel am Laufen."},
+   {h:"Team-Leaderboard", t:"Ein gemeinsames Ranking macht aus dem Einzelkampf ein Spiel mit Freunden — und Wettbewerb beflügelt."}
+ ]},
+ {kind:"content", title:"Warum das Neins-Sammeln so mächtig ist", lead:"Der größte Bremser im Vertrieb ist die Angst vor dem Nein. Genau die knackst du damit.", points:[
+   {t:"Wer Neins bewusst sammelt, sucht sie aktiv — und wer sie sucht, hat keine Angst mehr vor ihnen."},
+   {t:"Ohne diese Angst fragst du viel öfter. Und mehr Fragen heißt ganz nebenbei: mehr Jas."},
+   {t:"Jedes Nein bringt dich statistisch näher ans nächste Ja. Es ist kein Stich — es ist Fortschritt."}
+ ]},
+ {kind:"content", title:"Der Kreislauf, der sich selbst antreibt", lead:"Spaß und Erfolg sind kein Zufall — sie verstärken sich gegenseitig.", points:[
+   {h:"Spaß", t:"Wenn es Spaß macht, machst du mehr Input — ganz freiwillig."},
+   {h:"→ mehr Input", t:"Mehr Input bringt mehr Output: mehr Termine, mehr Abschlüsse."},
+   {h:"→ Erfolgserlebnisse", t:"Erfolge fühlen sich gut an — und machen sofort Lust auf mehr."},
+   {h:"→ zurück zum Spaß", t:"So dreht sich das Rad immer schneller. Du musst es nur einmal anschieben."}
+ ]},
+ {kind:"content", kicker:"Dein Startpunkt", title:"Fang im Umfeld an — aber richtig", lead:"Dein Umfeld ist kein Hindernis, sondern dein größter Vorteil.", points:[
+   {h:"Warme Kontakte vertrauen dir schon", t:"Bei Menschen, die dich kennen, musst du kein Vertrauen aufbauen — das ist längst da."},
+   {h:"Spielerisch statt verkäuferisch", t:"Nicht „ich muss dir etwas verkaufen“, sondern „ich mach jetzt etwas Spannendes — willst du davon hören?“."},
+   {h:"Die Umfeld-Landkarte", t:"Schreib 20 Menschen auf, die du kennst. Markier die 5, die du diese Woche spielerisch ansprichst. Mehr braucht es zum Start nicht."}
+ ]},
+ {kind:"section", title:"Deine Challenge für diese Woche", lead:"Kein Vorsatz ohne Spielregel. Leg deine jetzt fest.", points:[
+   {h:"Eine Spielregel", t:"Z. B. 10 Kontakte pro Tag oder 15 Neins in der Woche. Eine Zahl, die du dir selbst gibst."},
+   {h:"Eine Belohnung", t:"Was gönnst du dir, wenn du sie schaffst? Schreib es auf — das macht es echt."},
+   {h:"Ein Startzeitpunkt", t:"Nicht „irgendwann“, sondern heute. Der erste Kontakt heute entscheidet, ob das Spiel läuft."}
+ ]},
+ {kind:"quote", quote:"Erfolg macht Spaß — und Spaß macht Erfolg."},
+ {kind:"close", title:"Jetzt spielen.", lead:"Werde besser, werde der Beste — und hab dabei Spaß. Genau dafür sind wir hier.", note:"Nächster Schritt: ab in die Werkstatt und dein Spiel starten. Erster Kontakt heute."}
+]
+},
     {cat:"vertrieb", tag:"Seminar · Fokusthema", title:"Berufsunfähigkeit & Arbeitskraftsicherung: das Fundament jedes Konzepts",
 teaser:"Die Arbeitskraft ist das größte Vermögen deines Klienten — und ihre Absicherung eines unserer wichtigsten Fokusthemen. Warum sie für Klient und Vertrieb Gold wert ist, und wie du sie souverän platzierst.",
 meta:["Seminar","Fokusthema","Akquise-Skript","Tandem-Übung"],
@@ -2868,6 +2985,77 @@ function openStage(key){
   showStage();
 }
 
+
+/* ===== Präsentationsmodus-Engine ===== */
+var deckSlides=null, deckI=0, deckP=0;
+var DECK_DARK={title:1,section:1,quote:1,close:1};
+function startDeck(slides){
+  if(!slides||!slides.length) return;
+  deckSlides=slides; deckI=0; deckP=0;
+  var ov=document.getElementById('deckOverlay');
+  if(!ov){
+    ov=document.createElement('div'); ov.id='deckOverlay';
+    ov.innerHTML='<div class="deck-stage" id="deckStage"></div>'
+      +'<div class="deck-hint">Klick oder Pfeiltaste weiter · Wischen am Handy · ESC beendet</div>'
+      +'<div class="deck-bar"><button class="deck-btn" data-deck="prev">\u2039</button>'
+      +'<div class="deck-prog" id="deckProg"></div>'
+      +'<button class="deck-btn" data-deck="next">\u203a</button>'
+      +'<button class="deck-btn deck-x" data-deck="close">\u2715</button></div>';
+    document.body.appendChild(ov);
+    ov.addEventListener('click',function(e){
+      var b=e.target.closest('[data-deck]');
+      if(b){ var a=b.getAttribute('data-deck'); if(a==='next')deckNext(); else if(a==='prev')deckPrev(); else closeDeck(); return; }
+      if(e.target.closest('.deck-stage')) deckNext();
+    });
+    var sx=0,sy=0;
+    ov.addEventListener('touchstart',function(e){ sx=e.touches[0].clientX; sy=e.touches[0].clientY; },{passive:true});
+    ov.addEventListener('touchend',function(e){ var dx=e.changedTouches[0].clientX-sx, dy=e.changedTouches[0].clientY-sy; if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy)){ dx<0?deckNext():deckPrev(); } });
+  }
+  ov.style.display='flex';
+  document.addEventListener('keydown',deckKey);
+  if(ov.requestFullscreen){ try{ ov.requestFullscreen().catch(function(){}); }catch(e){} }
+  deckRenderSlide();
+}
+function deckKey(e){
+  var ov=document.getElementById('deckOverlay');
+  if(!ov||ov.style.display==='none') return;
+  if(e.key==='ArrowRight'||e.key===' '||e.key==='Spacebar'||e.key==='PageDown'){ e.preventDefault(); deckNext(); }
+  else if(e.key==='ArrowLeft'||e.key==='PageUp'){ e.preventDefault(); deckPrev(); }
+  else if(e.key==='Escape'){ closeDeck(); }
+}
+function deckNext(){
+  var s=deckSlides[deckI], np=(s.points||[]).length;
+  if(deckP<np){ deckP++; var st=document.getElementById('deckStage'); var pts=st.querySelectorAll('.deck-point'); if(pts[deckP-1]) pts[deckP-1].classList.add('shown'); }
+  else if(deckI<deckSlides.length-1){ deckI++; deckP=0; deckRenderSlide(); }
+}
+function deckPrev(){
+  if(deckP>0){ var st=document.getElementById('deckStage'); var pts=st.querySelectorAll('.deck-point'); if(pts[deckP-1]) pts[deckP-1].classList.remove('shown'); deckP--; }
+  else if(deckI>0){ deckI--; deckP=(deckSlides[deckI].points||[]).length; deckRenderSlide(); }
+}
+function deckRenderSlide(){
+  var ov=document.getElementById('deckOverlay'), st=document.getElementById('deckStage'), s=deckSlides[deckI];
+  ov.classList.toggle('deck-dark', !!DECK_DARK[s.kind||'content']);
+  st.className='deck-stage kind-'+(s.kind||'content');
+  var h='';
+  if(s.kicker) h+='<div class="ds-kicker">'+s.kicker+'</div>';
+  if(s.title) h+='<h2 class="ds-title">'+s.title+'</h2>';
+  if(s.lead) h+='<p class="ds-lead">'+s.lead+'</p>';
+  if(s.quote) h+='<blockquote class="ds-quote">'+s.quote+'</blockquote>';
+  if(s.svg) h+='<div class="ds-svg">'+s.svg+'</div>';
+  if(s.points&&s.points.length){ h+='<div class="ds-points">'+s.points.map(function(p){return '<div class="deck-point">'+(p.h?'<span class="dp-h">'+p.h+'</span> ':'')+'<span class="dp-t">'+(p.t||'')+'</span></div>';}).join('')+'</div>'; }
+  if(s.note) h+='<div class="ds-note">'+s.note+'</div>';
+  st.innerHTML=h;
+  var pts=st.querySelectorAll('.deck-point');
+  for(var i=0;i<deckP&&i<pts.length;i++) pts[i].classList.add('shown');
+  void st.offsetWidth; st.classList.add('anim-in');
+  var pr=document.getElementById('deckProg'); if(pr) pr.textContent=(deckI+1)+' / '+deckSlides.length;
+}
+function closeDeck(){
+  var ov=document.getElementById('deckOverlay'); if(ov) ov.style.display='none';
+  document.removeEventListener('keydown',deckKey);
+  if(document.fullscreenElement){ try{ document.exitFullscreen().catch(function(){}); }catch(e){} }
+}
+
 function openReader(key,idx,force){
   ciBumpRot();
   const _nid=tid(key,DATA[key].themes[idx]);
@@ -2887,6 +3075,7 @@ function openReader(key,idx,force){
     <div class="kicker">${c.corner} · ${c.title} · ${c.sub}</div>
     <h2>${t.title}</h2>
     <div class="frame">${t.frame}</div>
+    ${t.deck?`<button class="deck-start" data-act="startdeck">▶ Präsentation starten</button>`:''}
     <div class="howto">
       <span><b>Allein</b> oder zu zweit/dritt</span><span class="dot">·</span>
       <span><b>ca. 40 Min</b> — ein Thema, in Ruhe</span><span class="dot">·</span>
@@ -3042,6 +3231,7 @@ document.addEventListener('click',e=>{
     showStage();
   }
   if(act==='print'){ window.print(); }
+  if(act==='startdeck'){ startDeck(DATA[currentKey].themes[readerIdx].deck); return; }
   if(act==='takedone'){ const btn=e.target; markDone(btn); }
   if(act==='reveal'){ var _rv=e.target.closest('.reveal'); _rv.classList.toggle('open'); var _a=_rv.querySelector('.rv-a'); if(_a){ var _set=function(){ if(_rv.classList.contains('open')) _a.style.maxHeight=(_a.scrollHeight+40)+'px'; }; _a.style.maxHeight=_rv.classList.contains('open')?(_a.scrollHeight+40)+'px':'0'; var _im=_a.querySelector('img'); if(_im&&!_im.complete){ _im.addEventListener('load',_set,{once:true}); } } }
   if(act==='ftpick'){ ftPick(e.target.closest('.ft-opt')); return; }
