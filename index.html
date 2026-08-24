@@ -667,20 +667,22 @@
 /* ===== Präsentationsmodus ===== */
 #deckOverlay{position:fixed;inset:0;z-index:99999;display:none;flex-direction:column;background:#F4EFE2;color:#20242c;font-family:'Inter',system-ui,sans-serif;}
 #deckOverlay.deck-dark{background:#1A2A4A;color:#F4EFE2;}
-.deck-stage{flex:1;display:flex;flex-direction:column;justify-content:center;gap:14px;width:100%;max-width:1080px;margin:0 auto;padding:7vh 7vw;box-sizing:border-box;overflow:auto;}
+.deck-stage{flex:1;display:flex;flex-direction:column;justify-content:center;gap:11px;width:100%;max-width:1080px;margin:0 auto;padding:4.5vh 6.5vw;box-sizing:border-box;overflow:auto;}
 .deck-stage.anim-in{animation:deckIn .42s cubic-bezier(.2,.7,.2,1);}
 @keyframes deckIn{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:none;}}
 .ds-kicker{color:#C8A84B;font-weight:700;letter-spacing:3px;text-transform:uppercase;font-size:clamp(12px,1.5vw,16px);}
-.ds-title{font-family:'Cambria',Georgia,serif;font-weight:700;line-height:1.12;font-size:clamp(30px,5vw,58px);margin:2px 0;}
+.ds-title{font-family:'Cambria',Georgia,serif;font-weight:700;line-height:1.08;font-size:clamp(27px,4.4vw,50px);margin:1px 0;}
 #deckOverlay:not(.deck-dark) .ds-title{color:#1A2A4A;}
-.ds-lead{font-size:clamp(17px,2.2vw,25px);line-height:1.5;opacity:.93;max-width:62ch;}
+.ds-lead{font-size:clamp(15px,1.9vw,21px);line-height:1.45;opacity:.93;max-width:60ch;}
 .ds-quote{font-family:'Cambria',Georgia,serif;font-style:italic;font-weight:700;font-size:clamp(24px,4vw,44px);line-height:1.26;color:#C8A84B;border:0;margin:0;max-width:24ch;}
-.ds-svg{margin:4px 0;}.ds-svg svg{max-width:min(560px,82%);height:auto;display:block;}
-.ds-points{display:flex;flex-direction:column;gap:16px;margin-top:6px;}
-.deck-point{opacity:0;transform:translateY(10px);transition:opacity .4s ease,transform .4s ease;font-size:clamp(17px,2.05vw,25px);line-height:1.5;display:flex;gap:13px;align-items:flex-start;}
-.deck-point:before{content:"";flex:0 0 auto;width:11px;height:11px;border-radius:50%;background:#C8A84B;margin-top:.55em;}
+.ds-svg{margin:2px 0;}.ds-svg svg{max-width:min(420px,64%);height:auto;display:block;}
+.ds-points{display:flex;flex-direction:column;gap:11px;margin-top:3px;}
+.deck-point{opacity:0;transform:translateY(10px);transition:opacity .4s ease,transform .4s ease;font-size:clamp(14.5px,1.8vw,20px);line-height:1.4;display:flex;gap:13px;align-items:flex-start;}
+.deck-point:before{content:"";flex:0 0 auto;width:9px;height:9px;border-radius:50%;background:#C8A84B;margin-top:.5em;}
 .deck-point.shown{opacity:1;transform:none;}
-.dp-h{font-weight:700;color:#C8A84B;}
+.dp-h{display:block;font-weight:800;color:#C8A84B;margin-bottom:1px;}
+.dp-body{flex:1;min-width:0;}
+.dp-t{display:block;}
 #deckOverlay:not(.deck-dark) .dp-h{color:#1A2A4A;}
 .ds-note{margin-top:10px;padding:14px 18px;border-left:4px solid #C8A84B;background:rgba(200,168,75,.14);border-radius:8px;font-size:clamp(15px,1.8vw,20px);line-height:1.5;}
 .deck-bar{display:flex;align-items:center;gap:14px;justify-content:center;padding:10px;background:rgba(0,0,0,.07);}
@@ -2656,47 +2658,46 @@ roleB:"Reagier mal offen, mal zurückhaltend. Gib danach kurz zurück, wann es s
 rsScenarios:["Lockerer Einstieg bei einem Bekannten — A bringt das Thema spielerisch auf.","B blockt zuerst ab — A bleibt locker und macht ein Spiel daraus, statt zu drängen.","Speed-Runde: so viele kurze Ansprachen wie möglich in 3 Minuten — ein Punkt für jeden Versuch.","Coaching-Runde: Der Erfahrenere gibt dem Neuen EIN Feedback, das Mut macht."],
 rsNote:"Nach jeder Runde tauschen. Zählt die Versuche, nicht die Ergebnisse — wer am meisten spielt, gewinnt. Solo? Nutze die Variante unten.",
 deck:[
- {kind:"title", kicker:"Seminar · Capital Future", title:"Spaß am Vertrieb", lead:"Aus Input wird Output — warum Vertrieb ein Spiel ist und wie du lernst, es zu lieben."},
- {kind:"section", phase:"Ausgangslage", title:"Die unbequeme Wahrheit", lead:"Die meisten von uns tun zu wenig — nicht aus Faulheit, sondern aus drei sehr menschlichen Gründen.", points:[
-   {h:"Sie starten im eigenen Umfeld", t:"Genau dort, wo eine Absage am meisten wehtut — bei Freunden und Familie. Das lähmt, bevor es richtig losgeht."},
-   {h:"Sie werten jedes Nein als Niederlage", t:"Ein Nein fühlt sich an wie Versagen, statt wie ein ganz normaler Spielzug auf dem Weg zum Ja."},
-   {h:"Sie warten auf Motivation", t:"Motivation kommt aber nicht vor dem Tun — sie entsteht durch das Tun. Wer auf sie wartet, wartet ewig."}
+ {kind:"title", kicker:"Seminar · Capital Future", title:"Spaß am Vertrieb", lead:"Vertrieb ist ein Spiel — und du kannst es gewinnen. Wenn du es spielst."},
+ {kind:"section", phase:"Ausgangslage", title:"Die unbequeme Wahrheit", lead:"Die meisten tun zu wenig. Nicht aus Faulheit — aus drei sehr menschlichen Gründen.", points:[
+   {h:"Angst vorm eigenen Umfeld", t:"Da, wo die Absage am meisten wehtut, fangen alle an — und bremsen sich selbst aus."},
+   {h:"Jedes Nein als Niederlage", t:"Dabei ist ein Nein nur ein Spielzug auf dem Weg zum Ja."},
+   {h:"Warten auf Motivation", t:"Die kommt nie vorher. Sie entsteht erst beim Tun."}
  ]},
- {kind:"content", phase:"Ausgangslage", kicker:"Das Naturgesetz", title:"Input bestimmt Output", lead:"Der wichtigste Satz für deinen Erfolg — und er nimmt dir zugleich den Druck.", svg:"<svg viewBox='0 0 500 250' xmlns='http://www.w3.org/2000/svg' font-family='Inter,Arial,sans-serif'><rect x='16' y='52' width='176' height='98' rx='13' fill='#1A2A4A'/><text x='104' y='88' text-anchor='middle' fill='#C8A84B' font-size='21' font-weight='700'>INPUT</text><text x='104' y='113' text-anchor='middle' fill='#F4EFE2' font-size='13'>Kontakte &#183; Anrufe</text><text x='104' y='132' text-anchor='middle' fill='#F4EFE2' font-size='13'>Fragen &#183; Empfehlungen</text><line x1='198' y1='101' x2='300' y2='101' stroke='#C8A84B' stroke-width='9'/><polygon points='298,85 332,101 298,117' fill='#C8A84B'/><rect x='308' y='52' width='176' height='98' rx='13' fill='#C8A84B'/><text x='396' y='88' text-anchor='middle' fill='#1A2A4A' font-size='21' font-weight='700'>OUTPUT</text><text x='396' y='113' text-anchor='middle' fill='#1A2A4A' font-size='13'>Termine &#183; Abschl&#252;sse</text><text x='396' y='132' text-anchor='middle' fill='#1A2A4A' font-size='13'>Erfolgserlebnisse</text><path d='M 396 150 C 396 220, 104 220, 104 152' fill='none' stroke='#1A2A4A' stroke-width='3' stroke-dasharray='7 5'/><polygon points='96,158 104,138 112,158' fill='#1A2A4A'/><text x='250' y='214' text-anchor='middle' fill='#1A2A4A' font-size='13.5' font-style='italic'>Erfolg macht Spa&#223; &#8594; mehr Input</text></svg>", points:[
-   {h:"Den Abschluss kannst du nicht erzwingen", t:"Ob jemand Ja sagt, hängt von vielem ab, das du nicht steuerst. Verkrampfen bringt dich keinen Schritt weiter."},
-   {h:"Deinen Input steuerst du zu 100 %", t:"Wie viele Menschen du ansprichst, anrufst und fragst — das liegt ganz allein bei dir."},
-   {h:"Mehr Versuche = mehr Treffer", t:"Deine Quote bleibt ungefähr gleich. Doppelt so oft fragen heißt doppelt so viele Abschlüsse. So einfach ist die Rechnung."}
+ {kind:"content", phase:"Ausgangslage", kicker:"Das Naturgesetz", title:"Input bestimmt Output", lead:"Der eine Satz, der alles verändert — und dir sofort den Druck nimmt.", svg:"<svg viewBox='0 0 500 250' xmlns='http://www.w3.org/2000/svg' font-family='Inter,Arial,sans-serif'><rect x='16' y='52' width='176' height='98' rx='13' fill='#1A2A4A'/><text x='104' y='88' text-anchor='middle' fill='#C8A84B' font-size='21' font-weight='700'>INPUT</text><text x='104' y='113' text-anchor='middle' fill='#F4EFE2' font-size='13'>Kontakte &#183; Anrufe</text><text x='104' y='132' text-anchor='middle' fill='#F4EFE2' font-size='13'>Fragen &#183; Empfehlungen</text><line x1='198' y1='101' x2='300' y2='101' stroke='#C8A84B' stroke-width='9'/><polygon points='298,85 332,101 298,117' fill='#C8A84B'/><rect x='308' y='52' width='176' height='98' rx='13' fill='#C8A84B'/><text x='396' y='88' text-anchor='middle' fill='#1A2A4A' font-size='21' font-weight='700'>OUTPUT</text><text x='396' y='113' text-anchor='middle' fill='#1A2A4A' font-size='13'>Termine &#183; Abschl&#252;sse</text><text x='396' y='132' text-anchor='middle' fill='#1A2A4A' font-size='13'>Erfolgserlebnisse</text><path d='M 396 150 C 396 220, 104 220, 104 152' fill='none' stroke='#1A2A4A' stroke-width='3' stroke-dasharray='7 5'/><polygon points='96,158 104,138 112,158' fill='#1A2A4A'/><text x='250' y='214' text-anchor='middle' fill='#1A2A4A' font-size='13.5' font-style='italic'>Erfolg macht Spa&#223; &#8594; mehr Input</text></svg>", points:[
+   {h:"Output kannst du nicht erzwingen", t:"Ob jemand Ja sagt, steuerst du nicht — also lass los."},
+   {h:"Input steuerst du zu 100 %", t:"Mehr fragen heißt mehr Treffer. So einfach ist das."}
  ]},
- {kind:"quote", quote:"Nicht der Beste gewinnt — sondern der, der am meisten Freude am Spielen hat."},
- {kind:"content", phase:"Der Weg", kicker:"Die Lösung", title:"Mach den Input zum Spiel", lead:"Wenn sich Aktivität wie ein Spiel anfühlt, machst du automatisch mehr — ohne Zwang.", points:[
-   {h:"Spielstand", t:"Gib dir einen täglichen Punktestand: z. B. 10 Kontakte = Tagesziel erreicht. Ein klares Ziel macht aus Arbeit ein Spiel."},
-   {h:"Neins sammeln", t:"Dreh das Ziel um: Sammle 15 Neins pro Woche. Plötzlich ist jedes Nein ein Punkt — und die Angst davor löst sich auf."},
-   {h:"Strähnen & Belohnung", t:"Drei Tage in Folge das Ziel erreicht? Gönn dir bewusst etwas. Belohnung hält das Spiel am Laufen."},
-   {h:"Team-Leaderboard", t:"Ein gemeinsames Ranking macht aus dem Einzelkampf ein Spiel mit Freunden — und Wettbewerb beflügelt."}
+ {kind:"quote", quote:"Nicht der Beste gewinnt — sondern der, der am meisten spielt."},
+ {kind:"content", phase:"Der Weg", kicker:"Die Lösung", title:"Mach den Input zum Spiel", lead:"Fühlt es sich wie ein Spiel an, machst du automatisch mehr.", points:[
+   {h:"Spielstand", t:"10 Kontakte am Tag = Ziel erreicht. Zähl deine Punkte."},
+   {h:"Neins sammeln", t:"Ziel: 15 Neins pro Woche — und die Angst ist weg."},
+   {h:"Strähne & Belohnung", t:"Drei Tage in Folge? Gönn dir was."},
+   {h:"Team-Leaderboard", t:"Gemeinsam jagen macht mehr Spaß."}
  ]},
- {kind:"content", phase:"Der Weg", title:"Fang im Umfeld an — aber richtig", lead:"Dein Umfeld ist kein Hindernis, sondern dein größter Vorteil.", points:[
-   {h:"Warme Kontakte vertrauen dir schon", t:"Bei Menschen, die dich kennen, musst du kein Vertrauen aufbauen — das ist längst da."},
-   {h:"Spielerisch statt verkäuferisch", t:"Nicht „ich muss dir etwas verkaufen“, sondern „ich mach jetzt etwas Spannendes — willst du davon hören?“."},
-   {h:"Die Umfeld-Landkarte", t:"Schreib 20 Menschen auf, die du kennst, und markier die 5, die du diese Woche ansprichst. Mehr braucht es zum Start nicht."}
+ {kind:"content", phase:"Der Weg", title:"Starte in deinem Umfeld", lead:"Dein größter Vorteil — kein Hindernis.", points:[
+   {h:"Sie vertrauen dir schon", t:"Kein Vertrauensaufbau nötig — das ist längst da."},
+   {h:"Spielerisch statt verkäuferisch", t:"„Ich mach was Spannendes — willst du's hören?“"},
+   {h:"Deine Umfeld-Landkarte", t:"20 Namen notieren, 5 markieren, loslegen."}
  ]},
- {kind:"content", phase:"Einwände", title:"Wenn die Angst vorm Nein kommt", lead:"Die häufigste Hürde sitzt im eigenen Kopf. So gehst du souverän damit um.", points:[
-   {h:"Sammle sie, statt sie zu fürchten", t:"Wer Neins bewusst sammelt, sucht sie aktiv — und wer sie sucht, hat keine Angst mehr vor ihnen."},
-   {h:"Jedes Nein ist Fortschritt", t:"Statistisch bringt dich jedes Nein näher ans nächste Ja. Es ist kein Stich, sondern ein Schritt nach vorn."},
-   {h:"Trenne dich von der Person", t:"Das Nein gilt dem Zeitpunkt oder dem Thema, nicht dir. Wer das versteht, fragt beim Nächsten genauso locker weiter."}
+ {kind:"content", phase:"Einwände", title:"Angst vorm Nein? Dreh sie um.", lead:"Die größte Hürde sitzt im Kopf. Knack sie.", points:[
+   {h:"Sammle sie", t:"Wer Neins jagt, fürchtet sie nicht mehr."},
+   {h:"Jedes Nein ist Fortschritt", t:"Es bringt dich näher ans nächste Ja."},
+   {h:"Nicht persönlich nehmen", t:"Das Nein gilt dem Moment — nicht dir."}
  ]},
- {kind:"content", phase:"Umsetzung", title:"So spielst du — diese Woche", lead:"Aus dem Prinzip wird erst durch eine klare Spielregel ein Ergebnis.", points:[
-   {h:"Leg deine Spielregel fest", t:"Eine konkrete Zahl, die du dir selbst gibst — z. B. 10 Kontakte pro Tag oder 15 Neins in der Woche."},
-   {h:"Bestimme deine Belohnung", t:"Was gönnst du dir, wenn du sie schaffst? Schreib es auf — das macht das Spiel verbindlich."},
-   {h:"Starte heute, nicht irgendwann", t:"Der erste Kontakt heute entscheidet, ob das Spiel läuft. Nicht planen — anfangen."}
+ {kind:"content", phase:"Umsetzung", title:"Dein Spiel — diese Woche", lead:"Aus dem Prinzip wird jetzt dein Plan.", points:[
+   {h:"Deine Spielregel", t:"Eine Zahl: z. B. 10 Kontakte am Tag."},
+   {h:"Deine Belohnung", t:"Was gönnst du dir, wenn du sie knackst?"},
+   {h:"Dein Start: heute", t:"Nicht morgen. Der erste Kontakt zählt jetzt."}
  ]},
- {kind:"content", phase:"Ergebnis", title:"Der Kreislauf, der dich zum Besten macht", lead:"Wenn du dranbleibst, trägt sich das Spiel selbst — und du wirst besser, fast nebenbei.", points:[
-   {h:"Spaß → mehr Input", t:"Was Spaß macht, tust du öfter. Mehr Input ist die logische Folge."},
-   {h:"Input → Output", t:"Mehr Aktivität bringt mehr Termine und mehr Abschlüsse — ganz von selbst."},
-   {h:"Output → Erfolgserlebnis", t:"Erfolge fühlen sich gut an und machen sofort Lust auf die nächste Runde."},
-   {h:"So wirst du der Beste", t:"Das Rad dreht sich immer schneller. Wer am längsten mit Freude spielt, wird am Ende der Beste."}
+ {kind:"content", phase:"Ergebnis", title:"Der Kreislauf, der dich nach oben zieht", lead:"Einmal anschieben — dann trägt sich das Spiel selbst.", points:[
+   {h:"Spaß → mehr Input", t:"Was Spaß macht, tust du öfter."},
+   {h:"Input → Output", t:"Mehr Aktivität, mehr Abschlüsse."},
+   {h:"Output → Erfolg", t:"Und Erfolg macht Lust auf mehr."},
+   {h:"So wirst du der Beste", t:"Das Rad dreht schneller — wer spielt, gewinnt."}
  ]},
  {kind:"quote", quote:"Erfolg macht Spaß — und Spaß macht Erfolg."},
- {kind:"close", phase:"Handeln", title:"Jetzt spielen.", lead:"Werde besser, werde der Beste — und hab dabei Spaß. Genau dafür sind wir hier.", note:"Dein erster Zug heute: Leg deine Spielregel fest und sprich die erste Person aus deiner Umfeld-Landkarte an. Jetzt."}
+ {kind:"close", phase:"Handeln", title:"Jetzt raus — und spielen!", lead:"Werd besser. Werd der Beste. Und hab Spaß dabei.", note:"Dein erster Zug, jetzt: Spielregel festlegen und die erste Person aus deiner Landkarte anrufen."}
 ]
 },
     {cat:"vertrieb", tag:"Seminar · Fokusthema", title:"Berufsunfähigkeit & Arbeitskraftsicherung: das Fundament jedes Konzepts",
@@ -3052,7 +3053,7 @@ function deckRenderSlide(){
   if(s.lead) h+='<p class="ds-lead">'+s.lead+'</p>';
   if(s.quote) h+='<blockquote class="ds-quote">'+s.quote+'</blockquote>';
   if(s.svg) h+='<div class="ds-svg">'+s.svg+'</div>';
-  if(s.points&&s.points.length){ h+='<div class="ds-points">'+s.points.map(function(p){return '<div class="deck-point">'+(p.h?'<span class="dp-h">'+p.h+'</span> ':'')+'<span class="dp-t">'+(p.t||'')+'</span></div>';}).join('')+'</div>'; }
+  if(s.points&&s.points.length){ h+='<div class="ds-points">'+s.points.map(function(p){return '<div class="deck-point"><div class="dp-body">'+(p.h?'<span class="dp-h">'+p.h+'</span>':'')+'<span class="dp-t">'+(p.t||'')+'</span></div></div>';}).join('')+'</div>'; }
   if(s.note) h+='<div class="ds-note">'+s.note+'</div>';
   st.innerHTML=h;
   var pts=st.querySelectorAll('.deck-point');
