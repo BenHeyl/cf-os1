@@ -702,6 +702,57 @@
 .dr-seg.active{background:#C8A84B;border-color:#C8A84B;color:#1A2A4A;}
 #deckOverlay:not(.deck-dark) .dr-seg.active{background:#1A2A4A;border-color:#1A2A4A;color:#fff;}
 @media(max-width:620px){.deck-stage{padding:5vh 6vw;gap:11px;}}
+
+/* Karriere-Roadmap + Wochen-Hinweis */
+.rm{max-width:720px;margin:0 auto;}
+.rm-head{text-align:center;margin-bottom:20px;}
+.rm-eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;font-weight:800;}
+.rm-title{font-family:Cambria,Georgia,serif;font-size:clamp(24px,4vw,34px);color:var(--navy);margin:0 0 8px;}
+.rm-sub{color:#5b6472;font-size:14.5px;max-width:530px;margin:0 auto 16px;line-height:1.5;}
+.rm-progress{display:flex;align-items:center;gap:12px;max-width:520px;margin:0 auto;}
+.rm-progress-track{flex:1;height:8px;border-radius:99px;background:#e6e0d1;overflow:hidden;}
+.rm-progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--gold2,#A9863A),var(--gold));border-radius:99px;transition:width .5s cubic-bezier(.4,0,.2,1);}
+.rm-progress-label{font-size:12px;font-weight:800;color:var(--navy);white-space:nowrap;}
+.rm-track{position:relative;margin:24px 0 8px;}
+.rm-track:before{content:'';position:absolute;left:33px;top:16px;bottom:16px;width:3px;background:#e6e0d1;border-radius:2px;}
+.rm-node{position:relative;display:flex;gap:15px;align-items:flex-start;padding:10px 12px;margin-bottom:6px;cursor:pointer;border-radius:14px;transition:background .15s;}
+.rm-node:hover{background:rgba(200,168,75,.08);}
+.rm-node:focus-visible{outline:2px solid var(--gold);}
+.rm-dot{position:relative;z-index:1;flex:0 0 auto;width:52px;height:52px;border-radius:50%;background:#fff;border:3px solid #d8d2c3;display:flex;align-items:center;justify-content:center;transition:.2s;}
+.rm-code{font-weight:800;font-size:15px;color:#9aa2b0;}
+.rm-info{flex:1;min-width:0;padding-top:3px;}
+.rm-name{font-weight:800;color:var(--navy);font-size:15.5px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
+.rm-rate{font-weight:800;font-size:12px;color:var(--gold2,#A9863A);background:rgba(200,168,75,.15);padding:2px 9px;border-radius:99px;}
+.rm-tag{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:99px;}
+.rm-tag-here{background:var(--navy);color:#fff;}
+.rm-tag-next{background:var(--gold);color:var(--navy);}
+.rm-tag-done{background:#e6e0d1;color:#8a8574;}
+.rm-badge{display:inline-block;margin:5px 0 1px;font-size:11px;font-weight:800;color:var(--gold2,#A9863A);}
+.rm-focus{color:#4c5563;font-size:13.5px;margin-top:4px;line-height:1.5;}
+.rm-nextreq{margin-top:8px;font-size:12.5px;color:var(--navy);background:#f4efe2;border-left:3px solid var(--gold);padding:7px 11px;border-radius:0 8px 8px 0;line-height:1.45;}
+.rm-node.is-reached .rm-dot{background:var(--gold);border-color:var(--gold);}
+.rm-node.is-reached .rm-code{color:var(--navy);}
+.rm-node.is-here .rm-dot{border-color:var(--navy);background:var(--navy);box-shadow:0 0 0 4px rgba(26,42,74,.15);}
+.rm-node.is-here .rm-code{color:#fff;}
+.rm-node.is-next .rm-dot{border-color:var(--gold);background:#fff;animation:rmPulse 1.9s infinite;}
+.rm-node.is-next .rm-code{color:var(--gold2,#A9863A);}
+.rm-node.is-next{background:rgba(200,168,75,.10);}
+.rm-node.is-upcoming{opacity:.6;}
+@keyframes rmPulse{0%,100%{box-shadow:0 0 0 0 rgba(200,168,75,.55);}50%{box-shadow:0 0 0 8px rgba(200,168,75,0);}}
+.rm-foot{display:flex;flex-wrap:wrap;align-items:center;gap:8px;justify-content:center;margin-top:18px;font-size:13px;color:#5b6472;}
+.rm-link{background:#fff;border:1.5px solid #d8d2c3;color:var(--navy);font-weight:800;font-size:12.5px;padding:6px 13px;border-radius:99px;cursor:pointer;transition:.15s;}
+.rm-link:hover{border-color:var(--gold);color:var(--gold2,#A9863A);}
+.cf-nudge{position:fixed;top:0;left:0;right:0;z-index:9999;transform:translateY(-105%);transition:transform .4s cubic-bezier(.4,0,.2,1);}
+.cf-nudge.show{transform:translateY(0);}
+.cf-nudge-in{background:var(--navy);color:#fff;display:flex;align-items:center;gap:14px;padding:12px 18px;max-width:1100px;margin:0 auto;box-shadow:0 6px 24px rgba(0,0,0,.22);}
+.cf-nudge-dot{flex:0 0 auto;width:10px;height:10px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px rgba(200,168,75,.25);}
+.cf-nudge-txt{flex:1;font-size:13.5px;line-height:1.45;}
+.cf-nudge-txt b{color:var(--gold);}
+.cf-nudge-go{flex:0 0 auto;background:var(--gold);color:var(--navy);font-weight:800;font-size:13px;border:none;padding:9px 16px;border-radius:99px;cursor:pointer;}
+.cf-nudge-go:hover{background:#d8bd6a;}
+.cf-nudge-x{flex:0 0 auto;background:transparent;border:none;color:#cfc8b6;font-size:16px;cursor:pointer;padding:4px 6px;line-height:1;}
+.cf-nudge-x:hover{color:#fff;}
+@media(max-width:640px){.cf-nudge-in{flex-wrap:wrap;gap:10px;padding:11px 14px;}.cf-nudge-txt{flex:1 1 100%;}.rm-track:before{left:33px;}}
 </style>
 </head>
 <body>
@@ -930,73 +981,16 @@
 <!-- KARRIEREPFAD -->
 <section class="sec sec-more" id="pfad">
   <div class="wrap">
-    <details class="disc">
-      <summary><span class="disc-t">Wohin die Reise geht — der Karrierepfad</span><span class="disc-chev">▾</span></summary>
-      <div class="disc-body">
-    <div class="pfad">
-      <div class="pfad-step">
-        <div class="ps-rail"><span class="ps-num">1</span></div>
-        <div class="ps-body">
-          <div class="ps-pos">Klasse I · FA → FM</div>
-          <h3>Einsteiger — Fundament legen</h3>
-          <p class="ps-focus">Ankommen, dranbleiben, den Boden bereiten.</p>
-          <div class="ps-block"><b>Das beherrschst du hier</b><ul>
-            <li>Mindset: innerlich ankommen und durch die ersten Tiefs tragen</li>
-            <li>Erste Vertriebsschritte: Akquise, Analysetermin, einfache Einwände</li>
-            <li>Basis-Fachwissen: Haftpflicht, Unfall, BU, VL, Sozialsysteme, Altersvorsorge, Rechtsschutz</li>
-          </ul></div>
-          <div class="ps-next"><b>FA → FM:</b> 4.000 EH in max. 6 Monaten (min. 50 % Eigenumsatz). Vergütungsstufe steigt 1,50 € → 2,50 €, Karrierebonus 500 €.</div>
-          <button class="ps-go" data-open-class="einsteiger">Themen der Einsteiger →</button>
-        </div>
+    <div class="rm">
+      <div class="rm-head">
+        <div class="rm-eyebrow">Dein Weg bei CF</div>
+        <h2 class="rm-title">Der Karrierepfad</h2>
+        <p class="rm-sub">Sechs Stufen, ein Weg. Tipp an, wo du gerade stehst — und dein nächstes Ziel rückt in den Fokus.</p>
+        <div class="rm-progress"><div class="rm-progress-track"><div class="rm-progress-bar" id="rmBar"></div></div><span class="rm-progress-label" id="rmLabel">Tipp an, wo du stehst</span></div>
       </div>
-      <div class="pfad-step">
-        <div class="ps-rail"><span class="ps-num">2</span></div>
-        <div class="ps-body">
-          <div class="ps-pos">Klasse II · KM → VM</div>
-          <h3>Aufsteiger — den Cycle beherrschen</h3>
-          <p class="ps-focus">Der lange Atem: vertiefen und in erste Verantwortung wachsen.</p>
-          <div class="ps-block"><b>Das beherrschst du hier</b><ul>
-            <li>Den Verkaufs-Cycle vertiefen: Empfehlungen, Auswertung, Abschluss</li>
-            <li>Bestand pflegen und ausbauen — dein Fundament für Cashflow</li>
-            <li>Komplexe Fach-Themen: Gewerbe, bAV, Basisrente, Altersvorsorgedepot, Gold, Anlageimmobilien</li>
-          </ul></div>
-          <div class="ps-next"><b>FM → KM</b> (IHK-Pflicht): 15.000 EH in max. 12 Monaten. Vergütungsstufe 4,00 €, Karrierebonus 1.500 €. <b>KM → VM:</b> 65.000 EH in max. 24 Monaten → 5,00 €, Bonus 5.000 €.</div>
-          <button class="ps-go" data-open-class="aufsteiger">Themen der Aufsteiger →</button>
-        </div>
-      </div>
-      <div class="pfad-step">
-        <div class="ps-rail"><span class="ps-num">3</span></div>
-        <div class="ps-body">
-          <div class="ps-pos">Klasse III · GD / SP</div>
-          <h3>Führungskräfte — andere tragen</h3>
-          <p class="ps-focus">Nicht deine Zahlen, sondern die Köpfe deiner Leute.</p>
-          <div class="ps-block"><b>Das beherrschst du hier</b><ul>
-            <li>Vision und Recruiting: die Pipeline, die nie leer wird</li>
-            <li>Richtige Auswahl, Teamentwicklung, kritisieren, trennen, anerkennen</li>
-            <li>Den Cycle im Team verankern — duplizieren statt selbst machen</li>
-          </ul></div>
-          <div class="ps-next"><b>VM → GD:</b> 150.000 EH in max. 30 Monaten. Vergütungsstufe 6,00 €, Karrierebonus 10.000 €. <b>Darüber: SP — Senior Partner</b> (Ernennung durch den Vorstand).</div>
-          <button class="ps-go" data-open-class="fuehrung">Themen der Führung →</button>
-        </div>
-      </div>
-      <div class="pfad-step pfad-peak">
-        <div class="ps-rail"><span class="ps-num">★</span></div>
-        <div class="ps-body">
-          <div class="ps-pos">Die Spitze · eigener Satellit</div>
-          <h3>Das Nest verlassen — deine eigene Dependance</h3>
-          <p class="ps-focus">Größer denken, größere Räder drehen — und selbst tragen.</p>
-          <div class="ps-block"><b>Worum es hier geht</b><ul>
-            <li>Die Mannschaft so stabilisieren, ausbauen und schleifen, dass sie ohne dich läuft</li>
-            <li>Den eigenen Satelliten aufmachen — losgelöst vom Hauptbüro, unter dem CF-Dach</li>
-            <li>Verantwortung selbst tragen, auch finanziell: Fixkosten, Break-even, Reserve</li>
-          </ul></div>
-          <div class="ps-next"><b>Das Ziel:</b> eigener Boss, eigenes Geschäft, Freiheit — der Weg bis zum Generaldirektor und Senior Partner.</div>
-          <button class="ps-go" data-open-class="fuehrung">Zum Thema „Das Nest verlassen" →</button>
-        </div>
-      </div>
+      <div id="roadmap" class="rm-track"></div>
+      <div class="rm-foot"><span>Direkt zu den Themen:</span><button class="rm-link" data-open-class="einsteiger">Einsteiger</button><button class="rm-link" data-open-class="aufsteiger">Aufsteiger</button><button class="rm-link" data-open-class="fuehrung">Führung</button></div>
     </div>
-      </div>
-    </details>
   </div>
 </section>
 </main>
@@ -3651,5 +3645,58 @@ if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded
 <!-- ===== Wochen-Check-in Overlay ===== -->
 
 
+<script>
+(function(){
+var CAREER=[
+ {code:"FA",name:"Finanzassistent",rate:"1,50 €/EH",focus:"Fundament legen: Mindset, erste Vertriebsschritte, Basiswissen.",next:"4.000 EH in max. 6 Monaten (min. 50 % Eigenumsatz) · Bonus 500 €"},
+ {code:"FM",name:"Finanzmanager",rate:"2,50 €/EH",focus:"Sicher im Verkauf, erster Eigenumsatz, erste Partner.",next:"IHK-Zulassung + 15.000 EH in max. 12 Monaten · Bonus 1.500 €"},
+ {code:"KM",name:"Konzeptmanager",rate:"4,00 €/EH",focus:"Deine Startlinie: Eigenständigkeit, großes Einkommen, Team & Differenzen.",next:"65.000 EH in max. 24 Monaten · Bonus 5.000 €",star:true},
+ {code:"VM",name:"Aufbau und Struktur",rate:"5,00 €/EH",focus:"Struktur führen, Bestand ausbauen, duplizieren.",next:"150.000 EH in max. 30 Monaten · Bonus 10.000 €"},
+ {code:"GD",name:"Führungskraft",rate:"6,00 €/EH",focus:"Menschen entwickeln, Recruiting-Pipeline, den Cycle im Team verankern.",next:"Ernennung zum Senior Partner durch den Vorstand"},
+ {code:"SP",name:"Senior Partner",rate:"Spitze",focus:"An der Spitze: Vision, Verantwortung, Vorbild für alle.",next:null}
+];
+function rmCur(){var v=parseInt(localStorage.getItem("cf_career_stage"));return isNaN(v)?-1:v;}
+function renderRoadmap(){
+  var el=document.getElementById("roadmap"); if(!el) return;
+  var cur=rmCur(), n=CAREER.length, html="";
+  CAREER.forEach(function(s,i){
+    var st = cur<0?"neutral":(i<cur?"reached":(i===cur?"here":(i===cur+1?"next":"upcoming")));
+    html+='<div class="rm-node is-'+st+'" data-rm-stage="'+i+'" tabindex="0">';
+    html+='<div class="rm-dot"><span class="rm-code">'+s.code+'</span></div><div class="rm-info">';
+    var tag = st==="here"?'<span class="rm-tag rm-tag-here">Du bist hier</span>':(st==="next"?'<span class="rm-tag rm-tag-next">Dein nächstes Ziel</span>':(st==="reached"?'<span class="rm-tag rm-tag-done">erreicht</span>':""));
+    html+='<div class="rm-name">'+s.code+' · '+s.name+'<span class="rm-rate">'+s.rate+'</span>'+tag+'</div>';
+    if(s.star) html+='<div class="rm-badge">★ Startlinie</div>';
+    html+='<div class="rm-focus">'+s.focus+'</div>';
+    var req="";
+    if(st==="neutral" && s.next) req='<b>Aufstieg:</b> '+s.next;
+    else if(st==="here" && s.next) req='<b>Dein nächster Schritt:</b> '+s.next;
+    else if(st==="next") req='<b>So kommst du hin:</b> '+(CAREER[i-1]?CAREER[i-1].next:"");
+    if(req) html+='<div class="rm-nextreq">'+req+'</div>';
+    html+='</div></div>';
+  });
+  el.innerHTML=html;
+  var bar=document.getElementById("rmBar"),lab=document.getElementById("rmLabel");
+  var pct=cur<0?0:Math.round(((cur+1)/n)*100);
+  if(bar)bar.style.width=pct+"%";
+  if(lab)lab.textContent=cur<0?"Tipp an, wo du gerade stehst":("Stufe "+(cur+1)+" von "+n+(cur+1<n?" · Nächstes Ziel: "+CAREER[cur+1].code+" ("+CAREER[cur+1].name+")":" · Spitze erreicht"));
+}
+document.addEventListener("click",function(e){var d=e.target.closest("[data-rm-stage]");if(d){try{localStorage.setItem("cf_career_stage",d.getAttribute("data-rm-stage"));}catch(x){}renderRoadmap();}});
+renderRoadmap();
+function weekKey(){var n=new Date();var o=new Date(n.getFullYear(),0,1);var w=Math.ceil((((n-o)/86400000)+o.getDay()+1)/7);return n.getFullYear()+"-W"+w;}
+try{
+  var wk=weekKey();
+  if(localStorage.getItem("cf_career_nudge_week")!==wk){
+    var b=document.createElement("div");b.className="cf-nudge";
+    b.innerHTML='<div class="cf-nudge-in"><span class="cf-nudge-dot"></span><div class="cf-nudge-txt"><b>Neue Woche — dein Karrierepfad.</b> Wo stehst du gerade, und was ist dein nächstes Ziel? Ein kurzer Blick lohnt sich.</div><button class="cf-nudge-go" id="cfNudgeGo">Karrierepfad ansehen</button><button class="cf-nudge-x" id="cfNudgeX" aria-label="schließen">✕</button></div>';
+    document.body.appendChild(b);
+    requestAnimationFrame(function(){b.classList.add("show");});
+    localStorage.setItem("cf_career_nudge_week",wk);
+    var closeN=function(){b.classList.remove("show");setTimeout(function(){if(b.parentNode)b.remove();},420);};
+    document.getElementById("cfNudgeX").addEventListener("click",closeN);
+    document.getElementById("cfNudgeGo").addEventListener("click",function(){var el=document.getElementById("pfad");if(el)el.scrollIntoView({behavior:"smooth"});closeN();});
+  }
+}catch(e){}
+})();
+</script>
 </body>
 </html>
