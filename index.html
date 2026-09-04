@@ -705,43 +705,50 @@
 
 /* Karriere-Roadmap + Wochen-Hinweis */
 .rm{max-width:720px;margin:0 auto;}
-.rm-head{text-align:center;margin-bottom:20px;}
+.rm-head{text-align:center;margin-bottom:12px;}
 .rm-eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;font-weight:800;}
-.rm-title{font-family:Cambria,Georgia,serif;font-size:clamp(24px,4vw,34px);color:var(--navy);margin:0 0 8px;}
-.rm-sub{color:#5b6472;font-size:14.5px;max-width:530px;margin:0 auto 16px;line-height:1.5;}
+.rm-title{font-family:Cambria,Georgia,serif;font-size:clamp(24px,4vw,34px);color:#F4EFE2;margin:0 0 8px;}
+.rm-sub{color:#B6C0D0;font-size:14.5px;max-width:540px;margin:0 auto 16px;line-height:1.5;}
 .rm-progress{display:flex;align-items:center;gap:12px;max-width:520px;margin:0 auto;}
-.rm-progress-track{flex:1;height:8px;border-radius:99px;background:#e6e0d1;overflow:hidden;}
+.rm-progress-track{flex:1;height:8px;border-radius:99px;background:rgba(255,255,255,.14);overflow:hidden;}
 .rm-progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--gold2,#A9863A),var(--gold));border-radius:99px;transition:width .5s cubic-bezier(.4,0,.2,1);}
-.rm-progress-label{font-size:12px;font-weight:800;color:var(--navy);white-space:nowrap;}
-.rm-track{position:relative;margin:24px 0 8px;}
-.rm-track:before{content:'';position:absolute;left:33px;top:16px;bottom:16px;width:3px;background:#e6e0d1;border-radius:2px;}
+.rm-progress-label{font-size:12px;font-weight:800;color:#EAE4D6;white-space:nowrap;}
+.rm-cap{text-align:center;font-size:12px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;margin:8px 0;}
+.rm-cap-top{color:var(--gold);}
+.rm-cap-bot{color:#9fb0c6;}
+.rm-track{position:relative;margin:6px 0;}
+.rm-track:before{content:'';position:absolute;left:33px;top:16px;bottom:16px;width:3px;border-radius:2px;background:linear-gradient(to top,rgba(200,168,75,.14),rgba(200,168,75,.65));}
 .rm-node{position:relative;display:flex;gap:15px;align-items:flex-start;padding:10px 12px;margin-bottom:6px;cursor:pointer;border-radius:14px;transition:background .15s;}
-.rm-node:hover{background:rgba(200,168,75,.08);}
+.rm-node:hover{background:rgba(255,255,255,.05);}
 .rm-node:focus-visible{outline:2px solid var(--gold);}
-.rm-dot{position:relative;z-index:1;flex:0 0 auto;width:52px;height:52px;border-radius:50%;background:#fff;border:3px solid #d8d2c3;display:flex;align-items:center;justify-content:center;transition:.2s;}
-.rm-code{font-weight:800;font-size:15px;color:#9aa2b0;}
+.rm-dot{position:relative;z-index:1;flex:0 0 auto;width:52px;height:52px;border-radius:50%;background:#24365C;border:3px solid #40527a;display:flex;align-items:center;justify-content:center;transition:.2s;}
+.rm-code{font-weight:800;font-size:15px;color:#aab4c6;}
 .rm-info{flex:1;min-width:0;padding-top:3px;}
-.rm-name{font-weight:800;color:var(--navy);font-size:15.5px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
-.rm-rate{font-weight:800;font-size:12px;color:var(--gold2,#A9863A);background:rgba(200,168,75,.15);padding:2px 9px;border-radius:99px;}
+.rm-name{font-weight:800;color:#F4EFE2;font-size:15.5px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
+.rm-rate{font-weight:800;font-size:12px;color:#1A2A4A;background:var(--gold);padding:2px 9px;border-radius:99px;}
 .rm-tag{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:99px;}
-.rm-tag-here{background:var(--navy);color:#fff;}
-.rm-tag-next{background:var(--gold);color:var(--navy);}
-.rm-tag-done{background:#e6e0d1;color:#8a8574;}
-.rm-badge{display:inline-block;margin:5px 0 1px;font-size:11px;font-weight:800;color:var(--gold2,#A9863A);}
-.rm-focus{color:#4c5563;font-size:13.5px;margin-top:4px;line-height:1.5;}
-.rm-nextreq{margin-top:8px;font-size:12.5px;color:var(--navy);background:#f4efe2;border-left:3px solid var(--gold);padding:7px 11px;border-radius:0 8px 8px 0;line-height:1.45;}
+.rm-tag-here{background:var(--gold);color:#1A2A4A;}
+.rm-tag-next{background:transparent;border:1.5px solid var(--gold);color:var(--gold);}
+.rm-tag-done{background:rgba(255,255,255,.13);color:#bcc6d6;}
+.rm-badge{display:inline-block;margin:5px 0 1px;font-size:11px;font-weight:800;color:var(--gold);}
+.rm-focus{color:#C7D0DE;font-size:13.5px;margin-top:4px;line-height:1.5;}
+.rm-nextreq{margin-top:8px;font-size:12.5px;color:#1A2A4A;background:#F4EFE2;border-left:3px solid var(--gold);padding:7px 11px;border-radius:0 8px 8px 0;line-height:1.45;}
+.rm-nextreq b{color:#1A2A4A;}
 .rm-node.is-reached .rm-dot{background:var(--gold);border-color:var(--gold);}
-.rm-node.is-reached .rm-code{color:var(--navy);}
-.rm-node.is-here .rm-dot{border-color:var(--navy);background:var(--navy);box-shadow:0 0 0 4px rgba(26,42,74,.15);}
-.rm-node.is-here .rm-code{color:#fff;}
-.rm-node.is-next .rm-dot{border-color:var(--gold);background:#fff;animation:rmPulse 1.9s infinite;}
-.rm-node.is-next .rm-code{color:var(--gold2,#A9863A);}
-.rm-node.is-next{background:rgba(200,168,75,.10);}
-.rm-node.is-upcoming{opacity:.6;}
+.rm-node.is-reached .rm-code{color:#1A2A4A;}
+.rm-node.is-reached .rm-name,.rm-node.is-reached .rm-focus{opacity:.9;}
+.rm-node.is-here .rm-dot{background:#1A2A4A;border-color:var(--gold);box-shadow:0 0 0 4px rgba(200,168,75,.3);}
+.rm-node.is-here .rm-code{color:var(--gold);}
+.rm-node.is-here{background:rgba(200,168,75,.09);}
+.rm-node.is-next .rm-dot{background:#24365C;border-color:var(--gold);animation:rmPulse 1.9s infinite;}
+.rm-node.is-next .rm-code{color:var(--gold);}
+.rm-node.is-next{background:rgba(200,168,75,.13);}
+.rm-node.is-upcoming{opacity:.74;}
+.rm-node.is-upcoming .rm-focus{color:#9aa6ba;}
 @keyframes rmPulse{0%,100%{box-shadow:0 0 0 0 rgba(200,168,75,.55);}50%{box-shadow:0 0 0 8px rgba(200,168,75,0);}}
-.rm-foot{display:flex;flex-wrap:wrap;align-items:center;gap:8px;justify-content:center;margin-top:18px;font-size:13px;color:#5b6472;}
-.rm-link{background:#fff;border:1.5px solid #d8d2c3;color:var(--navy);font-weight:800;font-size:12.5px;padding:6px 13px;border-radius:99px;cursor:pointer;transition:.15s;}
-.rm-link:hover{border-color:var(--gold);color:var(--gold2,#A9863A);}
+.rm-foot{display:flex;flex-wrap:wrap;align-items:center;gap:8px;justify-content:center;margin-top:18px;font-size:13px;color:#B6C0D0;}
+.rm-link{background:transparent;border:1.5px solid #40527a;color:#EAE4D6;font-weight:800;font-size:12.5px;padding:6px 13px;border-radius:99px;cursor:pointer;transition:.15s;}
+.rm-link:hover{border-color:var(--gold);color:var(--gold);}
 .cf-nudge{position:fixed;top:0;left:0;right:0;z-index:9999;transform:translateY(-105%);transition:transform .4s cubic-bezier(.4,0,.2,1);}
 .cf-nudge.show{transform:translateY(0);}
 .cf-nudge-in{background:var(--navy);color:#fff;display:flex;align-items:center;gap:14px;padding:12px 18px;max-width:1100px;margin:0 auto;box-shadow:0 6px 24px rgba(0,0,0,.22);}
@@ -752,7 +759,7 @@
 .cf-nudge-go:hover{background:#d8bd6a;}
 .cf-nudge-x{flex:0 0 auto;background:transparent;border:none;color:#cfc8b6;font-size:16px;cursor:pointer;padding:4px 6px;line-height:1;}
 .cf-nudge-x:hover{color:#fff;}
-@media(max-width:640px){.cf-nudge-in{flex-wrap:wrap;gap:10px;padding:11px 14px;}.cf-nudge-txt{flex:1 1 100%;}.rm-track:before{left:33px;}}
+@media(max-width:640px){.cf-nudge-in{flex-wrap:wrap;gap:10px;padding:11px 14px;}.cf-nudge-txt{flex:1 1 100%;}}
 </style>
 </head>
 <body>
@@ -985,10 +992,12 @@
       <div class="rm-head">
         <div class="rm-eyebrow">Dein Weg bei CF</div>
         <h2 class="rm-title">Der Karrierepfad</h2>
-        <p class="rm-sub">Sechs Stufen, ein Weg. Tipp an, wo du gerade stehst — und dein nächstes Ziel rückt in den Fokus.</p>
+        <p class="rm-sub">Dein Weg führt von unten nach oben. Tipp an, wo du gerade stehst — dein nächstes Ziel liegt eine Stufe höher.</p>
         <div class="rm-progress"><div class="rm-progress-track"><div class="rm-progress-bar" id="rmBar"></div></div><span class="rm-progress-label" id="rmLabel">Tipp an, wo du stehst</span></div>
       </div>
+      <div class="rm-cap rm-cap-top">▲ Die Spitze · SP</div>
       <div id="roadmap" class="rm-track"></div>
+      <div class="rm-cap rm-cap-bot">↑ Hier beginnt dein Weg · FA</div>
       <div class="rm-foot"><span>Direkt zu den Themen:</span><button class="rm-link" data-open-class="einsteiger">Einsteiger</button><button class="rm-link" data-open-class="aufsteiger">Aufsteiger</button><button class="rm-link" data-open-class="fuehrung">Führung</button></div>
     </div>
   </div>
@@ -3659,7 +3668,7 @@ function rmCur(){var v=parseInt(localStorage.getItem("cf_career_stage"));return 
 function renderRoadmap(){
   var el=document.getElementById("roadmap"); if(!el) return;
   var cur=rmCur(), n=CAREER.length, html="";
-  CAREER.forEach(function(s,i){
+  for(var i=CAREER.length-1;i>=0;i--){var s=CAREER[i];
     var st = cur<0?"neutral":(i<cur?"reached":(i===cur?"here":(i===cur+1?"next":"upcoming")));
     html+='<div class="rm-node is-'+st+'" data-rm-stage="'+i+'" tabindex="0">';
     html+='<div class="rm-dot"><span class="rm-code">'+s.code+'</span></div><div class="rm-info">';
@@ -3673,7 +3682,7 @@ function renderRoadmap(){
     else if(st==="next") req='<b>So kommst du hin:</b> '+(CAREER[i-1]?CAREER[i-1].next:"");
     if(req) html+='<div class="rm-nextreq">'+req+'</div>';
     html+='</div></div>';
-  });
+  }
   el.innerHTML=html;
   var bar=document.getElementById("rmBar"),lab=document.getElementById("rmLabel");
   var pct=cur<0?0:Math.round(((cur+1)/n)*100);
