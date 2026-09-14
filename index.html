@@ -818,6 +818,36 @@
 .disg-wheelwrap{max-width:280px;margin:6px auto 18px;}
 .disg-arch{font-family:Cambria,Georgia,serif;font-weight:800;font-size:clamp(26px,5.5vw,38px);text-align:center;line-height:1.1;margin:2px 0 4px;}
 .disg-tag{text-align:center;color:#C7D0DE;font-size:14.5px;font-style:italic;max-width:460px;margin:0 auto 16px;line-height:1.5;}
+
+/* Globale Suche */
+.hdr-search{display:inline-flex;align-items:center;gap:7px;background:transparent;border:1.5px solid rgba(200,168,75,.5);color:#EAE4D6;font-weight:700;font-size:13px;padding:7px 14px;border-radius:99px;cursor:pointer;margin-right:12px;transition:.15s;vertical-align:middle;}
+.hdr-search:hover{border-color:var(--gold);color:var(--gold);}
+.hdr-search svg{width:15px;height:15px;flex:0 0 auto;}
+@media(max-width:560px){.hdr-search-tx{display:none;}.hdr-search{padding:8px;margin-right:8px;}}
+.search-ov{position:fixed;inset:0;z-index:10001;background:rgba(10,16,30,.975);display:none;flex-direction:column;}
+.search-bar{display:flex;align-items:center;gap:12px;max-width:720px;width:100%;margin:0 auto;padding:22px 20px 10px;box-sizing:border-box;}
+.search-ic{width:22px;height:22px;flex:0 0 auto;color:var(--gold);}
+.search-input{flex:1;min-width:0;background:#1c2b4c;border:1.5px solid #38496e;border-radius:12px;color:#F4EFE2;font-size:16px;padding:13px 16px;outline:none;}
+.search-input:focus{border-color:var(--gold);}
+.search-x{background:transparent;border:none;color:#cfc8b6;font-size:18px;cursor:pointer;padding:6px 8px;line-height:1;}
+.search-x:hover{color:#fff;}
+.search-hint{max-width:720px;width:100%;margin:0 auto;padding:0 20px 6px;color:#8b96a8;font-size:12.5px;box-sizing:border-box;}
+.search-results{flex:1;overflow-y:auto;max-width:720px;width:100%;margin:0 auto;padding:8px 14px 34px;box-sizing:border-box;}
+.sr-group{margin-bottom:12px;}
+.sr-glabel{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:9px 6px 5px;}
+.sr-row{display:flex;align-items:flex-start;gap:11px;width:100%;text-align:left;background:transparent;border:none;border-radius:12px;padding:11px 10px;cursor:pointer;transition:.12s;}
+.sr-row:hover{background:rgba(255,255,255,.06);}
+.sr-badge{flex:0 0 auto;font-size:10px;font-weight:800;color:#12203a;padding:3px 9px;border-radius:99px;margin-top:2px;white-space:nowrap;}
+.sr-txt{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.sr-title{color:#F4EFE2;font-weight:700;font-size:14.5px;}
+.sr-teaser{color:#9aa6ba;font-size:12.5px;line-height:1.4;}
+.sr-empty{color:#9aa6ba;text-align:center;padding:44px 20px;}
+
+.disg-card-good{border-left:3px solid #4FAE7F;}
+.disg-card-good h4{color:#6fd39c;}
+.disg-card-work{border-left:3px solid #E0A32E;}
+.disg-card-work h4{color:#f0bc55;}
+.disg-card2 p+p{margin-top:10px;}
 </style>
 </head>
 <body>
@@ -829,6 +859,7 @@
       <span class="cflogo cflogo-sm" role="img" aria-label="Capital Future"></span>
       <span>Mindset-Werkstatt<small>Capital Future · CF Operating System</small></span>
     </div>
+    <button class="hdr-search" id="searchTrigger" aria-label="Themen suchen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg><span class="hdr-search-tx">Suchen</span></button>
     <div class="timer" id="timer">
       <span id="clock">40:00</span>
       <span class="sep"></span>
@@ -3018,6 +3049,7 @@ function renderClasses(){
   });
 }
 renderClasses();
+try{window.CF_DATA=DATA;}catch(_e){};
 
 let currentKey=null, currentCat='alle', readerIdx=null, doneOpen=false;
 const home=document.getElementById('home');
@@ -3789,48 +3821,53 @@ var DISG_Q=[
  {q:"Andere beschreiben mich als …",o:[["G","… genau und zuverlässig."],["D","… durchsetzungsstark und direkt."],["I","… offen und mitreißend."],["S","… geduldig und loyal."]]},
  {q:"In Gesprächen …",o:[["I","… erzähle ich gern und lebhaft."],["D","… komme ich schnell auf den Punkt."],["S","… höre ich vor allem gut zu."],["G","… frage ich nach und will es genau verstehen."]]},
  {q:"Veränderung …",o:[["D","… ist eine Chance, die ich gern anpacke."],["I","… finde ich aufregend und spannend."],["G","… gehe ich vorsichtig und geplant an."],["S","… braucht bei mir etwas Zeit zum Gewöhnen."]]},
- {q:"Mit Fehlern gehe ich so um …",o:[["D","… abhaken und weitermachen."],["G","… verstehen, damit sie nicht wieder passieren."],["I","… meist locker nehmen."],["S","… sie beschäftigen mich; ich will es allen recht machen."]]},
+ {q:"Nach einer Absage oder einem Nein …",o:[["D","… hake ich ab und gehe zum Nächsten."],["I","… bin ich schnell drüber weg und suche neue Leute."],["S","… nagt es an mir und ich zweifle etwas."],["G","… analysiere ich, was ich beim nächsten Mal besser mache."]]},
  {q:"Am wohlsten fühle ich mich, wenn …",o:[["G","… ich alles im Griff und gut vorbereitet bin."],["S","… das Umfeld harmonisch und verlässlich ist."],["D","… ich Verantwortung habe und etwas bewegen kann."],["I","… viel los ist und ich unter Menschen bin."]]},
  {q:"Wenn ich etwas Neues lerne, …",o:[["S","… brauche ich klare Anleitung und Wiederholung."],["G","… will ich das Hintergrundwissen verstehen."],["D","… will ich schnell wissen, was es bringt, und es ausprobieren."],["I","… lerne ich am besten im Austausch mit anderen."]]},
- {q:"Ein guter Tag ist für mich, wenn …",o:[["D","… ich viel geschafft und Ziele erreicht habe."],["I","… ich viele schöne Begegnungen hatte."],["S","… alles ruhig und harmonisch lief."],["G","… alles genau nach Plan funktioniert hat."]]},
+ {q:"Wenn etwas nicht nach Plan läuft, …",o:[["D","… entscheide ich neu und packe an."],["I","… schwenke ich um und improvisiere."],["S","… bleibe ich ruhig und halte durch."],["G","… suche ich zuerst die Ursache."]]},
  {q:"Bei einem Konflikt …",o:[["D","… spreche ich ihn direkt an."],["I","… versuche ich, ihn mit Charme zu entschärfen."],["S","… suche ich nach Harmonie und Ausgleich."],["G","… kläre ich ihn ruhig und sachlich."]]},
  {q:"Meine Ziele sind …",o:[["D","… ehrgeizig und hoch gesteckt."],["G","… realistisch und gut durchdacht."],["I","… groß und sollen andere begeistern."],["S","… erreichbar und am liebsten gemeinsam."]]},
  {q:"Im Team übernehme ich am ehesten …",o:[["D","… die Führung und die Richtung."],["I","… die Motivation und die gute Stimmung."],["S","… den Zusammenhalt und die Verlässlichkeit."],["G","… die Qualität und den Überblick."]]},
  {q:"Was mich am meisten stört …",o:[["S","… Streit und ständige Hektik."],["G","… Schlamperei und Ungenauigkeit."],["D","… Langsamkeit und ewiges Zögern."],["I","… Langeweile und steife Atmosphäre."]]},
- {q:"Beim Verkaufen setze ich vor allem auf …",o:[["D","… Klarheit und den Abschluss."],["I","… Begeisterung und Beziehung."],["S","… Vertrauen und Geduld."],["G","… Fakten und Kompetenz."]]},
+ {q:"Beim Beraten und Verkaufen setze ich vor allem auf …",o:[["D","… Klarheit und den Abschluss."],["I","… Begeisterung und Beziehung."],["S","… Vertrauen und Geduld."],["G","… Fakten und Kompetenz."]]},
  {q:"Auf neue Leute …",o:[["I","… gehe ich offen und direkt zu."],["D","… schätze ich sie schnell ein."],["S","… werde ich langsam und herzlich warm."],["G","… schaue ich erst und beobachte."]]},
- {q:"Meine Schwäche ist eher …",o:[["D","… meine Ungeduld."],["I","… fehlende Struktur."],["S","… meine Konfliktscheu."],["G","… mein Perfektionismus."]]},
- {q:"Erfolg heißt für mich …",o:[["D","… gewinnen und vorankommen."],["I","… Anerkennung und Wirkung."],["S","… Sicherheit und gute Beziehungen."],["G","… exzellente Qualität."]]}
+ {q:"Meine größte Schwäche ist eher …",o:[["D","… meine Ungeduld."],["I","… fehlende Struktur."],["S","… meine Konfliktscheu."],["G","… mein Perfektionismus."]]},
+ {q:"Wenn ich jemanden für unsere Sache gewinnen will, …",o:[["D","… bringe ich es klar auf den Punkt und überzeuge."],["I","… stecke ich ihn mit meiner Begeisterung an."],["S","… baue ich in Ruhe Vertrauen auf."],["G","… überzeuge ich mit Fakten und Substanz."]]}
 ];
+function P2(a,b,c2){return {name:a,nick:b,col:c2};}
 var DISG_P={
  D:{name:"Dominant",nick:"Der Macher",col:"#E0604F",
-  recog:"Du bist gemacht, um voranzugehen. Wo andere zögern, entscheidest du. Ziele sind für dich keine Träume, sondern To-dos. Diese Klarheit und dieser Mut sind selten — und genau das macht dich aus.",
-  st:["Zielstrebig und entscheidungsstark","Mutig in Akquise und Abschluss","Treibt Tempo und übernimmt Verantwortung"],
-  ent:["Geduld und echtes Zuhören","Menschen mitnehmen statt über Köpfe hinweg","Beziehung vor den Abschluss stellen"],
-  lern:"Kurz, praxisnah und mit klarem Nutzen. Du lernst am schnellsten, indem du es direkt ausprobierst — gib dir konkrete Ziele statt langer Theorie.",
-  fokus:"Deine Akquise- und Abschlussstärke ist Gold wert. Dein Hebel: im Analysetermin bewusst mehr fragen und zuhören — und beim Teamaufbau die Menschen wirklich mitnehmen.",
-  kontakt:"Gib anderen bewusst Raum und hör aktiv zu — dann folgt man dir umso lieber."},
+  recog:["Du bist gemacht, um voranzugehen. Wo andere noch abwägen, hast du längst entschieden. Ziele sind für dich keine Wunschträume, sondern To-dos mit Datum. Du gehst nach vorn, auch wenn es unbequem wird — und ziehst andere mit deinem Tempo mit. Klarheit, Mut und Durchsetzungskraft in dieser Kombination sind selten. Bei dir sind sie Alltag.","Diese Energie ist deine Superkraft — und manchmal deine größte Stolperfalle. Denn nicht jeder ist so schnell wie du, und nicht jede Tür geht mit Nachdruck auf. Wer lernt, sein Tempo bewusst zu dosieren und anderen wirklich zuzuhören, wird aus einem starken Einzelkämpfer zu einer echten Führungspersönlichkeit."],
+  staerken:["Zielstrebig, mutig, entscheidungsstark","Kein Problem mit Akquise, Kaltkontakten und Absagen","Abschlussstark — du bringst Dinge zum Punkt","Übernimmst gern Verantwortung und gehst voran","Steckst Rückschläge weg und machst einfach weiter"],
+  punkte:["<b>Akquise & Abschluss:</b> Ansprechen, terminieren, abschließen — dein Heimspiel. Ein Nein wirft dich nicht um.","<b>Zielorientierung:</b> Du setzt dir EH-Ziele und gehst konsequent drauf zu.","<b>Aufbau & Führung:</b> Du willst wachsen, ein Team führen und andere nach oben ziehen."],
+  schwer:["<b>Analysetermin:</b> Hier zählt Zuhören, nicht Tempo. Dräng nicht zum Abschluss — stell Fragen und lass den Kunden reden.","<b>Beziehung & Betreuung:</b> Bestandspflege und echtes Interesse am Menschen brauchen Geduld — nicht deine Lieblingsdisziplin.","<b>Team entwickeln:</b> Menschen wachsen in ihrem Tempo. Wer nur überrollt, verliert sie. Hier musst du dich bewusst bremsen."],
+  fuss:"Starte da, wo du sofort stark bist: Kontakte machen, terminieren, abschließen. Setz dir klare EH-Ziele und leg los — dein Tempo ist dein Vorsprung. Deine Wachstumsaufgabe: den Analysetermin bewusst langsamer und fragend führen. Wer als Macher lernt, wirklich zuzuhören, wird bei uns nicht nur erfolgreich, sondern zur Führungskraft, der Menschen gern folgen.",
+  lern:"Kurz, praxisnah, mit klarem Nutzen. Lange Theorie langweilt dich — du lernst, indem du es sofort ausprobierst. Gib dir konkrete Ziele und miss deinen Fortschritt in Zahlen. Ein Mentor, der dich fordert statt bremst, holt das Beste aus dir heraus.",
+  kontakt:"Gib anderen bewusst Raum, lass sie ausreden und frag öfter nach, statt gleich die Lösung zu liefern. Menschen folgen dir umso lieber, wenn sie sich gesehen fühlen. Dein Tempo beeindruckt — deine Geduld gewinnt."},
  I:{name:"Initiativ",nick:"Der Begeisterer",col:"#E0A32E",
-  recog:"Du bringst Licht in jeden Raum. Menschen mögen dich, weil du echt bist, begeistert und nahbar. Diese Gabe, andere mitzureißen, kann man nicht lernen — du hast sie.",
-  st:["Kontaktstark und überzeugend","Motiviert und begeistert andere","Wie geschaffen für Ansprache und Recruiting"],
-  ent:["Dranbleiben und Nachfassen","Struktur und Details","Nicht nur reden — auch konsequent abschließen"],
-  lern:"Über Menschen und Austausch: Rollenspiele, Storytelling, gemeinsam üben. Visuell und mit Spaß bleibt bei dir am meisten hängen.",
-  fokus:"Ansprache und Recruiting sind deine Bühne — nutze sie voll. Dein Hebel: ein festes System fürs Nachfassen und Terminieren, damit aus Begeisterung auch Abschlüsse werden.",
-  kontakt:"Bleib nach dem ersten Funken dran — deine Verbindlichkeit macht aus Sympathie Vertrauen."},
+  recog:["Du bringst Licht in jeden Raum. Menschen mögen dich, weil du echt bist, offen und ansteckend begeistert. Kontakte zu knüpfen fällt dir so leicht wie atmen — du gewinnst Sympathie in Sekunden und Vertrauen kurz danach. Diese Gabe, andere mitzureißen, kann man nicht lernen. Du hast sie einfach.","Deine Energie ist Gold wert — solange du sie in Bahnen lenkst. Denn Begeisterung entfacht ein Feuer, aber sie hält es nicht von allein am Brennen. Struktur, Dranbleiben und der konsequente Abschluss sind nicht deine Lieblingsthemen — und genau hier entscheidet sich, ob aus Sympathie auch Ergebnisse werden."],
+  staerken:["Kontaktstark, offen, überzeugend","Begeisterst und motivierst andere mühelos","Wie geschaffen für Ansprache, Empfehlungen und Recruiting","Baust schnell Sympathie und Vertrauen auf","Bringst Energie und gute Laune ins Team"],
+  punkte:["<b>Ansprache & Recruiting:</b> Menschen gewinnen ist dein Talent — hier bist du kaum zu schlagen.","<b>Empfehlungen:</b> Deine Kontakte öffnen dir immer neue Türen.","<b>Perspektivmeeting & Präsentation:</b> Du kannst begeistern und andere in Bewegung bringen."],
+  schwer:["<b>Dranbleiben & Nachfassen:</b> Der erste Funke gelingt leicht — die Nachverfolgung braucht Disziplin. Bau dir ein festes System.","<b>Abschluss:</b> Reden ist einfach, den Sack zumachen weniger. Übe, konsequent zur Unterschrift zu führen.","<b>Struktur & Details:</b> Selbstorganisation, Fachtiefe und Routine (z. B. Terminierungs-Calls durchziehen) kosten dich Kraft — hier musst du dich reinfuchsen."],
+  fuss:"Nutz von Tag eins deine größte Stärke: Ansprache und Recruiting. Sprich Menschen an, bring sie ins Perspektivmeeting, hol dir Empfehlungen — da läufst du zur Höchstform auf. Deine Wachstumsaufgabe: ein festes System fürs Nachfassen und Terminieren, und der Mut, konsequent abzuschließen. Wenn du deiner Begeisterung Struktur gibst, wirst du bei uns nicht nur beliebt, sondern richtig erfolgreich.",
+  lern:"Über Menschen und Austausch: Rollenspiele, Storytelling, gemeinsam üben — so bleibt am meisten hängen. Trockene Theorie allein ermüdet dich; pack sie in Beispiele und Gespräche. Eine feste Lernroutine hilft dir, dranzubleiben.",
+  kontakt:"Bleib nach dem ersten Funken dran — deine Verbindlichkeit macht aus Sympathie echtes Vertrauen. Und hör bewusst zu, statt selbst den größten Redeanteil zu haben. Wer sich von dir gehört fühlt, folgt dir überallhin."},
  S:{name:"Stetig",nick:"Der Beständige",col:"#4FAE7F",
-  recog:"Du bist der Mensch, auf den man sich verlassen kann — ruhig, warm, treu. Du baust Beziehungen, die halten, und gibst anderen Halt. In einer lauten Welt bist du der ruhige, verlässliche Fels.",
-  st:["Beziehungspflege und Vertrauen","Stark bei Bestandskunden und Empfehlungen","Loyal, geduldig, ein guter Zuhörer"],
-  ent:["Raus aus der Komfortzone","Neukontakte aktiv angehen","Auch mal Nein sagen und Tempo zulassen"],
-  lern:"Schritt für Schritt, mit Sicherheit und Wiederholung. Eine klare Anleitung und ein Vorbild, an dem du dich orientieren kannst, helfen dir am meisten.",
-  fokus:"Deine Stärke ist Betreuung und Vertrauen — perfekt für Bestand und Empfehlungen. Dein Hebel: feste Routinen für die Neukontakt-Akquise, damit du regelmäßig aus der Komfortzone kommst.",
-  kontakt:"Trau dich öfter den ersten Schritt — deine Wärme wirkt sofort."},
+  recog:["Du bist der Mensch, auf den man sich verlassen kann — ruhig, warm, treu. Du baust Beziehungen, die halten, und gibst anderen Halt. Vertrauen entsteht bei dir nicht über Nacht, aber wenn es da ist, dann tief und dauerhaft. In einer lauten, hektischen Welt bist du der ruhige Fels, zu dem Menschen immer wieder zurückkommen.","Diese Beständigkeit ist im Finanzgeschäft unbezahlbar — denn hier zählt Vertrauen über Jahre. Deine Herausforderung liegt woanders: im aktiven Nach-vorne-Gehen. Neue Menschen anzusprechen, um Termine zu bitten, den Abschluss einzufordern — das kostet dich Überwindung. Und genau da liegt dein größtes Wachstum."],
+  staerken:["Verlässlich, geduldig, loyal","Baust tiefes, langfristiges Vertrauen auf","Stark in Betreuung, Bestand und Empfehlungen","Ein hervorragender Zuhörer","Der ruhige Anker im Team"],
+  punkte:["<b>Betreuung & Bestand:</b> Deine Kunden bleiben, weil sie dir vertrauen — hier bist du in deinem Element.","<b>Analysetermin:</b> Zuhören und echtes Interesse sind deine Stärke — Kunden fühlen sich bei dir gut aufgehoben.","<b>Empfehlungen:</b> Wer dir vertraut, empfiehlt dich gern weiter."],
+  schwer:["<b>Neukontakt-Akquise:</b> Fremde ansprechen und raus aus der Komfortzone — deine größte Hürde. Feste Routinen helfen, es trotzdem regelmäßig zu tun.","<b>Terminierungs-Telefonat:</b> Der Griff zum Hörer kostet Überwindung. Lern das Skript, bis es sich sicher anfühlt.","<b>Abschluss & Nein sagen:</b> Aus Harmoniebedürfnis weichst du dem Druckpunkt aus. Trau dich, den Abschluss aktiv einzufordern."],
+  fuss:"Fang bei deinem warmen Umfeld an: Menschen, die dir schon vertrauen, und Empfehlungen — hier fühlst du dich sicher und bist stark. Parallel deine Wachstumsaufgabe: die aktive Neukontakt-Akquise. Bau dir feste Routinen (z. B. täglich ein paar Terminierungs-Calls) und übe das Telefonat, bis es dir leichtfällt. Deine Verlässlichkeit trägt dich weit — wenn du dich traust, den ersten Schritt öfter selbst zu machen.",
+  lern:"Schritt für Schritt, mit Sicherheit und Wiederholung. Du magst klare Anleitungen und ein Vorbild zum Orientieren. Neues brauchst du in verdaulichen Häppchen — dann sitzt es fest. Üben in geschütztem Rahmen (Rollenspiel mit einem vertrauten Kollegen) gibt dir Sicherheit.",
+  kontakt:"Trau dich öfter, den ersten Schritt zu machen — deine Wärme wirkt sofort, du unterschätzt sie nur. Und pass auf, dass du aus Harmoniebedürfnis nicht Wichtiges unausgesprochen lässt. Klare, freundliche Ansagen sind auch Beziehungspflege."},
  G:{name:"Gewissenhaft",nick:"Der Analytiker",col:"#4F8BD0",
-  recog:"Du willst verstehen, bevor du handelst — und dann machst du es richtig. Deine Gründlichkeit schafft Qualität, der andere vertrauen. Diese Tiefe ist deine Stärke in einer oft oberflächlichen Zeit.",
-  st:["Fachkompetenz und Genauigkeit","Seriöse, fundierte Beratung","Schafft Vertrauen durch Kompetenz"],
-  ent:["Nicht in Analyse und Perfektion verharren","Schneller ins Handeln kommen","Emotion und Beziehung bewusst zulassen"],
-  lern:"Gründlich, mit Hintergründen und Fakten, in Ruhe und am besten schriftlich. Du willst das Konzept verstehen, bevor du loslegst.",
-  fokus:"Deine fundierte Beratung im Analysetermin schafft echtes Vertrauen. Dein Hebel: ins Tun kommen, ohne dich zu lange festzuanalysieren — und Ansprache und Emotion gezielt üben.",
-  kontakt:"Lass Nähe und Bauchgefühl zu — Fakten überzeugen, Vertrauen entscheidet."}
+  recog:["Du willst verstehen, bevor du handelst — und dann machst du es richtig. Genauigkeit, Substanz und Qualität sind dir wichtiger als schnelle Effekte. Zahlen und Fakten überzeugen dich, große Worte lassen dich kalt. Diese Gründlichkeit schafft etwas Wertvolles: eine Beratung, der Menschen wirklich vertrauen können. In einer oft oberflächlichen Branche ist deine Tiefe ein echtes Pfund.","Deine Stärke hat eine Kehrseite: Wer alles perfekt machen will, kommt manchmal gar nicht erst ins Tun. Ansprache, Emotion, der mutige erste Schritt — das fällt dir schwerer als die saubere Analyse. Deine Entwicklung liegt darin, ins Handeln zu kommen, bevor alles zu hundert Prozent durchdacht ist, und Menschen nicht nur mit Fakten, sondern auch mit Wärme zu gewinnen."],
+  staerken:["Fachkompetent, genau, gründlich","Schafft Vertrauen durch echte Kompetenz","Seriöse, fundierte Beratung","Bereitet sich hervorragend vor","Durchdacht und qualitätsbewusst"],
+  punkte:["<b>Analysetermin & Fachberatung:</b> Hier spielst du deine Stärke voll aus — Kunden vertrauen deiner Kompetenz.","<b>Vertrauen durch Substanz:</b> Wer es genau wissen will, ist bei dir goldrichtig.","<b>Vorbereitung & Konzeptarbeit:</b> Saubere, durchdachte Lösungen sind dein Markenzeichen."],
+  schwer:["<b>Ansprache & Akquise:</b> Auf fremde Menschen zugehen kostet Überwindung. Setz dir feste Kontakt-Ziele, damit du ins Tun kommst.","<b>Abschluss & Tempo:</b> Zu langes Analysieren bremst dich. Lern, auch mit 80 % Sicherheit zu entscheiden und zum Abschluss zu führen.","<b>Emotion & Beziehung:</b> Menschen kaufen Vertrauen, nicht nur Fakten. Üb den warmen Einstieg und die persönliche Ebene."],
+  fuss:"Starte da, wo du glänzt: im Analysetermin und in der fundierten Beratung. Deine Kompetenz schafft Vertrauen, das andere sich hart erarbeiten müssen. Deine Wachstumsaufgabe: ins Handeln kommen, ohne dich festzuanalysieren — setz dir feste Kontakt- und Aktivitätsziele. Und übe den warmen, emotionalen Draht zum Menschen. Wenn du deine Tiefe mit Tempo und Wärme verbindest, wirst du zum Berater, den Kunden von sich aus weiterempfehlen.",
+  lern:"Gründlich, mit Hintergründen und Fakten, in Ruhe und am besten schriftlich. Du willst das Konzept wirklich verstehen, bevor du loslegst. Gib dir diese Zeit — aber setz dir eine Grenze, damit aus Verstehen auch Tun wird. Checklisten und klare Strukturen sind dein Freund.",
+  kontakt:"Lass Nähe und Bauchgefühl zu — Fakten überzeugen den Kopf, Vertrauen gewinnt das Herz. Nicht jeder braucht alle Details; spür, wann weniger mehr ist. Ein warmes Wort zur richtigen Zeit wirkt oft stärker als die perfekte Analyse."}
 };
 var ARCH={
  DI:{n:"Der Antreiber",t:"Tempo, Ziele und Menschen: Du reißt mit und machst Nägel mit Köpfen."},
@@ -3859,7 +3896,7 @@ function openDisg(){
 }
 function closeDisg(){var o=ov();if(o)o.style.display="none";document.body.style.overflow="";}
 function renderIntro(){
-  stage().innerHTML='<div class="disg-intro"><div class="disg-eyebrow">Persönlichkeitstest</div><h2>Der DISG-Test</h2><p>20 kurze Fragen, etwa 5 bis 10 Minuten. Tipp jeweils die Antwort an, die am ehesten auf dich zutrifft — spontan und ehrlich, aus dem Bauch heraus. Danach weißt du, wie du tickst: dein Typ, deine Stärken, woran du arbeiten kannst, wie du am besten lernst und worauf du dich in unserem Beruf konzentrierst.</p><button class="disg-btn" id="disgStart">Los geht’s</button></div>';
+  stage().innerHTML='<div class="disg-intro"><div class="disg-eyebrow">Persönlichkeitstest</div><h2>Der DISG-Test</h2><p>20 kurze Fragen, etwa 5 bis 10 Minuten. Tipp jeweils die Antwort an, die am ehesten auf dich zutrifft — spontan und ehrlich, aus dem Bauch heraus. Danach bekommst du eine ausführliche Auswertung: dein Typ, deine Stärken, wo du in unserem Beruf sofort punktest, wo es für dich schwierig wird — und wie du bei uns Fuß fasst.</p><button class="disg-btn" id="disgStart">Los geht’s</button></div>';
   document.getElementById("disgStart").addEventListener("click",function(){dq=0;dscore={D:0,I:0,S:0,G:0};renderQ();});
 }
 function renderQ(){
@@ -3896,18 +3933,20 @@ function renderResult(){
   disgSave({primary:p1,secondary:p2,scores:dscore});
   var bars='';DISG_ORDER.forEach(function(d){var val=dscore[d],pc=Math.round((val/DISG_Q.length)*100);bars+='<div class="disg-bar"><div class="disg-bar-track"><div class="disg-bar-fill" style="height:'+pc+'%;background:'+DISG_P[d].col+'"></div></div><div class="disg-bar-lab" style="color:'+DISG_P[d].col+'">'+d+'</div><div class="disg-bar-val">'+val+'</div></div>';});
   var lis=function(a){return '<ul>'+a.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul>';};
+  var paras=function(a){return a.map(function(x){return '<p>'+x+'</p>';}).join('');};
   var h='<div class="disg-res"><div class="disg-eyebrow">Dein Ergebnis</div>';
   h+='<div class="disg-wheelwrap">'+wheelSVG(dscore)+'</div>';
   h+='<div class="disg-arch" style="color:'+P.col+'">'+A.n+'</div>';
   h+='<div class="disg-tag">'+A.t+'</div>';
   h+='<div class="disg-typesub">'+p1+' · '+P.name+' — mit Anteil von '+p2+' ('+DISG_P[p2].name+')</div>';
   h+='<div class="disg-bars">'+bars+'</div>';
-  h+='<div class="disg-card2"><h4>Das bist du</h4><p>'+P.recog+'</p></div>';
-  h+='<div class="disg-card2"><h4>Deine Stärken</h4>'+lis(P.st)+'</div>';
-  h+='<div class="disg-card2"><h4>Daran kannst du arbeiten</h4>'+lis(P.ent)+'</div>';
+  h+='<div class="disg-card2"><h4>Das bist du</h4>'+paras(P.recog)+'</div>';
+  h+='<div class="disg-card2"><h4>Deine Stärken</h4>'+lis(P.staerken)+'</div>';
+  h+='<div class="disg-card2 disg-card-good"><h4>Wo du bei uns sofort punktest</h4>'+lis(P.punkte)+'</div>';
+  h+='<div class="disg-card2 disg-card-work"><h4>Wo es schwierig wird — da musst du dich reinfuchsen</h4>'+lis(P.schwer)+'</div>';
+  h+='<div class="disg-card2 disg-card-focus"><h4>So fasst du bei uns Fuß</h4><p>'+P.fuss+'</p></div>';
   h+='<div class="disg-card2"><h4>So lernst du am besten</h4><p>'+P.lern+'</p></div>';
   h+='<div class="disg-card2"><h4>Im Umgang mit anderen</h4><p>'+P.kontakt+'</p></div>';
-  h+='<div class="disg-card2 disg-card-focus"><h4>Dein Fokus in unserem Beruf</h4><p>'+P.fokus+'</p></div>';
   h+='<div class="disg-actions"><button class="disg-retry" id="disgRetry">Nochmal machen</button><button class="disg-close" id="disgDone">Fertig</button></div></div>';
   stage().innerHTML=h;var o=ov();if(o)o.scrollTop=0;
   document.getElementById("disgRetry").addEventListener("click",function(){dq=0;dscore={D:0,I:0,S:0,G:0};renderIntro();});
@@ -3916,15 +3955,78 @@ function renderResult(){
 function renderDisgCard(){
   var el=document.getElementById("disgCard");if(!el)return;var r=disgLoad();
   if(r&&DISG_P[r.primary]){var P=DISG_P[r.primary];var A=ARCH[r.primary+r.secondary]||{n:P.nick};
-    el.innerHTML='<div class="tt-card"><div class="tt-badge">DISG-Test</div><h3>'+A.n+'</h3><div class="tt-res"><span class="tt-res-type" style="color:'+P.col+'">'+r.primary+' · '+P.name+'</span></div><p>Mit Anteil von '+r.secondary+'. Schau dir dein Rad, deine Stärken, deinen Lernstil und deinen Fokus an.</p><button class="tt-btn" id="disgView">Ergebnis ansehen</button><button class="tt-btn tt-btn-ghost" id="disgRedo">Neu machen</button></div>';
+    el.innerHTML='<div class="tt-card"><div class="tt-badge">DISG-Test</div><h3>'+A.n+'</h3><div class="tt-res"><span class="tt-res-type" style="color:'+P.col+'">'+r.primary+' · '+P.name+'</span></div><p>Mit Anteil von '+r.secondary+'. Schau dir dein Rad, deine Stärken und deinen Fokus in unserem Beruf an.</p><button class="tt-btn" id="disgView">Ergebnis ansehen</button><button class="tt-btn tt-btn-ghost" id="disgRedo">Neu machen</button></div>';
     document.getElementById("disgView").addEventListener("click",function(){openDisg();dscore=r.scores||{D:0,I:0,S:0,G:0};renderResult();});
     document.getElementById("disgRedo").addEventListener("click",openDisg);
   }else{
-    el.innerHTML='<div class="tt-card"><div class="tt-badge">DISG-Test</div><h3>Wie tickst du?</h3><p>20 Fragen, etwa 5 bis 10 Minuten — und du erkennst deinen Typ: dein Rad, deine Stärken, dein Lernstil und dein Fokus in unserem Beruf.</p><button class="tt-btn" id="disgStartCard">DISG-Test starten</button></div>';
+    el.innerHTML='<div class="tt-card"><div class="tt-badge">DISG-Test</div><h3>Wie tickst du?</h3><p>20 Fragen, etwa 5 bis 10 Minuten — und du bekommst eine ausführliche Auswertung: dein Typ, deine Stärken und wo du in unserem Beruf am besten Fuß fasst.</p><button class="tt-btn" id="disgStartCard">DISG-Test starten</button></div>';
     document.getElementById("disgStartCard").addEventListener("click",openDisg);
   }
 }
 renderDisgCard();
+})();
+</script>
+<script>
+(function(){
+ function esc(s){return (s||'').replace(/[&<>]/g,function(m){return ({'&':'&amp;','<':'&lt;','>':'&gt;'})[m];});}
+ function stripTags(s){return (s||'').replace(/<[^>]+>/g,' ');}
+ var IDX=null;
+ var KEYCOL={einsteiger:'#4FAE7F',aufsteiger:'#E0A32E',fuehrung:'#E0604F',seminare:'#4F8BD0'};
+ function buildIndex(){
+   var D=window.CF_DATA; var out=[]; if(!D) return out;
+   ['einsteiger','aufsteiger','fuehrung','seminare'].forEach(function(key){
+     var sec=D[key]; if(!sec||!sec.themes) return;
+     sec.themes.forEach(function(t,idx){
+       out.push({key:key,idx:idx,level:sec.title||key,col:KEYCOL[key]||'#9aa6ba',title:t.title||'',tag:t.tag||'',teaser:t.teaser||'',text:stripTags(JSON.stringify(t)).toLowerCase()});
+     });
+   });
+   out.push({special:'tests',level:'Extra',col:'#c8a84b',title:'Persönlichkeitstest: DISG',tag:'',teaser:'Finde deinen Typ: Stärken, Lernstil und dein Fokus im Beruf.',text:'disg persönlichkeit persönlichkeitstest test typ dominant initiativ stetig gewissenhaft stärken lernstil rad'});
+   out.push({special:'pfad',level:'Extra',col:'#c8a84b',title:'Karrierepfad',tag:'',teaser:'Deine Stufen von FA bis Senior Partner — und dein nächstes Ziel.',text:'karriere karrierepfad karriereplan stufen fa fm km vm gd sp konzeptmanager vergütung aufstieg nächste position ziel'});
+   return out;
+ }
+ function score(it,words){var s=0;words.forEach(function(w){if(!w)return;if(it.title.toLowerCase().indexOf(w)>=0)s+=10;if(it.tag.toLowerCase().indexOf(w)>=0)s+=5;if(it.teaser.toLowerCase().indexOf(w)>=0)s+=3;if(it.text.indexOf(w)>=0)s+=1;});return s;}
+ function rowHTML(it){var ref=it.special?('sp:'+it.special):(it.key+':'+it.idx);return '<button class="sr-row" data-sr="'+ref+'"><span class="sr-badge" style="background:'+it.col+'">'+esc(it.level)+'</span><span class="sr-txt"><span class="sr-title">'+esc(it.title)+'</span>'+(it.teaser?'<span class="sr-teaser">'+esc(it.teaser)+'</span>':'')+'</span></button>';}
+ function render(q){
+   if(!IDX)IDX=buildIndex();
+   var list=document.getElementById('searchResults'); if(!list) return;
+   var query=(q||'').trim().toLowerCase(),html='';
+   if(!query){
+     var levels=[];IDX.forEach(function(i){if(levels.indexOf(i.level)<0)levels.push(i.level);});
+     levels.forEach(function(lv){var g=IDX.filter(function(i){return i.level===lv;});if(!g.length)return;html+='<div class="sr-group"><div class="sr-glabel" style="color:'+g[0].col+'">'+esc(lv)+' · '+g.length+'</div>';g.forEach(function(it){html+=rowHTML(it);});html+='</div>';});
+   }else{
+     var words=query.split(/\s+/);
+     var items=IDX.map(function(it){return {it:it,s:score(it,words)};}).filter(function(x){return x.s>0;}).sort(function(a,b){return b.s-a.s;});
+     if(!items.length){list.innerHTML='<div class="sr-empty">Nichts gefunden. Versuch ein anderes Wort.</div>';return;}
+     items.slice(0,40).forEach(function(x){html+=rowHTML(x.it);});
+   }
+   list.innerHTML=html;
+   [].forEach.call(list.querySelectorAll('[data-sr]'),function(el){el.addEventListener('click',function(){go(el.getAttribute('data-sr'));});});
+ }
+ function closeSearch(){var o=document.getElementById('searchOverlay');if(o)o.style.display='none';document.body.style.overflow='';}
+ function go(ref){
+   closeSearch();
+   if(ref.indexOf('sp:')===0){var id=ref.slice(3);var home=document.getElementById('home');if(home)home.style.display='';var el=document.getElementById(id);if(el)setTimeout(function(){el.scrollIntoView({behavior:'smooth'});},60);return;}
+   var p=ref.split(':');try{window.openReader(p[0],parseInt(p[1]),true);window.scrollTo(0,0);}catch(e){}
+ }
+ function openSearch(){
+   var o=document.getElementById('searchOverlay');
+   if(!o){
+     o=document.createElement('div');o.id='searchOverlay';o.className='search-ov';
+     o.innerHTML='<div class="search-bar"><svg class="search-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg><input id="searchInput" class="search-input" type="text" placeholder="Thema, Wort oder Inhalt suchen …" autocomplete="off"><button class="search-x" id="searchClose">✕</button></div><div class="search-hint" id="searchHint">Tipp: „Analysetermin", „Einwand", „Recruiting", „Empfehlung", „DISG", „Karriere" …</div><div class="search-results" id="searchResults"></div>';
+     document.body.appendChild(o);
+     o.querySelector('#searchClose').addEventListener('click',closeSearch);
+     var inp=o.querySelector('#searchInput'),tmr;
+     inp.addEventListener('input',function(){clearTimeout(tmr);var v=inp.value;var hint=document.getElementById('searchHint');if(hint)hint.style.display=v.trim()?'none':'';tmr=setTimeout(function(){render(v);},110);});
+     inp.addEventListener('keydown',function(e){if(e.key==='Escape')closeSearch();});
+   }
+   o.style.display='flex';document.body.style.overflow='hidden';
+   var inp=document.getElementById('searchInput');if(inp)inp.value='';
+   var hint=document.getElementById('searchHint');if(hint)hint.style.display='';
+   render('');
+   if(inp)setTimeout(function(){try{inp.focus();}catch(e){}},50);
+ }
+ var trig=document.getElementById('searchTrigger');if(trig)trig.addEventListener('click',openSearch);
+ document.addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&(e.key==='k'||e.key==='K')){e.preventDefault();openSearch();}});
 })();
 </script>
 </body>
