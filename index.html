@@ -848,6 +848,18 @@
 .disg-card-work{border-left:3px solid #E0A32E;}
 .disg-card-work h4{color:#f0bc55;}
 .disg-card2 p+p{margin-top:10px;}
+
+.we-chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:640px;margin:0 auto;}
+.we-chip{background:#20305a;border:1.5px solid #38496e;color:#EAE4D6;font-size:14px;font-weight:600;padding:9px 15px;border-radius:99px;cursor:pointer;transition:.14s;}
+.we-chip:hover{border-color:var(--gold);}
+.we-chip.sel{background:var(--gold);color:#1a2a4a;border-color:var(--gold);}
+.we-chip .we-rank{display:inline-block;background:#1a2a4a;color:var(--gold);font-weight:800;border-radius:50%;width:19px;height:19px;line-height:19px;text-align:center;font-size:11px;margin-right:7px;}
+.we-count{text-align:center;color:#9aa6ba;font-size:13px;margin:16px 0 6px;font-weight:700;}
+.we-instr{text-align:center;color:#C7D0DE;font-size:15px;line-height:1.55;max-width:520px;margin:0 auto 18px;}
+.we-result-list{display:flex;flex-direction:column;gap:11px;max-width:470px;margin:10px auto 6px;}
+.we-val{display:flex;align-items:center;gap:15px;background:#1c2b4c;border:1px solid #30416a;border-radius:14px;padding:14px 18px;}
+.we-val .we-n{flex:0 0 auto;width:36px;height:36px;border-radius:50%;background:var(--gold);color:#1a2a4a;font-weight:800;display:flex;align-items:center;justify-content:center;font-family:Cambria,Georgia,serif;font-size:18px;}
+.we-val .we-name{font-family:Cambria,Georgia,serif;font-weight:700;color:#F4EFE2;font-size:21px;}
 </style>
 </head>
 <body>
@@ -1101,7 +1113,7 @@
       <p class="tt-sub">Wer weiß, wie er tickt, kommt schneller voran. Mach den Test und erkenne deine Stärken, deinen Lernstil und deinen Fokus in unserem Beruf.</p>
     </div>
     <div id="disgCard"></div>
-    <p class="tt-more">Weitere Tests wie der Wertetest folgen in Kürze.</p>
+    <div id="werteCard" style="margin-top:14px"></div>
   </div>
 </section>
 </main>
@@ -4040,6 +4052,82 @@ function openFPDeck(key){
 window.openFPDeck=openFPDeck;
 var _osd=window.startDeck;
 window.startDeck=function(s){ if(s&&s.fp){ openFPDeck(s.fp); return; } return _osd?_osd(s):undefined; };
+})();
+</script>
+<script>
+(function(){
+var WERTE=["Freiheit","Sicherheit","Familie","Gesundheit","Erfolg","Anerkennung","Ehrlichkeit","Vertrauen","Loyalität","Unabhängigkeit","Wachstum","Lernen","Kreativität","Abenteuer","Ordnung","Disziplin","Verantwortung","Gerechtigkeit","Mut","Ausdauer","Gelassenheit","Harmonie","Verbundenheit","Freundschaft","Liebe","Respekt","Toleranz","Offenheit","Neugier","Optimismus","Dankbarkeit","Großzügigkeit","Hilfsbereitschaft","Mitgefühl","Fairness","Zuverlässigkeit","Authentizität","Selbstbestimmung","Leistung","Ehrgeiz","Wohlstand","Einfluss","Führung","Balance","Achtsamkeit","Ruhe","Genuss","Humor","Natur","Nachhaltigkeit","Qualität","Zielstrebigkeit"];
+var weSel={}, weTop=[];
+function weSave(){try{localStorage.setItem("cf_werte",JSON.stringify(weTop));}catch(e){}}
+function weLoad(){try{return JSON.parse(localStorage.getItem("cf_werte"));}catch(e){return null;}}
+function ov(){return document.getElementById("werteOverlay");}
+function stage(){return document.getElementById("werteStage");}
+function openWerte(){
+  var o=ov();
+  if(!o){o=document.createElement("div");o.id="werteOverlay";o.className="disg-ov";o.innerHTML='<button class="disg-x" id="werteX">✕</button><div class="disg-stage" id="werteStage"></div>';document.body.appendChild(o);o.querySelector("#werteX").addEventListener("click",closeWerte);}
+  o.style.display="flex";document.body.style.overflow="hidden";weSel={};weTop=[];renderIntro();
+}
+function closeWerte(){var o=ov();if(o)o.style.display="none";document.body.style.overflow="";}
+function renderIntro(){
+  stage().innerHTML='<div class="disg-intro"><div class="disg-eyebrow">Persönlichkeitstest</div><h2>Der Werte-Test</h2><p>Deine Werte sind dein innerer Kompass. In etwa 5 bis 10 Minuten findest du deine fünf Kernwerte. So geht\u2019s: Zuerst tippst du alle Werte an, die dir wichtig sind. Danach grenzt du auf deine fünf wichtigsten ein — in deiner ganz persönlichen Reihenfolge.</p><button class="disg-btn" id="weStart">Los geht\u2019s</button></div>';
+  document.getElementById("weStart").addEventListener("click",renderSelect);
+}
+function renderSelect(){
+  var h='<div class="disg-eyebrow">Schritt 1 von 2</div><h2 style="font-size:clamp(22px,3.4vw,30px);text-align:center;color:#F4EFE2;font-family:Cambria,Georgia,serif;margin:0 0 6px">Was ist dir wichtig?</h2><div class="we-instr">Tipp alle Werte an, die dir wirklich etwas bedeuten. Sei großzügig — eingegrenzt wird gleich. (mindestens 8)</div><div class="we-chips" id="weChips">';
+  WERTE.forEach(function(w){h+='<button class="we-chip'+(weSel[w]?" sel":"")+'" data-v="'+w+'">'+w+'</button>';});
+  h+='</div><div class="we-count" id="weCount"></div><button class="disg-btn" id="weWeiter" style="margin-top:8px">Weiter</button>';
+  stage().innerHTML=h;var o=ov();if(o)o.scrollTop=0;
+  function upd(){var n=Object.keys(weSel).length;document.getElementById("weCount").textContent=n+" ausgewählt";var b=document.getElementById("weWeiter");b.disabled=n<8;b.style.opacity=n<8?"0.45":"1";b.style.cursor=n<8?"not-allowed":"pointer";}
+  [].forEach.call(stage().querySelectorAll(".we-chip"),function(ch){ch.addEventListener("click",function(){var w=ch.getAttribute("data-v");if(weSel[w]){delete weSel[w];ch.classList.remove("sel");}else{weSel[w]=1;ch.classList.add("sel");}upd();});});
+  document.getElementById("weWeiter").addEventListener("click",function(){if(Object.keys(weSel).length>=8)renderNarrow();});
+  upd();
+}
+function renderNarrow(){
+  var chosen=Object.keys(weSel);
+  var h='<div class="disg-eyebrow">Schritt 2 von 2</div><h2 style="font-size:clamp(22px,3.4vw,30px);text-align:center;color:#F4EFE2;font-family:Cambria,Georgia,serif;margin:0 0 6px">Deine 5 wichtigsten</h2><div class="we-instr">Tippe deine fünf wichtigsten Werte an — in der Reihenfolge. Der erste ist dein wichtigster. Nochmal tippen entfernt ihn wieder.</div><div class="we-chips" id="weChips2">';
+  chosen.forEach(function(w){h+='<button class="we-chip" data-v="'+w+'">'+w+'</button>';});
+  h+='</div><div class="we-count" id="weCount2"></div><button class="disg-btn" id="weFertig" style="margin-top:8px">Ergebnis anzeigen</button>';
+  stage().innerHTML=h;var o=ov();if(o)o.scrollTop=0;
+  function paint(){
+    [].forEach.call(stage().querySelectorAll(".we-chip"),function(ch){
+      var w=ch.getAttribute("data-v");var idx=weTop.indexOf(w);
+      if(idx>=0){ch.classList.add("sel");ch.innerHTML='<span class="we-rank">'+(idx+1)+'</span>'+w;}
+      else{ch.classList.remove("sel");ch.textContent=w;}
+    });
+    document.getElementById("weCount2").textContent=weTop.length+" von 5 gewählt";
+    var b=document.getElementById("weFertig");b.disabled=weTop.length!==5;b.style.opacity=weTop.length!==5?"0.45":"1";b.style.cursor=weTop.length!==5?"not-allowed":"pointer";
+  }
+  [].forEach.call(stage().querySelectorAll(".we-chip"),function(ch){ch.addEventListener("click",function(){var w=ch.getAttribute("data-v");var idx=weTop.indexOf(w);if(idx>=0){weTop.splice(idx,1);}else if(weTop.length<5){weTop.push(w);}paint();});});
+  document.getElementById("weFertig").addEventListener("click",function(){if(weTop.length===5)renderResult();});
+  paint();
+}
+function renderResult(){
+  weSave();
+  var list='';weTop.forEach(function(w,i){list+='<div class="we-val"><div class="we-n">'+(i+1)+'</div><div class="we-name">'+w+'</div></div>';});
+  var h='<div class="disg-res"><div class="disg-eyebrow">Dein Ergebnis</div>';
+  h+='<div class="disg-arch" style="color:var(--gold)">Deine 5 Kernwerte</div>';
+  h+='<div class="disg-tag">Dein innerer Kompass — in deiner Reihenfolge.</div>';
+  h+='<div class="we-result-list">'+list+'</div>';
+  h+='<div class="disg-card2"><h4>Was deine Werte bedeuten</h4><p>Deine Werte zeigen, was dir wirklich wichtig ist — und warum du dich in manchen Situationen stark und stimmig fühlst und in anderen unruhig. Entscheidungen fallen leichter, wenn sie zu diesen fünf passen.</p></div>';
+  h+='<div class="disg-card2 disg-card-focus"><h4>Und in unserem Beruf?</h4><p>Wenn deine Arbeit zu deinen Werten passt, arbeitest du mit Sog statt mit Druck. Genau das macht dich glaubwürdig — bei Klienten wie bei Menschen, die du für dein Team gewinnst. Nutze diese fünf als Kompass für dein persönliches Warum.</p></div>';
+  h+='<div class="disg-card2"><h4>Zum Nachdenken</h4><textarea class="disg-prompt" placeholder="Welchen dieser Werte lebst du im Alltag schon stark — und welchen zu wenig?" style="width:100%;min-height:70px;background:#20305a;border:1.5px solid #38496e;border-radius:10px;color:#EAE4D6;font-size:14px;padding:11px;box-sizing:border-box"></textarea></div>';
+  h+='<div class="disg-actions"><button class="disg-retry" id="weRetry">Nochmal machen</button><button class="disg-close" id="weDone">Fertig</button></div></div>';
+  stage().innerHTML=h;var o=ov();if(o)o.scrollTop=0;
+  document.getElementById("weRetry").addEventListener("click",function(){weSel={};weTop=[];renderIntro();});
+  document.getElementById("weDone").addEventListener("click",function(){closeWerte();renderWerteCard();});
+}
+function renderWerteCard(){
+  var el=document.getElementById("werteCard");if(!el)return;var r=weLoad();
+  if(r&&r.length){
+    el.innerHTML='<div class="tt-card"><div class="tt-badge">Werte-Test</div><h3>Deine Kernwerte</h3><div class="tt-res"><span class="tt-res-type" style="color:var(--gold);font-size:15px">'+r.join(" · ")+'</span></div><p>Dein innerer Kompass steht. Schau ihn dir an oder mach den Test neu.</p><button class="tt-btn" id="weView">Ergebnis ansehen</button><button class="tt-btn tt-btn-ghost" id="weRedo">Neu machen</button></div>';
+    document.getElementById("weView").addEventListener("click",function(){openWerte();weTop=r.slice();renderResult();});
+    document.getElementById("weRedo").addEventListener("click",openWerte);
+  }else{
+    el.innerHTML='<div class="tt-card"><div class="tt-badge">Werte-Test</div><h3>Was zählt für dich wirklich?</h3><p>In 5 bis 10 Minuten findest du deine fünf Kernwerte — deinen inneren Kompass für Entscheidungen, dein Warum und deine Arbeit.</p><button class="tt-btn" id="weStartCard">Werte-Test starten</button></div>';
+    document.getElementById("weStartCard").addEventListener("click",openWerte);
+  }
+}
+renderWerteCard();
 })();
 </script>
 </body>
