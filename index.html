@@ -860,6 +860,12 @@
 .we-val{display:flex;align-items:center;gap:15px;background:#1c2b4c;border:1px solid #30416a;border-radius:14px;padding:14px 18px;}
 .we-val .we-n{flex:0 0 auto;width:36px;height:36px;border-radius:50%;background:var(--gold);color:#1a2a4a;font-weight:800;display:flex;align-items:center;justify-content:center;font-family:Cambria,Georgia,serif;font-size:18px;}
 .we-val .we-name{font-family:Cambria,Georgia,serif;font-weight:700;color:#F4EFE2;font-size:21px;}
+
+.we-vs{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:14px;}
+.we-vs-opt{flex:0 1 250px;min-height:96px;background:#20305a;border:2px solid #38496e;border-radius:16px;color:#F4EFE2;font-family:Cambria,Georgia,serif;font-weight:700;font-size:clamp(21px,2.7vw,32px);cursor:pointer;padding:20px 22px;transition:.14s;}
+.we-vs-opt:hover{border-color:var(--gold);background:#26386a;transform:translateY(-2px);}
+.we-vs-or{color:#8b96a8;font-size:14px;font-weight:800;letter-spacing:.06em;}
+@media(max-width:520px){.we-vs{flex-direction:column;gap:12px;}.we-vs-opt{flex:1 1 auto;width:100%;min-height:72px;}}
 </style>
 </head>
 <body>
@@ -4057,73 +4063,81 @@ window.startDeck=function(s){ if(s&&s.fp){ openFPDeck(s.fp); return; } return _o
 <script>
 (function(){
 var WERTE=["Freiheit","Sicherheit","Familie","Gesundheit","Erfolg","Anerkennung","Ehrlichkeit","Vertrauen","Loyalität","Unabhängigkeit","Wachstum","Lernen","Kreativität","Abenteuer","Ordnung","Disziplin","Verantwortung","Gerechtigkeit","Mut","Ausdauer","Gelassenheit","Harmonie","Verbundenheit","Freundschaft","Liebe","Respekt","Toleranz","Offenheit","Neugier","Optimismus","Dankbarkeit","Großzügigkeit","Hilfsbereitschaft","Mitgefühl","Fairness","Zuverlässigkeit","Authentizität","Selbstbestimmung","Leistung","Ehrgeiz","Wohlstand","Einfluss","Führung","Balance","Achtsamkeit","Ruhe","Genuss","Humor","Natur","Nachhaltigkeit","Qualität","Zielstrebigkeit"];
-var weSel={}, weTop=[];
-function weSave(){try{localStorage.setItem("cf_werte",JSON.stringify(weTop));}catch(e){}}
+var MIN=5, MAX=9;
+var weSel={}, wePairs=[], weIdx=0, weWins={}, weDirect={}, weRanked=[];
+function weSave(){try{localStorage.setItem("cf_werte",JSON.stringify(weRanked));}catch(e){}}
 function weLoad(){try{return JSON.parse(localStorage.getItem("cf_werte"));}catch(e){return null;}}
 function ov(){return document.getElementById("werteOverlay");}
 function stage(){return document.getElementById("werteStage");}
 function openWerte(){
   var o=ov();
   if(!o){o=document.createElement("div");o.id="werteOverlay";o.className="disg-ov";o.innerHTML='<button class="disg-x" id="werteX">✕</button><div class="disg-stage" id="werteStage"></div>';document.body.appendChild(o);o.querySelector("#werteX").addEventListener("click",closeWerte);}
-  o.style.display="flex";document.body.style.overflow="hidden";weSel={};weTop=[];renderIntro();
+  o.style.display="flex";document.body.style.overflow="hidden";weSel={};weRanked=[];renderIntro();
 }
 function closeWerte(){var o=ov();if(o)o.style.display="none";document.body.style.overflow="";}
 function renderIntro(){
-  stage().innerHTML='<div class="disg-intro"><div class="disg-eyebrow">Persönlichkeitstest</div><h2>Der Werte-Test</h2><p>Deine Werte sind dein innerer Kompass. In etwa 5 bis 10 Minuten findest du deine fünf Kernwerte. So geht\u2019s: Zuerst tippst du alle Werte an, die dir wichtig sind. Danach grenzt du auf deine fünf wichtigsten ein — in deiner ganz persönlichen Reihenfolge.</p><button class="disg-btn" id="weStart">Los geht\u2019s</button></div>';
+  stage().innerHTML='<div class="disg-intro"><div class="disg-eyebrow">Persönlichkeitstest</div><h2>Der Werte-Test</h2><p>Deine Werte sind dein innerer Kompass. So findest du deine echte Rangfolge: Zuerst wählst du '+MIN+' bis '+MAX+' Werte, die dir wichtig sind. Danach treten sie im Duell gegeneinander an — jeder gegen jeden. Du entscheidest jedes Mal nur: „Was ist mir wichtiger?" Aus allen Duellen entsteht dein persönliches Ranking. Ehrlich und aus dem Bauch.</p><button class="disg-btn" id="weStart">Los geht\u2019s</button></div>';
   document.getElementById("weStart").addEventListener("click",renderSelect);
 }
 function renderSelect(){
-  var h='<div class="disg-eyebrow">Schritt 1 von 2</div><h2 style="font-size:clamp(22px,3.4vw,30px);text-align:center;color:#F4EFE2;font-family:Cambria,Georgia,serif;margin:0 0 6px">Was ist dir wichtig?</h2><div class="we-instr">Tipp alle Werte an, die dir wirklich etwas bedeuten. Sei großzügig — eingegrenzt wird gleich. (mindestens 8)</div><div class="we-chips" id="weChips">';
+  var h='<div class="disg-eyebrow">Schritt 1 von 2</div><h2 style="font-size:clamp(22px,3.4vw,30px);text-align:center;color:#F4EFE2;font-family:Cambria,Georgia,serif;margin:0 0 6px">Was ist dir wichtig?</h2><div class="we-instr">Wähl '+MIN+' bis '+MAX+' Werte, die dir wirklich etwas bedeuten. Danach werden sie im Duell gegeneinander abgewogen.</div><div class="we-chips" id="weChips">';
   WERTE.forEach(function(w){h+='<button class="we-chip'+(weSel[w]?" sel":"")+'" data-v="'+w+'">'+w+'</button>';});
-  h+='</div><div class="we-count" id="weCount"></div><button class="disg-btn" id="weWeiter" style="margin-top:8px">Weiter</button>';
+  h+='</div><div class="we-count" id="weCount"></div><button class="disg-btn" id="weWeiter" style="margin-top:8px">Weiter zu den Duellen</button>';
   stage().innerHTML=h;var o=ov();if(o)o.scrollTop=0;
-  function upd(){var n=Object.keys(weSel).length;document.getElementById("weCount").textContent=n+" ausgewählt";var b=document.getElementById("weWeiter");b.disabled=n<8;b.style.opacity=n<8?"0.45":"1";b.style.cursor=n<8?"not-allowed":"pointer";}
-  [].forEach.call(stage().querySelectorAll(".we-chip"),function(ch){ch.addEventListener("click",function(){var w=ch.getAttribute("data-v");if(weSel[w]){delete weSel[w];ch.classList.remove("sel");}else{weSel[w]=1;ch.classList.add("sel");}upd();});});
-  document.getElementById("weWeiter").addEventListener("click",function(){if(Object.keys(weSel).length>=8)renderNarrow();});
+  function upd(){var n=Object.keys(weSel).length;var duels=n*(n-1)/2;var ok=(n>=MIN&&n<=MAX);document.getElementById("weCount").textContent=n+" ausgewählt"+(n>=2?" \u00b7 das ergibt "+duels+" Duelle":"")+(n>MAX?" \u2014 bitte höchstens "+MAX:"");var b=document.getElementById("weWeiter");b.disabled=!ok;b.style.opacity=ok?"1":"0.45";b.style.cursor=ok?"pointer":"not-allowed";}
+  [].forEach.call(stage().querySelectorAll(".we-chip"),function(ch){ch.addEventListener("click",function(){var w=ch.getAttribute("data-v");if(weSel[w]){delete weSel[w];ch.classList.remove("sel");}else{if(Object.keys(weSel).length>=MAX){return;}weSel[w]=1;ch.classList.add("sel");}upd();});});
+  document.getElementById("weWeiter").addEventListener("click",function(){var n=Object.keys(weSel).length;if(n>=MIN&&n<=MAX)startDuels();});
   upd();
 }
-function renderNarrow(){
-  var chosen=Object.keys(weSel);
-  var h='<div class="disg-eyebrow">Schritt 2 von 2</div><h2 style="font-size:clamp(22px,3.4vw,30px);text-align:center;color:#F4EFE2;font-family:Cambria,Georgia,serif;margin:0 0 6px">Deine 5 wichtigsten</h2><div class="we-instr">Tippe deine fünf wichtigsten Werte an — in der Reihenfolge. Der erste ist dein wichtigster. Nochmal tippen entfernt ihn wieder.</div><div class="we-chips" id="weChips2">';
-  chosen.forEach(function(w){h+='<button class="we-chip" data-v="'+w+'">'+w+'</button>';});
-  h+='</div><div class="we-count" id="weCount2"></div><button class="disg-btn" id="weFertig" style="margin-top:8px">Ergebnis anzeigen</button>';
+function startDuels(){
+  var arr=Object.keys(weSel);wePairs=[];
+  for(var i=0;i<arr.length;i++)for(var j=i+1;j<arr.length;j++)wePairs.push([arr[i],arr[j]]);
+  for(var i=wePairs.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=wePairs[i];wePairs[i]=wePairs[j];wePairs[j]=t;}
+  wePairs.forEach(function(p){if(Math.random()<0.5){var t=p[0];p[0]=p[1];p[1]=t;}});
+  weIdx=0;weWins={};weDirect={};arr.forEach(function(v){weWins[v]=0;});
+  renderPair();
+}
+function renderPair(){
+  if(weIdx>=wePairs.length){finishWerte();return;}
+  var p=wePairs[weIdx],pct=Math.round((weIdx/wePairs.length)*100);
+  var h='<div class="disg-prog"><div class="disg-prog-bar" style="width:'+pct+'%"></div></div>';
+  h+='<div class="disg-qnum">Duell '+(weIdx+1)+' von '+wePairs.length+'</div>';
+  h+='<h3 style="color:#F4EFE2;font-size:clamp(20px,3.4vw,26px);text-align:center;margin:0 0 8px;font-family:Cambria,Georgia,serif">Was ist dir wichtiger?</h3>';
+  h+='<div class="we-vs"><button class="we-vs-opt" data-w="'+p[0]+'">'+p[0]+'</button><span class="we-vs-or">oder</span><button class="we-vs-opt" data-w="'+p[1]+'">'+p[1]+'</button></div>';
   stage().innerHTML=h;var o=ov();if(o)o.scrollTop=0;
-  function paint(){
-    [].forEach.call(stage().querySelectorAll(".we-chip"),function(ch){
-      var w=ch.getAttribute("data-v");var idx=weTop.indexOf(w);
-      if(idx>=0){ch.classList.add("sel");ch.innerHTML='<span class="we-rank">'+(idx+1)+'</span>'+w;}
-      else{ch.classList.remove("sel");ch.textContent=w;}
-    });
-    document.getElementById("weCount2").textContent=weTop.length+" von 5 gewählt";
-    var b=document.getElementById("weFertig");b.disabled=weTop.length!==5;b.style.opacity=weTop.length!==5?"0.45":"1";b.style.cursor=weTop.length!==5?"not-allowed":"pointer";
-  }
-  [].forEach.call(stage().querySelectorAll(".we-chip"),function(ch){ch.addEventListener("click",function(){var w=ch.getAttribute("data-v");var idx=weTop.indexOf(w);if(idx>=0){weTop.splice(idx,1);}else if(weTop.length<5){weTop.push(w);}paint();});});
-  document.getElementById("weFertig").addEventListener("click",function(){if(weTop.length===5)renderResult();});
-  paint();
+  [].forEach.call(stage().querySelectorAll(".we-vs-opt"),function(b){b.addEventListener("click",function(){var w=b.getAttribute("data-w");weWins[w]=(weWins[w]||0)+1;var k=p[0]<p[1]?p[0]+"|"+p[1]:p[1]+"|"+p[0];weDirect[k]=w;weIdx++;renderPair();});});
+}
+function finishWerte(){
+  var arr=Object.keys(weSel);
+  weRanked=arr.slice().sort(function(a,b){
+    if((weWins[b]||0)!==(weWins[a]||0))return (weWins[b]||0)-(weWins[a]||0);
+    var k=a<b?a+"|"+b:b+"|"+a;if(weDirect[k]===a)return -1;if(weDirect[k]===b)return 1;return 0;
+  });
+  renderResult();
 }
 function renderResult(){
   weSave();
-  var list='';weTop.forEach(function(w,i){list+='<div class="we-val"><div class="we-n">'+(i+1)+'</div><div class="we-name">'+w+'</div></div>';});
+  var list='';weRanked.forEach(function(w,i){list+='<div class="we-val"><div class="we-n">'+(i+1)+'</div><div class="we-name">'+w+'</div></div>';});
   var h='<div class="disg-res"><div class="disg-eyebrow">Dein Ergebnis</div>';
-  h+='<div class="disg-arch" style="color:var(--gold)">Deine 5 Kernwerte</div>';
-  h+='<div class="disg-tag">Dein innerer Kompass — in deiner Reihenfolge.</div>';
+  h+='<div class="disg-arch" style="color:var(--gold)">Deine Werte-Rangfolge</div>';
+  h+='<div class="disg-tag">Aus deinen Duellen berechnet — Platz 1 ist dein stärkster Wert.</div>';
   h+='<div class="we-result-list">'+list+'</div>';
-  h+='<div class="disg-card2"><h4>Was deine Werte bedeuten</h4><p>Deine Werte zeigen, was dir wirklich wichtig ist — und warum du dich in manchen Situationen stark und stimmig fühlst und in anderen unruhig. Entscheidungen fallen leichter, wenn sie zu diesen fünf passen.</p></div>';
-  h+='<div class="disg-card2 disg-card-focus"><h4>Und in unserem Beruf?</h4><p>Wenn deine Arbeit zu deinen Werten passt, arbeitest du mit Sog statt mit Druck. Genau das macht dich glaubwürdig — bei Klienten wie bei Menschen, die du für dein Team gewinnst. Nutze diese fünf als Kompass für dein persönliches Warum.</p></div>';
-  h+='<div class="disg-card2"><h4>Zum Nachdenken</h4><textarea class="disg-prompt" placeholder="Welchen dieser Werte lebst du im Alltag schon stark — und welchen zu wenig?" style="width:100%;min-height:70px;background:#20305a;border:1.5px solid #38496e;border-radius:10px;color:#EAE4D6;font-size:14px;padding:11px;box-sizing:border-box"></textarea></div>';
+  h+='<div class="disg-card2"><h4>Was deine Werte bedeuten</h4><p>Deine Rangfolge zeigt, was dir wirklich am wichtigsten ist — und warum du dich in manchen Situationen stark und stimmig fühlst und in anderen unruhig. Entscheidungen fallen leichter, wenn sie zu deinen obersten Werten passen.</p></div>';
+  h+='<div class="disg-card2 disg-card-focus"><h4>Und in unserem Beruf?</h4><p>Wenn deine Arbeit zu deinen Top-Werten passt, arbeitest du mit Sog statt mit Druck. Genau das macht dich glaubwürdig — bei Klienten wie bei Menschen, die du für dein Team gewinnst. Nutze deine oberen Werte als Kompass für dein persönliches Warum.</p></div>';
+  h+='<div class="disg-card2"><h4>Zum Nachdenken</h4><textarea placeholder="Lebst du deinen Wert Nr. 1 im Alltag schon stark — oder kommt er zu kurz?" style="width:100%;min-height:70px;background:#20305a;border:1.5px solid #38496e;border-radius:10px;color:#EAE4D6;font-size:14px;padding:11px;box-sizing:border-box"></textarea></div>';
   h+='<div class="disg-actions"><button class="disg-retry" id="weRetry">Nochmal machen</button><button class="disg-close" id="weDone">Fertig</button></div></div>';
   stage().innerHTML=h;var o=ov();if(o)o.scrollTop=0;
-  document.getElementById("weRetry").addEventListener("click",function(){weSel={};weTop=[];renderIntro();});
+  document.getElementById("weRetry").addEventListener("click",function(){weSel={};weRanked=[];renderIntro();});
   document.getElementById("weDone").addEventListener("click",function(){closeWerte();renderWerteCard();});
 }
 function renderWerteCard(){
   var el=document.getElementById("werteCard");if(!el)return;var r=weLoad();
-  if(r&&r.length){
-    el.innerHTML='<div class="tt-card"><div class="tt-badge">Werte-Test</div><h3>Deine Kernwerte</h3><div class="tt-res"><span class="tt-res-type" style="color:var(--gold);font-size:15px">'+r.join(" · ")+'</span></div><p>Dein innerer Kompass steht. Schau ihn dir an oder mach den Test neu.</p><button class="tt-btn" id="weView">Ergebnis ansehen</button><button class="tt-btn tt-btn-ghost" id="weRedo">Neu machen</button></div>';
-    document.getElementById("weView").addEventListener("click",function(){openWerte();weTop=r.slice();renderResult();});
+  if(r&&r.length){var top=r.slice(0,5).join(" \u00b7 ")+(r.length>5?" \u2026":"");
+    el.innerHTML='<div class="tt-card"><div class="tt-badge">Werte-Test</div><h3>Deine Werte-Rangfolge</h3><div class="tt-res"><span class="tt-res-type" style="color:var(--gold);font-size:14.5px">'+top+'</span></div><p>Dein innerer Kompass steht. Schau dir die volle Rangfolge an oder mach den Test neu.</p><button class="tt-btn" id="weView">Ergebnis ansehen</button><button class="tt-btn tt-btn-ghost" id="weRedo">Neu machen</button></div>';
+    document.getElementById("weView").addEventListener("click",function(){openWerte();weRanked=r.slice();renderResult();});
     document.getElementById("weRedo").addEventListener("click",openWerte);
   }else{
-    el.innerHTML='<div class="tt-card"><div class="tt-badge">Werte-Test</div><h3>Was zählt für dich wirklich?</h3><p>In 5 bis 10 Minuten findest du deine fünf Kernwerte — deinen inneren Kompass für Entscheidungen, dein Warum und deine Arbeit.</p><button class="tt-btn" id="weStartCard">Werte-Test starten</button></div>';
+    el.innerHTML='<div class="tt-card"><div class="tt-badge">Werte-Test</div><h3>Was zählt für dich wirklich?</h3><p>Wähl deine wichtigsten Werte und lass sie im Duell gegeneinander antreten. Daraus entsteht deine echte Rangfolge — dein Kompass für Entscheidungen, dein Warum und deine Arbeit.</p><button class="tt-btn" id="weStartCard">Werte-Test starten</button></div>';
     document.getElementById("weStartCard").addEventListener("click",openWerte);
   }
 }
