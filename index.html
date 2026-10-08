@@ -896,6 +896,34 @@
 .train-box .tb-go{background:#A80F26;color:#fff;border:0;border-radius:11px;padding:15px 24px;
   font-family:'Inter',sans-serif;font-size:16px;font-weight:700;cursor:pointer;white-space:nowrap;}
 .train-box .tb-go:hover{background:#C21430;}
+
+.qs{max-width:860px;margin:0 auto;}
+.qs-head{text-align:center;margin-bottom:22px;}
+.qs-sub{color:#5b6b86;font-size:15px;max-width:620px;margin:8px auto 18px;line-height:1.55;}
+.qs-prog{height:10px;background:rgba(26,42,74,.1);border-radius:99px;overflow:hidden;max-width:520px;margin:0 auto;}
+.qs-prog-bar{height:100%;width:0;background:linear-gradient(90deg,#A9863A,#C8A84B);border-radius:99px;transition:width .35s;}
+.qs-prog-txt{text-align:center;color:#8a7430;font-weight:800;font-size:13px;margin-top:8px;letter-spacing:.02em;}
+.qs-phase{background:#fff;border:1px solid rgba(26,42,74,.12);border-radius:16px;padding:16px 18px;margin-bottom:14px;box-shadow:0 2px 10px rgba(26,42,74,.04);}
+.qs-ph-head{display:flex;align-items:center;gap:12px;margin-bottom:6px;}
+.qs-ph-n{flex:0 0 auto;width:30px;height:30px;border-radius:50%;background:#1A2A4A;color:#C8A84B;font-weight:800;display:flex;align-items:center;justify-content:center;font-family:Cambria,Georgia,serif;}
+.qs-ph-t{font-family:Cambria,Georgia,serif;font-weight:700;color:#1A2A4A;font-size:19px;line-height:1.15;}
+.qs-ph-when{color:#9aa6ba;font-size:12px;font-weight:700;margin-left:auto;white-space:nowrap;}
+.qs-items{list-style:none;margin:6px 0 0;padding:0;}
+.qs-item{display:flex;align-items:center;gap:11px;padding:9px 6px;border-top:1px solid rgba(26,42,74,.07);}
+.qs-item:first-child{border-top:0;}
+.qs-chk{flex:0 0 auto;width:22px;height:22px;border-radius:7px;border:2px solid #c3ccdb;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff;transition:.12s;}
+.qs-chk.on{background:#4fae7f;border-color:#4fae7f;}
+.qs-label{flex:1;cursor:pointer;color:#26324a;font-size:15px;font-weight:600;}
+.qs-item.done .qs-label{color:#9aa6ba;text-decoration:line-through;}
+.qs-tag{flex:0 0 auto;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;padding:3px 8px;border-radius:99px;}
+.qs-tag.lesson{background:rgba(26,42,74,.09);color:#1A2A4A;}
+.qs-tag.seminar{background:rgba(200,168,75,.18);color:#8a7430;}
+.qs-tag.trainer{background:rgba(79,174,127,.16);color:#2f7d58;}
+.qs-tag.task{background:rgba(224,96,79,.14);color:#b24632;}
+.qs-free{text-align:center;margin-top:18px;color:#8a95a8;font-size:13px;}
+.qs-free span{display:block;margin-bottom:8px;}
+.qs-free .sh-go{margin:3px;}
+@media(max-width:560px){.qs-ph-when{display:none;}}
 </style>
 </head>
 <body>
@@ -1046,30 +1074,20 @@
 
 <section class="sec starthier" id="starthier">
   <div class="wrap">
-    <div class="sh-wrap">
-      <div class="sh-kick">Neu hier?</div>
-      <h2>In 60 Sekunden bereit</h2>
-      <div class="sh-trio">
-        <div class="sh-card">
-          <div class="sh-card-n">1</div>
-          <b>Wähl deine Gewichtsklasse</b>
-          <p>Neu? Starte bei den <em>Einsteigern</em>. Erfahrener? Wähl die Klasse, die zu dir passt.</p>
-        </div>
-        <div class="sh-card">
-          <div class="sh-card-n">2</div>
-          <b>Nimm dir EIN Thema vor</b>
-          <p>30–40 Minuten. Allein oder zu zweit. Lies, übe, spiel das Rollenspiel durch.</p>
-        </div>
-        <div class="sh-card">
-          <div class="sh-card-n">3</div>
-          <b>Check-in einmal pro Woche</b>
-          <p>Der Wochen-Check-in schlägt dir das Thema vor, das jetzt für dich dran ist.</p>
-        </div>
+    <div class="qs" id="qsRoot">
+      <div class="qs-head">
+        <div class="sh-kick">Neu hier? Dein Schnellstart</div>
+        <h2>Dein Weg in den ersten Wochen</h2>
+        <p class="qs-sub">Kein Verzetteln im großen Portal — hier ist die Reihenfolge, die dich am schnellsten ins Verkaufen bringt. Hak ab, was du erledigt hast.</p>
+        <div class="qs-prog"><div class="qs-prog-bar" id="qsBar"></div></div>
+        <div class="qs-prog-txt" id="qsTxt"></div>
       </div>
-      <div class="sh-actions">
-        <button class="sh-go sh-go--primary" data-open-class="einsteiger">→ Einsteiger</button>
-        <button class="sh-go sh-go--sec" data-open-class="aufsteiger">→ Aufsteiger</button>
-        <button class="sh-go sh-go--sec" data-open-class="fuehrung">→ Führungskräfte</button>
+      <div id="qs-phases"></div>
+      <div class="qs-free">
+        <span>Lieber frei stöbern?</span>
+        <button class="sh-go sh-go--sec" data-open-class="einsteiger">Einsteiger</button>
+        <button class="sh-go sh-go--sec" data-open-class="aufsteiger">Aufsteiger</button>
+        <button class="sh-go sh-go--sec" data-open-class="fuehrung">Führungskräfte</button>
         <button class="sh-go sh-go--ghost" data-scrollto="pfad">Karrierepfad ↓</button>
       </div>
     </div>
@@ -4116,6 +4134,76 @@ document.addEventListener('click',function(e){
 document.addEventListener('keydown',function(e){
   if(e.key==='Escape'){ var ov=document.getElementById('trOverlay'); if(ov&&ov.classList.contains('on')) closeTrainer(); }
 });
+})();
+</script>
+<script>
+(function(){
+ var QS=[
+  {n:1,t:"Ankommen",when:"Tag 1",items:[
+    {k:"e0",tag:"lesson",label:"\u201eIst das hier echt?\u201c \u2014 ankommen und einordnen",a:["einsteiger",0]},
+    {k:"e2",tag:"lesson",label:"Konzeptmanager: deine Startlinie",a:["einsteiger",2]},
+    {k:"e16",tag:"lesson",label:"Mein pers\u00f6nliches Warum",a:["einsteiger",16]}
+  ]},
+  {n:2,t:"Das Verkaufsgespr\u00e4ch",when:"Woche 1",items:[
+    {k:"e3",tag:"lesson",label:"Kontaktmanagement: wer ist in deinem Umfeld?",a:["einsteiger",3]},
+    {k:"e5",tag:"lesson",label:"Das Terminierungs-Telefonat: den Termin gewinnen",a:["einsteiger",5]},
+    {k:"e6",tag:"lesson",label:"Der Analysetermin: der erste echte Termin",a:["einsteiger",6]},
+    {k:"e7",tag:"lesson",label:"Erste Einw\u00e4nde am Kontakt entkr\u00e4ften",a:["einsteiger",7]},
+    {k:"e8",tag:"lesson",label:"Empfehlungen: dein Multiplikator von Tag eins",a:["einsteiger",8]},
+    {k:"s0",tag:"seminar",label:"Pr\u00e4sentation: Kontakt & Analyse",a:["seminare",0]}
+  ]},
+  {n:3,t:"\u00dcben statt nur lesen",when:"Woche 1\u20132",items:[
+    {k:"tr1",tag:"trainer",label:"Trainingsraum: Ansprache & Terminierung durchspielen",tr:1},
+    {k:"tr2",tag:"trainer",label:"Trainingsraum: Einwandbehandlung durchspielen",tr:1},
+    {k:"tr3",tag:"trainer",label:"Trainingsraum: Empfehlungen durchspielen",tr:1}
+  ]},
+  {n:4,t:"Deine ersten Fachthemen",when:"Woche 2\u20133",items:[
+    {k:"e20",tag:"lesson",label:"Das Sozialsystem & seine L\u00fccken: warum Beratung z\u00e4hlt",a:["einsteiger",20]},
+    {k:"e22",tag:"lesson",label:"Berufsunf\u00e4higkeit: wenn die Arbeitskraft wegbricht",a:["einsteiger",22]},
+    {k:"e21",tag:"lesson",label:"Private Haftpflicht: die wichtigste g\u00fcnstige Police",a:["einsteiger",21]},
+    {k:"e24",tag:"lesson",label:"Verm\u00f6genswirksame Leistungen: das untersch\u00e4tzte Geschenk",a:["einsteiger",24]},
+    {k:"s5",tag:"seminar",label:"Pr\u00e4sentation: BU & Arbeitskraftsicherung",a:["seminare",5]}
+  ]},
+  {n:5,t:"Loslegen & dranbleiben",when:"ab Woche 3",items:[
+    {k:"e11",tag:"lesson",label:"Dein Elevator Pitch: in 30 Sekunden \u00fcberzeugen",a:["einsteiger",11]},
+    {k:"e18",tag:"lesson",label:"Selbstorganisation: dein Wochenplan",a:["einsteiger",18]},
+    {k:"e15",tag:"lesson",label:"Der Antrieb: warum du jeden Tag rausgehst",a:["einsteiger",15]},
+    {k:"t1",tag:"task",label:"Mach deinen ersten echten Analysetermin",task:1}
+  ]}
+ ];
+ var tagLbl={lesson:"Lektion",seminar:"Seminar",trainer:"\u00dcbung",task:"Aufgabe"};
+ var KEY="cf_quickstart_v1", done={};
+ try{(JSON.parse(localStorage.getItem(KEY))||[]).forEach(function(k){done[k]=1;});}catch(e){}
+ function save(){try{localStorage.setItem(KEY,JSON.stringify(Object.keys(done)));}catch(e){}}
+ var all=[]; QS.forEach(function(p){p.items.forEach(function(it){all.push(it.k);});});
+ function open(it){
+   if(it.a){ if(window.openReader) window.openReader(it.a[0],it.a[1],true); }
+   else if(it.tr){ var b=document.querySelector('[data-act="opentrainer"]'); if(b)b.click(); }
+   else if(it.task){ var el=document.getElementById('trainingsraum')||document.getElementById('waehlen'); if(el)el.scrollIntoView({behavior:"smooth"}); }
+ }
+ function mark(k,on){ if(on)done[k]=1; else delete done[k]; save(); paint(); }
+ function paint(){
+   var n=all.filter(function(k){return done[k];}).length, tot=all.length, pct=Math.round(n/tot*100);
+   document.getElementById('qsBar').style.width=pct+'%';
+   document.getElementById('qsTxt').textContent=n+' von '+tot+' erledigt \u00b7 '+pct+'%';
+   document.querySelectorAll('.qs-item').forEach(function(li){ var k=li.getAttribute('data-k'); li.classList.toggle('done',!!done[k]); li.querySelector('.qs-chk').classList.toggle('on',!!done[k]); li.querySelector('.qs-chk').innerHTML=done[k]?'\u2713':''; });
+ }
+ function render(){
+   var root=document.getElementById('qs-phases'); if(!root)return; var h='';
+   QS.forEach(function(p){
+     h+='<div class="qs-phase"><div class="qs-ph-head"><div class="qs-ph-n">'+p.n+'</div><div class="qs-ph-t">'+p.t+'</div><div class="qs-ph-when">'+p.when+'</div></div><ul class="qs-items">';
+     p.items.forEach(function(it){
+       h+='<li class="qs-item" data-k="'+it.k+'"><div class="qs-chk" data-chk="'+it.k+'"></div><div class="qs-label" data-go="'+it.k+'">'+it.label+'</div><span class="qs-tag '+it.tag+'">'+tagLbl[it.tag]+'</span></li>';
+     });
+     h+='</ul></div>';
+   });
+   root.innerHTML=h;
+   var map={}; QS.forEach(function(p){p.items.forEach(function(it){map[it.k]=it;});});
+   root.querySelectorAll('.qs-chk').forEach(function(ch){ch.addEventListener('click',function(){var k=ch.getAttribute('data-chk');mark(k,!done[k]);});});
+   root.querySelectorAll('.qs-label').forEach(function(lb){lb.addEventListener('click',function(){var k=lb.getAttribute('data-go');open(map[k]);done[k]=1;save();paint();});});
+   paint();
+ }
+ if(document.readyState!=='loading')render(); else document.addEventListener('DOMContentLoaded',render);
 })();
 </script>
 </body>
