@@ -3088,22 +3088,24 @@ const home=document.getElementById('home');
 const stage=document.getElementById('stage');
 const reader=document.getElementById('reader');
 
+var FT_STICH=[["zupackend","mitreißend","gelassen","gewissenhaft"],["konsequent","aufgeschlossen","loyal","präzise"],["tatkräftig","lebhaft","bodenständig","sachlich"]];
+function ftShuf(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}
 function farbtestHTML(){
   var rows=[
    ["selbstsicher","optimistisch","harmonisch","genau"],
    ["wagemutig","kontaktfreudig","zuhörend","nachdenklich"],
    ["entscheidungsfreudig","spontan","geduldig","kontrolliert"],
-   ["bestimmend","begeistert","teamfähig","sorgfältig"],
+   ["durchsetzungsstark","begeistert","teamfähig","sorgfältig"],
    ["kraftvoll","beliebt","vertrauensvoll","analytisch"],
    ["ergebnisorientiert","enthusiastisch","beständig","selbstdiszipliniert"],
-   ["risikofreudig","positiv","unterstützend","zurückhaltend"],
-   ["zielorientiert","impulsiv","zuverlässig","kritisch"],
+   ["risikofreudig","positiv","unterstützend","bedacht"],
+   ["zielorientiert","schwungvoll","zuverlässig","hinterfragend"],
    ["furchtlos","gesellig","ausgleichend","strukturiert"],
    ["hartnäckig","überzeugend","vermittelnd","planend"]
   ];
   var cols=["rot","gelb","gruen","blau"];
   var body=rows.map(function(r,ri){
-    return '<div class="ft-row" data-row="'+ri+'">'+r.map(function(w,ci){
+    return '<div class="ft-row" data-row="'+ri+'">'+ftShuf(r.map(function(w,ci){return {w:w,ci:ci};})).map(function(o){var w=o.w,ci=o.ci;
       return '<button class="ft-opt ft-'+cols[ci]+'" type="button" data-act="ftpick" data-color="'+cols[ci]+'">'+w+'</button>';
     }).join('')+'</div>';
   }).join('');
@@ -3111,7 +3113,7 @@ function farbtestHTML(){
     +'<div class="ft-head"><span class="ft-badge">Selbsttest</span><h4 class="ft-title">Welche Farbe bist du? \u2014 Der 60-Sekunden-Check</h4>'
     +'<p class="ft-lead">In jeder Zeile: tippe das Wort an, das <b>am ehesten auf dich</b> zutrifft. Nicht lange überlegen \u2014 der erste Impuls zählt. Am Ende siehst du deine <b>dominante Zweier-Kombination</b>.</p></div>'
     +'<div class="ft-rows">'+body+'</div>'
-    +'<div class="ft-bar-wrap"><div class="ft-progress"><span id="ftCount">0</span>/10 beantwortet</div>'
+    +'<div class="ft-bar-wrap"><div class="ft-progress"><span id="ftCount">0</span>/<span id="ftTot">10</span> beantwortet</div>'
     +'<div class="ft-actions"><button class="ft-eval" type="button" data-act="fteval">Auswerten \u2192</button>'
     +'<button class="ft-reset" type="button" data-act="ftreset">Zurücksetzen</button></div></div>'
     +'<div class="ft-result" id="ftResult" hidden></div></div>';
@@ -3140,6 +3142,21 @@ function ftEval(){
   var tally={rot:0,gelb:0,gruen:0,blau:0};
   document.querySelectorAll('#farbtest .ft-row .ft-opt.on').forEach(function(b){tally[b.dataset.color]++;});
   var total=tally.rot+tally.gelb+tally.gruen+tally.blau;
+  var openRows=[].filter.call(document.querySelectorAll('#farbtest .ft-stich'),function(r){return !r.querySelector('.ft-opt.on');});
+  if(openRows.length){res.hidden=false;res.innerHTML='<div class="ftr-hint">Gleichstand: Tipp zuerst in der neuen Zeile das Wort an, das noch besser passt, und werte dann erneut aus.</div>';return;}
+  var o0=['rot','gelb','gruen','blau'].sort(function(a,b){return tally[b]-tally[a];}), v0=o0.map(function(k){return tally[k];}), tv=null;
+  if(v0[0]===v0[1])tv=v0[0];else if(v0[1]===v0[2])tv=v0[1];
+  var addedN=document.querySelectorAll('#farbtest .ft-stich').length;
+  if(tv!==null&&tv>0&&addedN<FT_STICH.length){
+    var grp=o0.filter(function(k){return tally[k]===tv;}), sr=FT_STICH[addedN], cmap={rot:0,gelb:1,gruen:2,blau:3};
+    var row=document.createElement('div');row.className='ft-row ft-stich';row.style.gridTemplateColumns='repeat('+grp.length+',1fr)';
+    row.innerHTML=ftShuf(grp.map(function(k){return {w:sr[cmap[k]],k:k};})).map(function(o){return '<button class="ft-opt ft-'+o.k+'" type="button" data-act="ftpick" data-color="'+o.k+'">'+o.w+'</button>';}).join('');
+    document.querySelector('#farbtest .ft-rows').appendChild(row);
+    var tt=document.getElementById('ftTot');if(tt)tt.textContent=10+addedN+1;
+    res.hidden=false;res.innerHTML='<div class="ftr-hint">Gleichstand zwischen '+grp.map(ftCap).join(' und ')+'. Tipp in der neuen Zeile unten das Wort an, das noch besser passt, und werte dann erneut aus.</div>';
+    row.scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
   if(total===0){ res.hidden=false; res.innerHTML='<div class="ftr-hint">Tipp zuerst in ein paar Zeilen das Wort an, das am ehesten auf dich zutrifft \u2014 dann werte ich aus.</div>'; return; }
   var order=Object.keys(tally).sort(function(a,b){return tally[b]-tally[a];});
   var t1=order[0], t2=order[1];
@@ -3178,7 +3195,7 @@ function ftEval(){
     +inc;
   res.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
-function ftReset(){ document.querySelectorAll('#farbtest .ft-opt.on').forEach(function(b){b.classList.remove('on');}); var r=document.getElementById('ftResult'); if(r){r.hidden=true;r.innerHTML='';} ftUpdate(); }
+function ftReset(){ document.querySelectorAll('#farbtest .ft-stich').forEach(function(r){r.remove();}); var tt=document.getElementById('ftTot'); if(tt)tt.textContent=10; document.querySelectorAll('#farbtest .ft-opt.on').forEach(function(b){b.classList.remove('on');}); var r=document.getElementById('ftResult'); if(r){r.hidden=true;r.innerHTML='';} ftUpdate(); }
 function curveHTML(){return `<div class="curvewrap"><div class="curve-cap">Wie sich Fortschritt wirklich entwickelt</div><svg viewBox="0 0 640 380" class="curve-svg" role="img" aria-label="Tal der Enttaeuschung: erwarteter linearer gegenueber tatsaechlichem exponentiellem Fortschritt"><path d="M64,319 L430,204 C400,230 365,268 330,298 C258,306 176,314 64,318 Z" fill="rgba(210,59,59,.12)"/><path d="M64,40 V320 M64,320 H600" stroke="#1A2A4A" stroke-width="1.5" opacity="0.3" fill="none"/><path d="M64,320 L600,150" stroke="#1A2A4A" stroke-width="2.5" stroke-dasharray="7 5" opacity="0.55" fill="none"/><path d="M64,318 C180,314 260,306 330,298 C405,288 468,175 536,96 C565,62 588,48 600,42" stroke="#C8A84B" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M330,296 L330,236" stroke="#d23b3b" stroke-width="1.2" stroke-dasharray="3 3"/><path d="M188,186 L322,292" stroke="#d23b3b" stroke-width="1" opacity="0.5" fill="none"/><circle cx="330" cy="298" r="5" fill="#d23b3b"/><text x="96" y="170" fill="#d23b3b" font-size="15" font-weight="700">Hier geben<tspan x="96" dy="18">die meisten auf</tspan></text><text x="508" y="70" fill="#C8A84B" font-size="15" font-weight="700">Realit\u00e4t</text><text x="470" y="160" fill="#1A2A4A" font-size="15" opacity="0.7">Erwartung</text><text x="596" y="340" fill="#1A2A4A" font-size="13" opacity="0.6" text-anchor="end">Zeit</text><text x="20" y="184" fill="#1A2A4A" font-size="13" opacity="0.6" transform="rotate(-90 20 184)">Ergebnisse</text></svg><div class="curve-legend"><span class="cl-item"><span class="cl-dash"></span>Was du erwartest (linear)</span><span class="cl-item"><span class="cl-solid"></span>Was wirklich passiert (exponentiell)</span><span class="cl-item"><span class="cl-val"></span>Tal der Entt\u00e4uschung</span></div><p class="curve-note">Wir erwarten Fortschritt als gerade Linie. In Wahrheit passiert lange scheinbar nichts \u2014 im Tal der Entt\u00e4uschung liegst du sogar unter deiner Erwartung. Genau dort geben die meisten auf, kurz bevor die Kurve nach oben dreht. Wer das System durchh\u00e4lt, erntet den steilen Teil.</p></div>`;}
 function renderLesson(t,key){
   const noteLabel={merke:'Merke',falle:'Vorsicht — typische Falle',beispiel:'Beispiel',tipp:'Tipp'};
@@ -3847,23 +3864,23 @@ try{
 var DISG_Q=[
  {q:"Wenn ich eine neue Aufgabe bekomme, …",o:[["D","… will ich sofort loslegen und Ergebnisse sehen."],["I","… überlege ich, wen ich mit ins Boot hole und begeistere."],["S","… gehe ich sie ruhig und Schritt für Schritt an."],["G","… plane ich erst gründlich, bevor ich anfange."]]},
  {q:"In einer Gruppe bin ich meistens …",o:[["I","… der, der die Stimmung macht und Leute mitreißt."],["D","… der, der die Richtung vorgibt und Tempo macht."],["G","… der, der die Fakten checkt und mitdenkt."],["S","… der, der ausgleicht und fürs gute Miteinander sorgt."]]},
- {q:"Unter Druck …",o:[["D","… werde ich direkter und entscheide schnell."],["G","… ziehe ich mich zurück und prüfe erst alles genau."],["I","… rede ich mehr und suche den Austausch."],["S","… bleibe ich ruhig und halte den Laden zusammen."]]},
- {q:"Entscheidungen treffe ich …",o:[["D","… schnell — Hauptsache, es geht voran."],["G","… erst nach gründlicher Abwägung aller Fakten."],["S","… lieber gemeinsam und mit Bedacht."],["I","… spontan, wenn es sich gut anfühlt."]]},
+ {q:"Unter Druck …",o:[["D","… werde ich direkter und entscheide schnell."],["G","… werde ich noch genauer und prüfe alles zweimal."],["I","… suche ich das Gespräch mit anderen und hole mir Energie."],["S","… werde ich ruhiger und achte darauf, dass niemand untergeht."]]},
+ {q:"Entscheidungen treffe ich …",o:[["D","… schnell — Hauptsache, es geht voran."],["G","… erst, wenn ich die Fakten sauber geprüft habe."],["S","… lieber gemeinsam und mit Bedacht."],["I","… nach Gefühl und im Gespräch mit anderen."]]},
  {q:"Was mich antreibt, ist …",o:[["D","… gewinnen und Ziele erreichen."],["I","… Anerkennung und der Kontakt mit Menschen."],["S","… Sicherheit und ein gutes Miteinander."],["G","… Qualität und es richtig zu machen."]]},
  {q:"Andere beschreiben mich als …",o:[["G","… genau und zuverlässig."],["D","… durchsetzungsstark und direkt."],["I","… offen und mitreißend."],["S","… geduldig und loyal."]]},
  {q:"In Gesprächen …",o:[["I","… erzähle ich gern und lebhaft."],["D","… komme ich schnell auf den Punkt."],["S","… höre ich vor allem gut zu."],["G","… frage ich nach und will es genau verstehen."]]},
- {q:"Veränderung …",o:[["D","… ist eine Chance, die ich gern anpacke."],["I","… finde ich aufregend und spannend."],["G","… gehe ich vorsichtig und geplant an."],["S","… braucht bei mir etwas Zeit zum Gewöhnen."]]},
- {q:"Nach einer Absage oder einem Nein …",o:[["D","… hake ich ab und gehe zum Nächsten."],["I","… bin ich schnell drüber weg und suche neue Leute."],["S","… nagt es an mir und ich zweifle etwas."],["G","… analysiere ich, was ich beim nächsten Mal besser mache."]]},
+ {q:"Veränderung …",o:[["D","… ist eine Chance, die ich gern anpacke."],["I","… finde ich aufregend und spannend."],["G","… gehe ich vorsichtig und geplant an."],["S","… nehme ich gern mit, wenn alle gut mitkommen und es verlässlich bleibt."]]},
+ {q:"Nach einer Absage oder einem Nein …",o:[["D","… hake ich ab und gehe zum Nächsten."],["I","… bin ich schnell drüber weg und suche neue Leute."],["S","… nehme ich es mir zu Herzen und spreche mit jemandem darüber."],["G","… analysiere ich, was ich beim nächsten Mal besser mache."]]},
  {q:"Am wohlsten fühle ich mich, wenn …",o:[["G","… ich alles im Griff und gut vorbereitet bin."],["S","… das Umfeld harmonisch und verlässlich ist."],["D","… ich Verantwortung habe und etwas bewegen kann."],["I","… viel los ist und ich unter Menschen bin."]]},
- {q:"Wenn ich etwas Neues lerne, …",o:[["S","… brauche ich klare Anleitung und Wiederholung."],["G","… will ich das Hintergrundwissen verstehen."],["D","… will ich schnell wissen, was es bringt, und es ausprobieren."],["I","… lerne ich am besten im Austausch mit anderen."]]},
+ {q:"Wenn ich etwas Neues lerne, …",o:[["S","… lerne ich am liebsten in Ruhe, Schritt für Schritt und mit Wiederholung."],["G","… will ich das Hintergrundwissen verstehen."],["D","… will ich schnell wissen, was es bringt, und es ausprobieren."],["I","… lerne ich am besten im Austausch mit anderen."]]},
  {q:"Wenn etwas nicht nach Plan läuft, …",o:[["D","… entscheide ich neu und packe an."],["I","… schwenke ich um und improvisiere."],["S","… bleibe ich ruhig und halte durch."],["G","… suche ich zuerst die Ursache."]]},
- {q:"Bei einem Konflikt …",o:[["D","… spreche ich ihn direkt an."],["I","… versuche ich, ihn mit Charme zu entschärfen."],["S","… suche ich nach Harmonie und Ausgleich."],["G","… kläre ich ihn ruhig und sachlich."]]},
- {q:"Meine Ziele sind …",o:[["D","… ehrgeizig und hoch gesteckt."],["G","… realistisch und gut durchdacht."],["I","… groß und sollen andere begeistern."],["S","… erreichbar und am liebsten gemeinsam."]]},
+ {q:"Bei einem Konflikt …",o:[["D","… spreche ich ihn direkt an."],["I","… versuche ich, die Stimmung aufzulockern und alle ins Gespräch zu holen."],["S","… suche ich nach Harmonie und Ausgleich."],["G","… sortiere ich die Fakten und kläre ihn mit Argumenten."]]},
+ {q:"Meine Ziele sind …",o:[["D","… ehrgeizig und hoch gesteckt."],["G","… realistisch und gut durchdacht."],["I","… groß und sollen andere begeistern."],["S","… verlässlich erreichbar, am liebsten gemeinsam im Team."]]},
  {q:"Im Team übernehme ich am ehesten …",o:[["D","… die Führung und die Richtung."],["I","… die Motivation und die gute Stimmung."],["S","… den Zusammenhalt und die Verlässlichkeit."],["G","… die Qualität und den Überblick."]]},
  {q:"Was mich am meisten stört …",o:[["S","… Streit und ständige Hektik."],["G","… Schlamperei und Ungenauigkeit."],["D","… Langsamkeit und ewiges Zögern."],["I","… Langeweile und steife Atmosphäre."]]},
  {q:"Beim Beraten und Verkaufen setze ich vor allem auf …",o:[["D","… Klarheit und die Umsetzung."],["I","… Begeisterung und Beziehung."],["S","… Vertrauen und Geduld."],["G","… Fakten und Kompetenz."]]},
- {q:"Auf neue Leute …",o:[["I","… gehe ich offen und direkt zu."],["D","… schätze ich sie schnell ein."],["S","… werde ich langsam und herzlich warm."],["G","… schaue ich erst und beobachte."]]},
- {q:"Meine größte Schwäche ist eher …",o:[["D","… meine Ungeduld."],["I","… fehlende Struktur."],["S","… meine Konfliktscheu."],["G","… mein Perfektionismus."]]},
+ {q:"Auf neue Leute …",o:[["I","… gehe ich offen und gesprächig zu."],["D","… komme ich schnell zur Sache und sehe, ob es passt."],["S","… werde ich langsam und herzlich warm."],["G","… schaue ich erst und beobachte."]]},
+ {q:"Meine größte Schwäche ist eher …",o:[["D","… meine Ungeduld."],["I","… mein Hang, Nachfassen und Details schleifen zu lassen."],["S","… meine Konfliktscheu."],["G","… mein Hang, zu lange zu prüfen."]]},
  {q:"Wenn ich jemanden für unsere Sache gewinnen will, …",o:[["D","… bringe ich es klar auf den Punkt und überzeuge."],["I","… stecke ich ihn mit meiner Begeisterung an."],["S","… baue ich in Ruhe Vertrauen auf."],["G","… überzeuge ich mit Fakten und Substanz."]]}
 ];
 function P2(a,b,c2){return {name:a,nick:b,col:c2};}
@@ -3924,21 +3941,46 @@ function stage(){return document.getElementById("disgStage");}
 function openDisg(){
   var o=ov();
   if(!o){o=document.createElement("div");o.id="disgOverlay";o.className="disg-ov";o.innerHTML='<button class="disg-x" id="disgX">✕</button><div class="disg-stage" id="disgStage"></div>';document.body.appendChild(o);o.querySelector("#disgX").addEventListener("click",closeDisg);}
-  o.style.display="flex";document.body.style.overflow="hidden";dq=0;dscore={D:0,I:0,S:0,G:0};renderIntro();
+  o.style.display="flex";document.body.style.overflow="hidden";dq=0;dscore={D:0,I:0,S:0,G:0};dtie={D:0,I:0,S:0,G:0};renderIntro();
 }
 function closeDisg(){var o=ov();if(o)o.style.display="none";document.body.style.overflow="";}
 function renderIntro(){
-  stage().innerHTML='<div class="disg-intro"><div class="disg-eyebrow">Persönlichkeitstest</div><h2>Der DISG-Test</h2><p>20 kurze Fragen, etwa 5 bis 10 Minuten. Tipp jeweils die Antwort an, die am ehesten auf dich zutrifft — spontan und ehrlich, aus dem Bauch heraus. Danach bekommst du eine ausführliche Auswertung: dein Typ, deine Stärken, wo du in unserem Beruf sofort punktest, wo es für dich schwierig wird — und wie du bei uns Fuß fasst.</p><button class="disg-btn" id="disgStart">Los geht’s</button></div>';
+  stage().innerHTML='<div class="disg-intro"><div class="disg-eyebrow">Persönlichkeitstest</div><h2>Der DISG-Test</h2><p>20 kurze Fragen, etwa 5 bis 10 Minuten (bei einem Gleichstand kommt eine kurze Stichfrage dazu). Tipp jeweils die Antwort an, die am ehesten auf dich zutrifft — spontan und ehrlich, aus dem Bauch heraus. Danach bekommst du eine ausführliche Auswertung: dein Typ, deine Stärken, wo du in unserem Beruf sofort punktest, wo es für dich schwierig wird — und wie du bei uns Fuß fasst.</p><button class="disg-btn" id="disgStart">Los geht’s</button></div>';
   document.getElementById("disgStart").addEventListener("click",function(){dq=0;dscore={D:0,I:0,S:0,G:0};renderQ();});
 }
 function renderQ(){
-  if(dq>=DISG_Q.length){renderResult();return;}
+  if(dq===0){stichN=0;dtie={D:0,I:0,S:0,G:0};}
+  if(dq>=DISG_Q.length){finish();return;}
   var item=DISG_Q[dq],pct=Math.round((dq/DISG_Q.length)*100);
   var h='<div class="disg-q"><div class="disg-prog"><div class="disg-prog-bar" style="width:'+pct+'%"></div></div><div class="disg-qnum">Frage '+(dq+1)+' von '+DISG_Q.length+'</div><h3>'+item.q+'</h3><div class="disg-opts">';
-  item.o.forEach(function(op){h+='<button class="disg-opt" data-dim="'+op[0]+'">'+op[1]+'</button>';});
+  shuf(item.o.slice()).forEach(function(op){h+='<button class="disg-opt" data-dim="'+op[0]+'">'+op[1]+'</button>';});
   h+='</div></div>';
   stage().innerHTML=h;var o=ov();if(o)o.scrollTop=0;
   [].forEach.call(stage().querySelectorAll(".disg-opt"),function(b){b.addEventListener("click",function(){dscore[b.getAttribute("data-dim")]++;dq++;renderQ();});});
+}
+var stichN=0,dtie={D:0,I:0,S:0,G:0};
+var STICH=[
+ {D:"Wenn etwas zu lange dauert, übernehme ich selbst und bringe es voran.",I:"Wenn etwas festgefahren ist, bringe ich Leute ins Gespräch und Schwung hinein.",S:"Wenn etwas hektisch wird, sorge ich dafür, dass alle in Ruhe weiterarbeiten können.",G:"Wenn etwas unklar ist, sortiere ich die Fakten, bis ein klares Bild entsteht."},
+ {D:"Am Ende des Tages zählt für mich, was erreicht wurde.",I:"Am Ende des Tages zählt für mich, wie die Stimmung bei den Menschen war.",S:"Am Ende des Tages zählt für mich, dass alles verlässlich gelaufen ist.",G:"Am Ende des Tages zählt für mich, dass alles sauber gemacht ist."},
+ {D:"Wenn ich etwas Neues beginne, will ich vor allem bald sichtbare Ergebnisse.",I:"Wenn ich etwas Neues beginne, will ich vor allem, dass andere Lust darauf bekommen.",S:"Wenn ich etwas Neues beginne, will ich vor allem, dass es verlässlich und gemeinsam läuft.",G:"Wenn ich etwas Neues beginne, will ich vor allem genau wissen, worauf ich mich einlasse."}
+];
+function shuf(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function eff(d){return dscore[d]+dtie[d]*0.5;}
+function tieGroup(){
+  var o=DISG_ORDER.slice().sort(function(a,b){return eff(b)-eff(a);});
+  var v=o.map(eff),val=null;
+  if(v[0]===v[1])val=v[0];else if(v[1]===v[2])val=v[1];
+  if(val===null)return null;
+  return DISG_ORDER.filter(function(d){return eff(d)===val;});
+}
+function finish(){var g=tieGroup();if(g&&stichN<STICH.length){renderStich(g);return;}renderResult();}
+function renderStich(g){
+  var set=STICH[stichN];
+  var h='<div class="disg-q"><div class="disg-prog"><div class="disg-prog-bar" style="width:100%"></div></div><div class="disg-qnum">Stichfrage: bei dir liegt etwas gleichauf</div><h3>Welche Aussage passt noch ein Stück besser zu dir?</h3><div class="disg-opts">';
+  shuf(g.slice()).forEach(function(d){h+='<button class="disg-opt" data-dim="'+d+'">'+set[d]+'</button>';});
+  h+='</div></div>';
+  stage().innerHTML=h;var o=ov();if(o)o.scrollTop=0;
+  [].forEach.call(stage().querySelectorAll(".disg-opt"),function(b){b.addEventListener("click",function(){dtie[b.getAttribute("data-dim")]++;stichN++;finish();});});
 }
 function wheelSVG(s){
   var tot=(s.D+s.I+s.S+s.G)||1;
@@ -3960,9 +4002,9 @@ function wheelSVG(s){
    +'</svg>';
 }
 function renderResult(){
-  var sorted=DISG_ORDER.slice().sort(function(a,b){return dscore[b]-dscore[a];});
+  var sorted=DISG_ORDER.slice().sort(function(a,b){return eff(b)-eff(a);});
   var p1=sorted[0],p2=sorted[1],P=DISG_P[p1],A=ARCH[p1+p2]||{n:P.nick,t:""};
-  disgSave({primary:p1,secondary:p2,scores:dscore});
+  disgSave({primary:p1,secondary:p2,scores:dscore,tie:dtie});
   var bars='';DISG_ORDER.forEach(function(d){var val=dscore[d],pc=Math.round((val/DISG_Q.length)*100);bars+='<div class="disg-bar"><div class="disg-bar-track"><div class="disg-bar-fill" style="height:'+pc+'%;background:'+DISG_P[d].col+'"></div></div><div class="disg-bar-lab" style="color:'+DISG_P[d].col+'">'+d+'</div><div class="disg-bar-val">'+val+'</div></div>';});
   var lis=function(a){return '<ul>'+a.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul>';};
   var paras=function(a){return a.map(function(x){return '<p>'+x+'</p>';}).join('');};
@@ -3988,7 +4030,7 @@ function renderDisgCard(){
   var el=document.getElementById("disgCard");if(!el)return;var r=disgLoad();
   if(r&&DISG_P[r.primary]){var P=DISG_P[r.primary];var A=ARCH[r.primary+r.secondary]||{n:P.nick};
     el.innerHTML='<div class="tt-card"><div class="tt-badge">DISG-Test</div><h3>'+A.n+'</h3><div class="tt-res"><span class="tt-res-type" style="color:'+P.col+'">'+r.primary+' · '+P.name+'</span></div><p>Mit Anteil von '+r.secondary+'. Schau dir dein Rad, deine Stärken und deinen Fokus in unserem Beruf an.</p><button class="tt-btn" id="disgView">Ergebnis ansehen</button><button class="tt-btn tt-btn-ghost" id="disgRedo">Neu machen</button></div>';
-    document.getElementById("disgView").addEventListener("click",function(){openDisg();dscore=r.scores||{D:0,I:0,S:0,G:0};renderResult();});
+    document.getElementById("disgView").addEventListener("click",function(){openDisg();dscore=r.scores||{D:0,I:0,S:0,G:0};dtie=r.tie||{D:0,I:0,S:0,G:0};renderResult();});
     document.getElementById("disgRedo").addEventListener("click",openDisg);
   }else{
     el.innerHTML='<div class="tt-card"><div class="tt-badge">DISG-Test</div><h3>Wie tickst du?</h3><p>20 Fragen, etwa 5 bis 10 Minuten — und du bekommst eine ausführliche Auswertung: dein Typ, deine Stärken und wo du in unserem Beruf am besten Fuß fasst.</p><button class="tt-btn" id="disgStartCard">DISG-Test starten</button></div>';
